@@ -10,7 +10,7 @@ export class UserController{
     }
 
     register = async(req: Request, res: Response) => {
-
+        res.json({message: 'OK'})
     }
 
     refresh = async(req: Request, res: Response) => {
