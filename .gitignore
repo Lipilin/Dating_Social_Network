@@ -26,3 +26,5 @@ dist-ssr
 *.svg
 *.png
 *.jpg
+generated
+.env
