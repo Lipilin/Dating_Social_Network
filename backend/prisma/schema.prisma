@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserStatus{
+  NEW
+  PENDING_APPROVEMENT
+  REGISTERED
+  BANNED
+}
+
+enum UserContentStatus{
+  PENDING_APPROVEMENT
+  PUBLISHED
+  BANNED
+}
+
+enum UserRole{
+  USER
+  ADMIN
+}
+
+enum GenderPreference{
+  MALE
+  FEMALE
+  ANYBODY
+}
+
+model User{
+  id String @id @default(cuid())
+  email String @unique
+  password String
+  name String
+  surname String?
+  description String? @db.VarChar(255)
+  status UserStatus @default(NEW)
+  role UserRole @default(USER)
+  avatar String?
+  banner String?
+  lastSeen DateTime @default(now())
+  metadata Json?
+  announcements Announcement[]
+  posts Post[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Post{
+  id String @id @default(cuid())
+  title String
+  tags Json?
+  content String @db.Text
+  image String
+  status UserContentStatus @default(PENDING_APPROVEMENT)
+  userId String @map("user_id")
+  user User @relation(fields: [userId], references: [id])
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Announcement{
+  id String @id @default(cuid())
+  title String?
+  interests Interest[]
+  description String @db.Text
+  dateFrom DateTime @map("date_from")
+  dateTo DateTime @map("date_to")
+  status UserContentStatus @default(PENDING_APPROVEMENT)
+  departure String
+  destination String
+  genderInterest GenderPreference @default(ANYBODY)
+  userId String @map("user_id")
+  user User @relation(fields: [userId], references: [id])
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Category {
+  id String @id @default(cuid())
+  name String
+  interests Interest[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Interest{
+  id String @id @default(cuid())
+  categoryId String @map("category_id")
+  category Category @relation(fields: [categoryId], references: [id])
+  announcements Announcement[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
