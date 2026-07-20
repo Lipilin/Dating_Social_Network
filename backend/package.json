@@ -1,0 +1,32 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend часть проекта Boltaem - админка и endpoints",
+  "license": "ISC",
+  "author": "Egor",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon ./src/server.ts"
+  },
+  "dependencies": {
+    "@adminjs/express": "^6.1.1",
+    "@adminjs/prisma": "^5.0.4",
+    "@prisma/client": "^6.19.3",
+    "adminjs": "^7.8.17",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "helmet": "^8.3.0",
+    "prisma": "^6.19.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.1.1",
+    "nodemon": "^3.1.14",
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2"
+  },
+  "imports": {
+    "@/*": "./src/*"
+  }
+}
