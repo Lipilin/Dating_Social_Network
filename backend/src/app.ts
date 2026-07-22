@@ -1,8 +1,9 @@
 import express from 'express'
-import helmet from 'helmet'
+export { prisma } from '@/prisma.js'
 import { router as UserRouter } from '@/routes/user.routes.js'
+import { router as AdminRouter } from '@/admin/index.js'
 export const app = express()
-
-app.use(helmet())
 app.use(express.json())
 app.use('/api', UserRouter)
+app.use('/admin', AdminRouter)
+app.use('/resources', express.static('./resources'))

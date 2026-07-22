@@ -58,7 +58,7 @@ model Post{
   image String
   status UserContentStatus @default(PENDING_APPROVEMENT)
   userId String @map("user_id")
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }
@@ -75,7 +75,7 @@ model Announcement{
   destination String
   genderInterest GenderPreference @default(ANYBODY)
   userId String @map("user_id")
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }
@@ -90,8 +90,9 @@ model Category {
 
 model Interest{
   id String @id @default(cuid())
+  name String
   categoryId String @map("category_id")
-  category Category @relation(fields: [categoryId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   announcements Announcement[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
