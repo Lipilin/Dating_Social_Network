@@ -1,6 +1,6 @@
-import type { UserService } from "@/services/UserService.js"
-import type { Request } from "express"
-import type { Response } from "express"
+import type { UserService } from '@/services/UserService.js'
+import type { Request } from 'express'
+import type { Response } from 'express'
 
 export class UserController{
     #userService: UserService | null  = null
@@ -10,7 +10,7 @@ export class UserController{
     }
 
     register = async(req: Request, res: Response) => {
-        res.json({message: 'OK'})
+        res.json({ message: 'OK' })
     }
 
     refresh = async(req: Request, res: Response) => {

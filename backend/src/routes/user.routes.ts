@@ -1,7 +1,7 @@
-import { Router } from "express"
-import { UserController } from "@/controllers/UserController.js"
-import { UserService } from "@/services/UserService.js"
-import { securityMiddlewareDefault } from "@/middleware/security.js"
+import { Router } from 'express'
+import { UserController } from '@/controllers/UserController.js'
+import { UserService } from '@/services/UserService.js'
+import { securityMiddlewareDefault } from '@/middleware/security.js'
 
 const userSerivce = new UserService()
 const userController = new UserController(userSerivce)
