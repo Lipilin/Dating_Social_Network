@@ -29,5 +29,10 @@
 
 Проект полностью контейнеризирован. Запуск всех сервисов (frontend, backend, PostgreSQL) одной командой:
 
+
+### ESlint
+
+Чистота кода отслеживается с помощью ESLint
+
 ```bash
 docker-compose up -d --build
