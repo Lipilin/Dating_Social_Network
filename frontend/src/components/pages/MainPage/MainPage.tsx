@@ -2,15 +2,16 @@ import '@/assets/css/main.css'
 import {
     SearchForm,
     InterestBlock,
-    DestinationBlock,
     AnnouncementSlider,
     Banner
 } from './index'
 import { Announcement } from '@/utils/api/Announcement'
 import { User } from '@/utils/api/User'
+import { Category } from '@/utils/api/Category'
 
 const announcement = new Announcement()
 const user = new User()
+const category = new Category()
 
 export function MainPage() {
     return (
@@ -23,8 +24,7 @@ export function MainPage() {
                     <section className="friends">
                         <div className="container">
                             <div className="row">
-                                <InterestBlock />
-                                <DestinationBlock />
+                                <InterestBlock dataProvider={ category }/>
                             </div>
                         </div>
                     </section>

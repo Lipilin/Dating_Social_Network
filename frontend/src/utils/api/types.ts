@@ -1,4 +1,5 @@
 export interface AnnouncementResource{
+    id: string, 
     userName: string, 
     userAge: number, 
     genderPreference: string, 
@@ -7,4 +8,18 @@ export interface AnnouncementResource{
     dateTo: Date, 
     destination: string, 
     departure: string, 
+}
+
+export interface InterestResource{
+    id: Number, 
+    name: string,
+    image?: string,
+}
+
+export interface CategoryWithInterestResource{
+    id: string,
+    name: string, 
+    image: string, 
+    interests: InterestResource[],
+    isCountry: boolean
 }

@@ -2,14 +2,10 @@ import { images } from './AnnouncementSlider.images'
 import { useState, useEffect } from 'react'
 import type { Announcement } from '@/utils/api/Announcement'
 import type { AnnouncementResource } from '@/utils/api/types'
+import { LoadStatus } from './types'
 
 interface AnnouncementSliderProps{
     dataProvider: Announcement
-}
-
-enum LoadStatus{
-    LOADING, 
-    READY
 }
 
 export function AnnouncementSlider({ dataProvider }: AnnouncementSliderProps) {
@@ -53,7 +49,7 @@ export function AnnouncementSlider({ dataProvider }: AnnouncementSliderProps) {
                 </div>
                 <div className="content">
                     {(loadStatus == LoadStatus.READY) ? announcements.map((item) => (
-                        <div data-tab-content="text" className="slider-wrapper swiper" style={{ display: "block" }}>
+                        <div key = { item.id } data-tab-content="text" className="slider-wrapper swiper" style={{ display: "block" }}>
                             <div className="card-list swiper-wrapper">
                                 <div className="card swiper-slide">
                                     <div className="card__image">
@@ -110,7 +106,7 @@ export function AnnouncementSlider({ dataProvider }: AnnouncementSliderProps) {
                                 </div>
                             </div>
                     </div>
-                    )) : (<>Идет Загрузка...</>)}
+                    )) : null}
                     
                 </div>
             </div>
