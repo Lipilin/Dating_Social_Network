@@ -4,7 +4,6 @@ import { ruLocale } from '@/admin/configs/locales/ruLocales.js'
 import bcrypt from 'bcryptjs'
 import { prisma } from '@/app.js'
 AdminJS.registerAdapter({ Database, Resource })
-
 export const admin = new AdminJS({
     branding: {
         companyName: 'Boltaem Admin',
@@ -148,7 +147,7 @@ export const admin = new AdminJS({
     rootPath: '/admin',
     locale: {
         language: 'ru',
-        availableLanguages: [ 'ru', 'en' ],
+        availableLanguages: [ 'ru' ],
         localeDetection: true,
         translations: {
             ru: ruLocale
