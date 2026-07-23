@@ -1,0 +1,28 @@
+services:
+  backend:
+    build: 
+      context: ./backend
+      target: develop
+    depends_on:
+      - mysql
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  mysql:
+    image: mysql:8
+    env_file: ./backend/.env
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  frontend:
+    build: 
+      context: ./frontend
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  mysql_data:
