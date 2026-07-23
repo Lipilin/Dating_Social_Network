@@ -1,0 +1,387 @@
+.hotels {
+    margin-top: 30px;
+
+    .container {
+        border-radius: 8px;
+        background: #FFF;
+        box-shadow: 1px 1px 4px 0px rgba(94, 92, 154, 0.06);
+        padding: 50px 60px;
+
+        @media #{$laptop} {
+            padding: 40px 20px;
+        }
+    }
+
+    &__top {
+        display: flex;
+        align-items: center;
+        gap: 27px;
+    }
+
+    &__tab {
+        display: flex;
+        gap: 13px;
+        align-items: center;
+
+        button {
+            color: #20212E;
+            font-family: "TT Commons";
+            font-size: 17px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            border-radius: 5px;
+            border: 1px solid #E2E4E9;
+            padding: 11px 20px 7px 20px;
+            background-color: transparent;
+            cursor: pointer;
+
+            &.active {
+                background-color: #0041F2;
+                border-color: #0041F2;
+                color: #fff;
+                position: relative;
+
+                &:after {
+                    position: absolute;
+                    content: '';
+                    width: 14px;
+                    height: 14px;
+                    transform: rotate(-45deg);
+                    flex-shrink: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: -7px;
+                    margin: auto;
+                    background-color: #0041F2;
+                }
+            }
+        }
+    }
+
+    &__content {
+        margin-top: 52px;
+    }
+
+    &__list {
+        display: none;
+
+        &.show {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: space-between;
+        }
+    }
+
+    &__item {
+        width: calc(50% - 15px);
+        display: flex;
+        border-radius: 8px;
+        background: #F6F7F9;
+        overflow: hidden;
+
+        @media #{$table} {
+            width: 100%;
+        }
+
+        @media #{$mobile} {
+            flex-direction: column;
+        }
+
+        &-image {
+            width: 33%;
+            min-height: 216px;
+            flex: 0 0 auto;
+
+            @media #{$mobile} {
+                width: 100%;
+                height: 90px;
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        &-content {
+            padding: 27px 32px;
+
+            @media #{$mobile} {
+                padding: 20px 15px;
+            }
+        }
+
+        &-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        &-title {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            color: #20212E;
+            font-family: "TT Commons";
+            font-size: 19px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+
+            span {
+                display: flex;
+                align-items: flex-start;
+                gap: 3px;
+                color: #60616B;
+                font-family: "TT Commons";
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                color: #20212E;
+                font-family: "TT Commons";
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+            }
+        }
+
+        &-place {
+            color: #20212E;
+            font-family: "TT Commons";
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            opacity: 0.6;
+        }
+
+        &-rating {
+            width: 45px;
+            height: 45px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: #0041F2;
+            font-family: "TT Commons";
+            font-size: 17.1px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 20px;
+            background: conic-gradient(blue 90%, #F6F7F9 0%);
+            position: relative;
+
+            span {
+                position: relative;
+                z-index: 2;
+                padding-top: 3px;
+                padding-right: 1px;
+            }
+
+            &:before {
+                content: "";
+                width: 38px;
+                height: 38px;
+                background: #F0F0F2;
+                position: absolute;
+                z-index: 0;
+                border-radius: 50%;
+            }
+        }
+
+        &-description {
+            color: #20212E;
+            font-family: "TT Commons";
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            opacity: 0.6;
+            margin-top: 15px;
+        }
+
+        &-meta {
+            display: flex;
+            margin-top: 26px;
+            gap: 6px;
+        }
+
+        &-comment {
+            border-radius: 15px;
+            background: #FFF;
+            padding: 7px 13px 5px 12px;
+            gap: 5px;
+            color: #20212E;
+            font-family: "TT Commons";
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            height: fit-content;
+            display: flex;
+            align-items: flex-start;
+            text-decoration: none;
+            transition: .3s all ease;
+
+            &:hover {
+                background-color: #E2E4E9;
+            }
+        }
+
+        &-like {
+            border-radius: 15px;
+            background: #FFF;
+            padding: 7px 13px 5px 12px;
+            gap: 5px;
+            color: #20212E;
+            font-family: "TT Commons";
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            height: fit-content;
+            display: flex;
+            align-items: flex-start;
+            position: relative;
+            cursor: pointer;
+            transition: .3s all ease;
+
+            &:hover {
+                background-color: #E2E4E9;
+
+                .emojis {
+                    opacity: 1;
+                    top: -90px;
+                    z-index: 1;
+                }
+            }
+
+            &.active {
+                background-color: #E2E4E9;
+            }
+
+            .emojis {
+                position: absolute;
+                border-radius: 15.48px;
+                background: #FFF;
+                box-shadow: 0px 2.976px 5.952px 0px rgba(83, 89, 102, 0.17);
+                top: 0px;
+                left: 0;
+                display: flex;
+                padding: 11px 15px 11px 15px;
+                gap: 10px;
+                align-items: start;
+                opacity: 0;
+                z-index: -10;
+                transition: .3s all ease;
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    width: 19px;
+                    height: 19px;
+                    bottom: -7px;
+                    left: 20px;
+                    transform: rotate(45deg);
+                    z-index: -1;
+                    background: #FFF;
+                }
+
+                .emoji {
+                    color: #000;
+                    font-family: "TT Commons";
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                    display: flex;
+                    flex-direction: column-reverse;
+                    justify-content: end;
+                    align-items: center;
+                    transition: .3s all ease;
+
+                    img {
+                        height: 25px;
+                    }
+
+                    span {
+                        font-size: 19px;
+                        transition: .3s all ease;
+                        position: relative;
+
+                        .text {
+                            position: absolute;
+                            font-size: 9px;
+                            background-color: #FFF;
+                            padding: 4px 7px;
+                            border-radius: 6px;
+                            font-family: 'Gilroy';
+                            font-weight: 600;
+                            text-align: center;
+                            color: #000;
+                            top: -30px;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            opacity: 0;
+
+                            &::after {
+                                content: "";
+                                position: absolute;
+                                width: 9px;
+                                height: 9px;
+                                bottom: -3px;
+                                left: 0;
+                                right: 0;
+                                margin: auto;
+                                transform: rotate(45deg);
+                                background: #FFF;
+                                z-index: -1;
+                            }
+                        }
+                    }
+
+                    &:hover {
+                        span {
+                            transform: scale(1.4);
+
+                            .text {
+                                opacity: 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &__more {
+        display: flex;
+        margin-top: 45px;
+        gap: 18px;
+        color: #00195B;
+        font-family: "TT Commons";
+        font-size: 17px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 100%;
+        text-decoration: none;
+        width: fit-content;
+
+        svg {
+            transition: .3s all ease;
+        }
+
+        &:hover {
+            color: #0041F2;
+
+            svg {
+                transform: translate(3px, 0.5px);
+            }
+        }
+    }
+}
