@@ -1,31 +1,22 @@
 import type { AnnouncementResource } from '@/utils/api/types'
 import { images } from './AnnouncementSlider.images'
+import { AnnouncementGenderBLock } from './AnnouncementGenderBlock'
 
 export function Announcement(item: AnnouncementResource){
     return (
-        <div key = { item.id } data-tab-content="text" className="slider-wrapper swiper" style={{ display: 'block' }}>
+        <div data-tab-content="text" className="slider-wrapper swiper" style={{ display: 'block' }}>
             <div className="card-list swiper-wrapper">
                 <div className="card swiper-slide">
                     <div className="card__image">
-                        <img src={images['announcement_1.png']} alt={item.userName} />
+                        <img src={images['announcement_1.png']} alt={item.title} />
                     </div>
                     <div className="card__info">
                         <div className="card__info-top">
                             <div className="card__item">
-                                <h3>{item.userName}</h3>
+                                <h3>{item.title}</h3>
                             </div>
                             <small>{item.userAge} года</small>
-                            <div className="profile-badge">
-                                <div className="avatars">
-                                    <div className="avatar m">
-                                        <img src={images['avatar_male.svg']} alt="" />
-                                    </div>
-                                    <div className="avatar j">
-                                        <img src={images['avatar_female.svg']} alt="" />
-                                    </div>
-                                </div>
-                                <div className="text">{item.genderPreference}</div>
-                            </div>
+                            <AnnouncementGenderBLock gender = { item.genderInterest }/>
                             <p className="limited-text">
                                 { item.description }
                             </p>
@@ -53,7 +44,7 @@ export function Announcement(item: AnnouncementResource){
                                 </a>
                             </h4>
                             <h5>
-                                с {item.dateFrom.toDateString()} по {item.dateTo.toDateString()}
+                                с { item.dateFrom } по {item.dateTo }
                             </h5>
                         </div>
                     </div>

@@ -1,29 +1,38 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { SearchGender } from './partials/searchForm/SearchGender'
 import { SearchInterests } from './partials/searchForm/SearchInterests'
-import { SearchBottom } from './partials/searchForm/SearchBottom'
 import { DefaultInput } from '@/components/ui/inputs/DefaultInput'
-import type { Announcement } from '@/utils/api/Announcement'
 import { LoadStatus } from './types'
 import { GENDER_PREFERENCE } from '@/utils/api/types'
+import { DefaultButton } from "@/components/ui/buttons/DefaultButton"
 
 interface SeacrhFormProps{
-    dataProvider: Announcement
+    setData: (data: any) => void,
+    loadStatus: LoadStatus, 
 }
 
-export function SearchForm({ dataProvider }: SeacrhFormProps) {
+export function SearchForm({ setData, loadStatus }: SeacrhFormProps) {
     const [genderPreference, setGenderPreference] = useState<GENDER_PREFERENCE | null>(null)
     const [departure, setDeparture] = useState('')
     const [destination, setDestination] = useState('')
-    const [status, setStatus] = useState<LoadStatus>(LoadStatus.READY)
+    const [error, setError] = useState<string>('')
     const find = useCallback(async () => {
-        setStatus(LoadStatus.LOADING)
-        const data = await dataProvider.getDataWithClauses()
-    }, [departure, destination])
+        setError('')
+        try {
+            if(!genderPreference) throw Error('Поле Я ищу нe может быть пустым')
+            if(departure == '') throw Error('Поле Откуда нe может быть пустым')
+            if(destination == '') throw Error('Поле Куда нe может быть пустым')
+        } catch (errorObject) {
+            setError((errorObject as Error).message)
+            return
+        }
+        setData({})
+    }, [genderPreference, departure, destination, setData])
+    useEffect(() => setError(''), [genderPreference, departure, destination])
     return (
         <section className="search">
             <div className="container">
-                { status == LoadStatus.READY ? 
+                { loadStatus == LoadStatus.READY ? 
                     <form action="#">
                         <div className="search__top">
                             <SearchGender 
@@ -52,7 +61,25 @@ export function SearchForm({ dataProvider }: SeacrhFormProps) {
                                 </div>
                             </div>
                         </div>
-                        <SearchBottom />
+                        { error ? (
+                            <span className='text-red-600 text-sm mt-1 block'>
+                                {error}
+                            </span>
+                        ) : null }
+                        <div className="search__bottom">
+                            <div className="search__bottom-right">
+                                <DefaultButton 
+                                    classNames='show_map'
+                                    content='Показать на карте'
+                                    onSend={ find }
+                                />
+                                <DefaultButton 
+                                    classNames='search__btn'
+                                    content='Найти'
+                                    onSend = { find }
+                                />
+                            </div>
+                        </div>
                     </form>
                 : null}
             </div>

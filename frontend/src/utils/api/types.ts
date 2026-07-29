@@ -1,11 +1,11 @@
 export interface AnnouncementResource{
     id: string, 
-    userName: string, 
+    title: string, 
     userAge: number, 
-    genderPreference: string, 
+    genderInterest: GENDER_PREFERENCE, 
     description: string, 
-    dateFrom: Date, 
-    dateTo: Date, 
+    dateFrom: string, 
+    dateTo: string, 
     destination: string, 
     departure: string, 
 }
@@ -22,6 +22,13 @@ export interface CategoryWithInterestResource{
     image: string, 
     interests: InterestResource[],
     isCountry: boolean
+}
+
+export interface AnnouncementRequest{
+    pagination: number, 
+    genderPreference?: GENDER_PREFERENCE, 
+    destination?: string
+    departure?: string
 }
 
 export enum GENDER_PREFERENCE{

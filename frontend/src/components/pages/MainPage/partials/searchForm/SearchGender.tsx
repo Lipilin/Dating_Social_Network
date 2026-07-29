@@ -25,6 +25,7 @@ export function SearchGender({ genderValue, setGender }: SearchGenderProps){
                     required={true}
                     id="selected-values" 
                     value = { genderValue ? genderLabels[genderValue].label : ''}
+                    onChange = {(e) => null}
                     placeholder=" "
                 />
                 <label className="label" >Я ищу</label>

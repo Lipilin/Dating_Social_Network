@@ -7,6 +7,8 @@ ol {
   box-sizing: border-box;
 }
 
+@import "tailwindcss";
+
 .wrapper {
   overflow: clip;
 }

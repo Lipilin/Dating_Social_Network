@@ -16,3 +16,14 @@ export const genderLabels = {
         label: 'Кого-нибудь'
     }
 }
+
+export const API_SETTINGS = {
+    API_HOST: 'http://localhost:3000/api', 
+    DEFAULT_PAGINATION: 7, 
+    ENDPOINTS: {
+        ANNOUNCEMENT: {
+            BASE: 'announcement', 
+            LIST: 'list', 
+        }
+    },
+}
