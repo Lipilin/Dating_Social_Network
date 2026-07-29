@@ -3,6 +3,9 @@ import { Announcement as AnnouncementComponent } from './partials/announcement/A
 import { AnnouncementBottom } from './partials/announcement/AnnouncementBottom'
 import { AnnouncementHeader } from './partials/announcement/AnnouncementHeader'
 import type { AnnouncementResource } from '@/utils/api/types'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation } from 'swiper/modules'
+import 'swiper/css'
 
 interface AnnouncementSliderProps{
     loadStatus: LoadStatus
@@ -16,10 +19,28 @@ export function AnnouncementSlider({ loadStatus, announcements }: AnnouncementSl
                 <div className="announcement__top">
                     <AnnouncementHeader />
                     <div className="content">
-                        {(loadStatus == LoadStatus.READY) ? announcements.map((item) => (
-                            <AnnouncementComponent  key = { item.id } {...item}/>
-                        )) : null}
-                    
+                        {
+                            (loadStatus == LoadStatus.READY) ? (
+                                <Swiper
+                                spaceBetween = { 50 }
+                                slidesPerView=  { 4 }
+                                modules={ [Navigation] }
+                                navigation={{
+                                    prevEl: '.prev',
+                                    nextEl: '.next',
+                                }}
+                                loop
+                                >
+                                    {
+                                        announcements.map((item) => (
+                                            <SwiperSlide>
+                                                <AnnouncementComponent  key = { item.id } {...item}/>
+                                            </SwiperSlide>
+                                        ))
+                                    }
+                                </Swiper>
+                            ) : null
+                        }
                     </div>
                 </div>
                 <AnnouncementBottom />
