@@ -23,3 +23,9 @@ export interface CategoryWithInterestResource{
     interests: InterestResource[],
     isCountry: boolean
 }
+
+export enum GENDER_PREFERENCE{
+    MALE="MALE",
+    FEMALE="FEMALE",
+    ANYBODY="ANYBODY",
+}

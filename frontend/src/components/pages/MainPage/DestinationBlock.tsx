@@ -18,7 +18,7 @@ export function DestinationBlock({categories}: DestinationBlockProps) {
                     </a>
                 ))}
             </div>
-            <a href="#" className="friends__others">
+            <a href="/destinations" className="friends__others">
                 Показать все интересы
                 <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16"
                     fill="none">
