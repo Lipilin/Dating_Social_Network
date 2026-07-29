@@ -1,5 +1,5 @@
 #Основа для всех контейнеров
-FROM node:20-alpine AS base
+FROM node:20-bookworm AS base
 WORKDIR /app
 COPY package*.json .
 RUN npm config set registry https://registry.npmmirror.com
