@@ -1,4 +1,4 @@
-import type { AnnouncementResource } from "./types"
+import type { AnnouncementResource } from './types'
 
 export class Announcement{
 
@@ -7,6 +7,10 @@ export class Announcement{
     }
 
     async getPopular(): Promise<AnnouncementResource[]>{
+        return []
+    }
+
+    async getDataWithClauses(): Promise<AnnouncementResource[]>{
         return []
     }
 

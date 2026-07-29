@@ -8,12 +8,12 @@ import avatar_male_svg from '@/assets/images/avatar_male.svg'
 import turkey_png from '@/assets/images/turkey.png'
 
 export const images = {
-  'announcement_1.png': announcement_1_png,
-  'announcement_2.png': announcement_2_png,
-  'announcement_3.png': announcement_3_png,
-  'announcement_4.png': announcement_4_png,
-  'avatar_female.svg': avatar_female_svg,
-  'avatar_group.svg': avatar_group_svg,
-  'avatar_male.svg': avatar_male_svg,
-  'turkey.png': turkey_png,
+    'announcement_1.png': announcement_1_png,
+    'announcement_2.png': announcement_2_png,
+    'announcement_3.png': announcement_3_png,
+    'announcement_4.png': announcement_4_png,
+    'avatar_female.svg': avatar_female_svg,
+    'avatar_group.svg': avatar_group_svg,
+    'avatar_male.svg': avatar_male_svg,
+    'turkey.png': turkey_png
 } as const

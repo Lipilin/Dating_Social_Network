@@ -11,7 +11,7 @@ export interface AnnouncementResource{
 }
 
 export interface InterestResource{
-    id: Number, 
+    id: number, 
     name: string,
     image?: string,
 }
@@ -25,7 +25,7 @@ export interface CategoryWithInterestResource{
 }
 
 export enum GENDER_PREFERENCE{
-    MALE="MALE",
-    FEMALE="FEMALE",
-    ANYBODY="ANYBODY",
+    MALE='MALE',
+    FEMALE='FEMALE',
+    ANYBODY='ANYBODY',
 }

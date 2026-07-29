@@ -1,4 +1,4 @@
-import type { CategoryWithInterestResource } from "./types"
+import type { CategoryWithInterestResource } from './types'
 
 export class Category{
     async getAllCategoriesWithInterests(): Promise<CategoryWithInterestResource[]>{

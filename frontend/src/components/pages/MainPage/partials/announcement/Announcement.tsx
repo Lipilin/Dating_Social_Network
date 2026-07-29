@@ -3,7 +3,7 @@ import { images } from './AnnouncementSlider.images'
 
 export function Announcement(item: AnnouncementResource){
     return (
-        <div key = { item.id } data-tab-content="text" className="slider-wrapper swiper" style={{ display: "block" }}>
+        <div key = { item.id } data-tab-content="text" className="slider-wrapper swiper" style={{ display: 'block' }}>
             <div className="card-list swiper-wrapper">
                 <div className="card swiper-slide">
                     <div className="card__image">

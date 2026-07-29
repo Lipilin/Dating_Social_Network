@@ -11,8 +11,8 @@ interface AnnouncementSliderProps{
 }
 
 export function AnnouncementSlider({ dataProvider }: AnnouncementSliderProps) {
-    const [announcements, setAnnouncements] = useState<AnnouncementResource[]>([])
-    const [loadStatus, setLoadStatus] = useState<LoadStatus>(LoadStatus.LOADING)
+    const [ announcements, setAnnouncements ] = useState<AnnouncementResource[]>([])
+    const [ loadStatus, setLoadStatus ] = useState<LoadStatus>(LoadStatus.LOADING)
     useEffect(()=>{
         async function getAnnouncements(){
             const data: AnnouncementResource[] = await dataProvider.getLast()
@@ -21,19 +21,19 @@ export function AnnouncementSlider({ dataProvider }: AnnouncementSliderProps) {
         }
     }, [])
     return (
-    <section className="announcement">
-        <div className="container">
-            <div className="announcement__top">
-                <AnnouncementHeader />
-                <div className="content">
-                    {(loadStatus == LoadStatus.READY) ? announcements.map((item) => (
-                        <AnnouncementComponent {...item}/>
-                    )) : null}
+        <section className="announcement">
+            <div className="container">
+                <div className="announcement__top">
+                    <AnnouncementHeader />
+                    <div className="content">
+                        {(loadStatus == LoadStatus.READY) ? announcements.map((item) => (
+                            <AnnouncementComponent {...item}/>
+                        )) : null}
                     
+                    </div>
                 </div>
+                <AnnouncementBottom />
             </div>
-            <AnnouncementBottom />
-        </div>
-    </section>
+        </section>
     )
 }

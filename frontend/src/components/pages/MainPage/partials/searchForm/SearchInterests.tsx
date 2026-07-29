@@ -5,20 +5,20 @@ interface SearchInterestsProps{
     categories: CategoryWithInterestResource[]
 }
 
-export function SearchInterests({categories}: SearchInterestsProps){
+export function SearchInterests({ categories }: SearchInterestsProps){
     return (
         <div className="input-data">
-        <input type="text" required={true} id="selected-values-2" />
-        <label className="label" htmlFor="">Цель</label>
-        <img src={selectArrowSvg} alt="" className="arrow-toogle" />
-        <div className="checkbox-list">
-            {categories.map((category) => (
-                <label className="label-list" key={category.id}>
-                    <input type="checkbox" name="interests" value={category.id} />
-                    <span>{category.name}</span>
-                </label>
-            ))}
-        </div>
+            <input type="text" required={true} id="selected-values-2" />
+            <label className="label" htmlFor="">Цель</label>
+            <img src={selectArrowSvg} alt="" className="arrow-toogle" />
+            <div className="checkbox-list">
+                {categories.map((category) => (
+                    <label className="label-list" key={category.id}>
+                        <input type="checkbox" name="interests" value={category.id} />
+                        <span>{category.name}</span>
+                    </label>
+                ))}
+            </div>
         </div>
     )
 }

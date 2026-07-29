@@ -1,27 +1,57 @@
+import React, { useState, useCallback } from 'react'
 import selectArrowSvg from '@/assets/images/select_arrow.svg'
 import { GENDER_PREFERENCE } from '@/utils/api/types'
+import { genderLabels } from '@/config/General'
 
-export function SearchGender(){
+interface SearchGenderProps{
+    genderValue: GENDER_PREFERENCE | null, 
+    setGender: (value: GENDER_PREFERENCE) => void
+}
+
+export function SearchGender({ genderValue, setGender }: SearchGenderProps){
+    const [open, setOpen] = useState(false)
+    const changeHandler = useCallback((e: React.FocusEvent<HTMLDivElement>) => {
+        setOpen(e.currentTarget.contains(e.relatedTarget))
+    }, [])
     return (
         <div className="search__top-item">
-            <div className="input-data">
-            <input type="text" required={true} id="selected-values" />
-            <label className="label" htmlFor="">Я ищу</label>
-            <img src={selectArrowSvg} alt="" className="arrow-toogle" />
-            <div id="checkbox-list" className="checkbox-list">
-                <label className="label-list">
-                    <input type="checkbox" name="search_option" value={GENDER_PREFERENCE.FEMALE} />
-                    <span>Девушку</span>
-                </label>
-                <label className="label-list">
-                    <input type="checkbox" name="search_option" value={GENDER_PREFERENCE.MALE} />
-                    <span>Парня</span>
-                </label>
-                <label className="label-list">
-                    <input type="checkbox" name="search_option" value={GENDER_PREFERENCE.ANYBODY} id="kogo_nibud" />
-                    <span>Кого нибудь</span>
-                </label>
-            </div>
+            <div 
+                className="input-data"
+                onFocus={ (e) => setOpen(true) }
+                onBlur={ changeHandler }
+            >
+                <input 
+                    type="text"
+                    required={true}
+                    id="selected-values" 
+                    value = { genderValue ? genderLabels[genderValue].label : ''}
+                    placeholder=" "
+                />
+                <label className="label" >Я ищу</label>
+                <img src={selectArrowSvg} alt="" className="arrow-toogle"/>
+                { open ? 
+                    <div id="checkbox-list" className="checkbox-list visible bottom" onMouseDown = { (e) => {e.preventDefault()} }>
+                        {Object.values(genderLabels).map((item) => 
+                            {
+                                return (
+                                    <label className="label-list" key = { item.id }>
+                                        <input 
+                                            type="checkbox"
+                                            name="search_option"
+                                            value = { item.value }
+                                            checked = { genderValue == item.value }
+                                            onChange = { (e) => {
+                                                    setGender(item.value)
+                                                }
+                                            }
+                                        />
+                                        <span> { item.label } </span>
+                                    </label>
+                                )
+                            }
+                        )}
+                    </div>
+                : null}
             </div>
         </div>
     )
