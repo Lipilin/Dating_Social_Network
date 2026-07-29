@@ -4,8 +4,8 @@
   "description": "Общие зависимости для backend и frontend",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
-    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix"
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix"
   },
   "repository": {
     "type": "git",

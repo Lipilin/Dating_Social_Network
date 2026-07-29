@@ -12,6 +12,8 @@ export default tseslint.config(
         '*.config.js',
         '*.config.cjs',
         'coverage',
+        'verstka', 
+        '**/assets/**'
     ],
   },
   js.configs.recommended,
