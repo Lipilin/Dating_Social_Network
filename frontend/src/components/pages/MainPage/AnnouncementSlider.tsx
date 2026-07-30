@@ -7,9 +7,29 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
 import 'swiper/css'
 
-interface AnnouncementSliderProps{
+interface AnnouncementSliderProps {
     loadStatus: LoadStatus
     announcements: AnnouncementResource[]
+}
+
+const ANNOUNCEMENT_SWIPER_BREAKPOINTS = {
+    0: {
+        slidesPerView: 1.1,
+        spaceBetween: 10,
+    },
+    480: {
+        slidesPerView: 2,
+        spaceBetween: 10,
+    },
+    768: {
+        slidesPerView: 2,
+    },
+    1024: {
+        slidesPerView: 3,
+    },
+    1370: {
+        slidesPerView: 4,
+    },
 }
 
 export function AnnouncementSlider({ loadStatus, announcements }: AnnouncementSliderProps) {
@@ -22,19 +42,24 @@ export function AnnouncementSlider({ loadStatus, announcements }: AnnouncementSl
                         {
                             (loadStatus == LoadStatus.READY) ? (
                                 <Swiper
-                                spaceBetween = { 50 }
-                                slidesPerView=  { 4 }
-                                modules={ [Navigation] }
-                                navigation={{
-                                    prevEl: '.prev',
-                                    nextEl: '.next',
-                                }}
-                                loop
+                                    className="slider-wrapper swiper"
+                                    wrapperClass="card-list swiper-wrapper"
+                                    data-tab-content="text"
+                                    style={{ display: 'block' }}
+                                    modules={[Navigation]}
+                                    loop
+                                    grabCursor
+                                    spaceBetween={30}
+                                    navigation={{
+                                        prevEl: '.prev',
+                                        nextEl: '.next',
+                                    }}
+                                    breakpoints={ANNOUNCEMENT_SWIPER_BREAKPOINTS}
                                 >
                                     {
                                         announcements.map((item) => (
-                                            <SwiperSlide>
-                                                <AnnouncementComponent  key = { item.id } {...item}/>
+                                            <SwiperSlide key={item.id} className="card">
+                                                <AnnouncementComponent {...item} />
                                             </SwiperSlide>
                                         ))
                                     }

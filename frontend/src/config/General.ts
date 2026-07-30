@@ -17,13 +17,36 @@ export const genderLabels = {
     }
 }
 
-export const API_SETTINGS = {
+interface ApiSettings{
+    API_HOST: string, 
+    DEFAULT_PAGINATION: number, 
+    ENDPOINTS: Record<string, Endpoint>
+}
+
+interface Endpoint{
+    LIST: string
+    CREATE: string
+    UPDATE: string  
+}
+
+export const API_SETTINGS: ApiSettings = {
     API_HOST: 'http://localhost:3000/api', 
     DEFAULT_PAGINATION: 7, 
     ENDPOINTS: {
         ANNOUNCEMENT: {
-            BASE: 'announcement', 
-            LIST: 'list', 
+            LIST: '/announcement/list', 
+            CREATE: '', 
+            UPDATE: ''
+        }, 
+        CATEGORIES: {
+            LIST: '/category/list', 
+            CREATE: '', 
+            UPDATE: ''
+        }, 
+        USER: {
+            LIST: '/user/list', 
+            CREATE: '', 
+            UPDATE: ''
         }
     },
 }

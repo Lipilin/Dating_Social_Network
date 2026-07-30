@@ -3,16 +3,18 @@ import { SearchGender } from './partials/searchForm/SearchGender'
 import { SearchInterests } from './partials/searchForm/SearchInterests'
 import { DefaultInput } from '@/components/ui/inputs/DefaultInput'
 import { LoadStatus } from './types'
-import { GENDER_PREFERENCE } from '@/utils/api/types'
+import { GENDER_PREFERENCE, type CategoryWithInterestResource } from '@/utils/api/types'
 import { DefaultButton } from "@/components/ui/buttons/DefaultButton"
 
 interface SeacrhFormProps{
     setData: (data: any) => void,
     loadStatus: LoadStatus, 
+    categories: CategoryWithInterestResource[]
 }
 
-export function SearchForm({ setData, loadStatus }: SeacrhFormProps) {
+export function SearchForm({ setData, loadStatus, categories }: SeacrhFormProps) {
     const [genderPreference, setGenderPreference] = useState<GENDER_PREFERENCE | null>(null)
+    const [purpose, setPurpose] = useState<CategoryWithInterestResource | null>(null)
     const [departure, setDeparture] = useState('')
     const [destination, setDestination] = useState('')
     const [error, setError] = useState<string>('')
@@ -20,6 +22,7 @@ export function SearchForm({ setData, loadStatus }: SeacrhFormProps) {
         setError('')
         try {
             if(!genderPreference) throw Error('Поле Я ищу нe может быть пустым')
+            if(!purpose) throw Error('Поле Цель не может быть пустым')
             if(departure == '') throw Error('Поле Откуда нe может быть пустым')
             if(destination == '') throw Error('Поле Куда нe может быть пустым')
         } catch (errorObject) {
@@ -27,8 +30,8 @@ export function SearchForm({ setData, loadStatus }: SeacrhFormProps) {
             return
         }
         setData({})
-    }, [genderPreference, departure, destination, setData])
-    useEffect(() => setError(''), [genderPreference, departure, destination])
+    }, [genderPreference, departure, destination, purpose, setData])
+    useEffect(() => setError(''), [genderPreference, departure, destination, purpose])
     return (
         <section className="search">
             <div className="container">
@@ -40,7 +43,7 @@ export function SearchForm({ setData, loadStatus }: SeacrhFormProps) {
                                 setGender={ (value) => setGenderPreference(value) }
                             />
                             <div className="search__top-item">
-                                <SearchInterests categories={[]}/>
+                                <SearchInterests categories={ categories }/>
                             </div>
                             <div className="search__top-item">
                                 <div className="place">

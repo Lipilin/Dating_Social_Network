@@ -1,59 +1,49 @@
-import { useEffect, useState } from 'react'
 import type { CategoryWithInterestResource } from '@/utils/api/types'
-import { LoadStatus } from './types'
-import { Category } from '@/utils/api/Category'
 import { DestinationBlock } from './DestinationBlock'
-import { HrefWithImage } from '@/components/ui/hrefs/HrefWithImage'
-import { default as showCategories } from '@/assets/images/show-announcements.svg'
+import { CategoryBLock } from './partials/interests/CategoryBlock'
 
-interface InterestBlockProps{
-    dataProvider: Category
+interface InterestBlockProps {
+    categories: CategoryWithInterestResource[]
 }
 
-export function InterestBlock({ dataProvider }: InterestBlockProps) {
-    const [ categories, setCategories ] = useState<CategoryWithInterestResource[]>([])
-    const [ loadStatus, setLoadStatus ] = useState<LoadStatus>(LoadStatus.LOADING)
-    useEffect(() => {
-        async function getCategories(){
-            const data: CategoryWithInterestResource[] = await dataProvider.getAllCategoriesWithInterests()
-            setCategories(data)
-            setLoadStatus(LoadStatus.READY)
-        }
-        getCategories()
-    }, [])
+function chunkItems<T>(items: T[], size: number): T[][] {
+    const rows: T[][] = []
+
+    for (let index = 0; index < items.length; index += size) {
+        rows.push(items.slice(index, index + size))
+    }
+
+    return rows
+}
+
+export function InterestBlock({ categories }: InterestBlockProps) {
+    const interestCategories = categories.filter((category) => !category.isCountry)
+
+    if (interestCategories.length === 0) {
+        return null
+    }
+
     return (
         <>
-            {loadStatus === LoadStatus.READY ? (
-                <>
-                    <div className="friends__content">
-                        <h3>Друзья по интересам</h3>
-                        {categories.filter((category) => category.isCountry == false).map((category) => (
-                            <div className="friends__interests" key = {category.id}>
-                                <div className="friends__interests-row">
-                                    <div className="friends__interests-item">
-                                        <h4>
-                                            <img src={ category.image } alt={category.name} />
-                                            { category.name }
-                                        </h4>
-                                        {category.interests.map((interest) => (
-                                            <div className="friends__actions" key = {category.id}>
-                                                <a href="#">{ interest.name }</a>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                        <HrefWithImage 
-                            classNames="friends__others"
-                            link="/interests"
-                            content="Показать все интересы"
-                            image = { showCategories }
-                        />
-                    </div>
-                    <DestinationBlock categories={ categories }/>
-                </>
-            ) : null}
+            <div className="friends__content">
+                <h3>Друзья по интересам</h3>
+                <div className="friends__interests">
+                    {chunkItems(interestCategories, 2).map((row, rowIndex) => (
+                        <div className="friends__interests-row" key={rowIndex}>
+                            {row.map((category) => (
+                                <CategoryBLock key={category.id} category={category} />
+                            ))}
+                        </div>
+                    ))}
+                </div>
+                <a href="/interests" className="friends__others">
+                    Показать все интересы
+                    <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
+                        <path d="M1 14.5L7.5 8L1 1.5" stroke="#0041F2" strokeWidth="2" />
+                    </svg>
+                </a>
+            </div>
+            <DestinationBlock categories={categories} />
         </>
     )
 }

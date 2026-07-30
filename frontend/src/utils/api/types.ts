@@ -10,6 +10,10 @@ export interface AnnouncementResource{
     departure: string, 
 }
 
+export interface Request{
+    pagination: number
+}
+
 export interface InterestResource{
     id: number, 
     name: string,
@@ -20,12 +24,15 @@ export interface CategoryWithInterestResource{
     id: string,
     name: string, 
     image: string, 
+    isCountry: boolean, 
     interests: InterestResource[],
-    isCountry: boolean
 }
 
-export interface AnnouncementRequest{
-    pagination: number, 
+export interface CategoryRequest extends Request{
+    
+}
+
+export interface AnnouncementRequest extends Request{
     genderPreference?: GENDER_PREFERENCE, 
     destination?: string
     departure?: string

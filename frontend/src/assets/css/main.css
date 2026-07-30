@@ -3370,6 +3370,7 @@ img.mfp-img {
 }
 .announcement__top .content .card__info .profile-badge {
   display: flex;
+  align-items: center;
   border-radius: 8px;
   background: #FFF;
   box-shadow: 0px 0px 40px 0px rgba(94, 92, 154, 0.06);
@@ -3380,7 +3381,7 @@ img.mfp-img {
 }
 .announcement__top .content .card__info .profile-badge .avatars {
   display: flex;
-  gap: -5px;
+  flex-shrink: 0;
 }
 .announcement__top .content .card__info .profile-badge .avatars .avatar {
   width: 19px;
@@ -3397,6 +3398,7 @@ img.mfp-img {
   justify-content: center;
 }
 .announcement__top .content .card__info .profile-badge .avatars .avatar img {
+  display: block;
   width: 15px;
   height: 15px;
 }
