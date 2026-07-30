@@ -12,18 +12,13 @@ export class AnnouncementController{
     async getLastAnnouncements(request: Request, response: Response){
         const pagination = Number(request?.query?.pagination)
         if(!pagination){
-            response.status(API_RESPONSE.BAD_REQUEST)
-            await response.json([])
-            return
+            return response.status(API_RESPONSE.BAD_REQUEST).json([])
         }
         try{
             const entites = await this.#annoucementProvider.getAnnouncements(pagination)
-            response.status(API_RESPONSE.OK)
-            await response.json(entites)
+            response.status(API_RESPONSE.OK).json(entites)
         }catch(error){
-            response.status(API_RESPONSE.ERROR)
-            await response.json([])
+            response.status(API_RESPONSE.ERROR).json([])
         }
     }
-
 }

@@ -6,4 +6,4 @@ import { CategoryService } from '@/services/CategoryService.js'
 const categorySerivce = new CategoryService()
 const categoryController = new CategoryController(categorySerivce)
 export const router = Router()
-router.use('/list', categoryController.listCategories.bind(categoryController))
+router.get('/list', categoryController.listCategories.bind(categoryController))
