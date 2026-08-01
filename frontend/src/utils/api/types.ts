@@ -8,6 +8,7 @@ export interface AnnouncementResource{
     dateTo: string, 
     destination: string, 
     departure: string, 
+    user: UserResource
 }
 
 export interface Request{

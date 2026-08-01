@@ -11,7 +11,10 @@ export class AnnouncementService{
             where: {
                 status: UserContentStatus.PUBLISHED
             },
-            take: pagination
+            include: {
+                user: true,
+            }, 
+            take: pagination, 
         })
         return response
     }

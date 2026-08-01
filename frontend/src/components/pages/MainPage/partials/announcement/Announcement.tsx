@@ -7,14 +7,14 @@ export function Announcement(item: AnnouncementResource) {
     return (
         <>
             <div className="card__image">
-                <img src={images['announcement_1.png']} alt={item.title} />
+                <img src={images['announcement_1.png']} alt={ item.user.avatar } />
             </div>
             <div className="card__info">
                 <div className="card__info-top">
                     <div className="card__item">
-                        <h3>{item.title}</h3>
+                        <h3>{item.user.name} {item.user.surname}</h3>
                     </div>
-                    <small>{item.userAge} года</small>
+                    <small>{ 22 } года</small>
                     <AnnouncementGenderBLock gender={item.genderInterest} />
                     <p className="limited-text">
                         {item.description}
@@ -39,7 +39,7 @@ export function Announcement(item: AnnouncementResource) {
                         </a>
                     </h4>
                     <h5>
-                        с {item.dateFrom} по {item.dateTo}
+                        с { new Date(item.dateFrom).toLocaleDateString('ru-RU') } по { new Date(item.dateTo).toLocaleDateString('ru-RU') }
                     </h5>
                 </div>
             </div>
