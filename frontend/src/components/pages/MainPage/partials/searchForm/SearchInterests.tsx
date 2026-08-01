@@ -1,24 +1,33 @@
-import selectArrowSvg from '@/assets/images/select_arrow.svg'
 import type { CategoryWithInterestResource } from '@/utils/api/types'
+import { DefaultDropdown, type Label } from '@/components/ui/dropdowns/DefaultDropdown'
+import { useMemo } from 'react'
 
 interface SearchInterestsProps{
+    value: CategoryWithInterestResource | null, 
+    setValue: (value: CategoryWithInterestResource) => void,
     categories: CategoryWithInterestResource[]
 }
 
-export function SearchInterests({ categories }: SearchInterestsProps){
+function categoriesToLabels(categories: CategoryWithInterestResource[]){
+    return categories.map((category) => {
+        return {
+            label: category.name,
+            value: category,  
+            id: category.id, 
+        }
+    })
+}
+
+export function SearchInterests({ value, setValue, categories }: SearchInterestsProps){
+    const labels = useMemo(() => categoriesToLabels(categories), [categories])
     return (
-        <div className="input-data">
-            <input type="text" required={true} id="selected-values-2" />
-            <label className="label" htmlFor="">Цель</label>
-            <img src={selectArrowSvg} alt="" className="arrow-toogle" />
-            <div className="checkbox-list">
-                {categories.map((category) => (
-                    <label className="label-list" key={category.id}>
-                        <input type="checkbox" name="interests" value={category.id} />
-                        <span>{category.name}</span>
-                    </label>
-                ))}
-            </div>
-        </div>
+        <>
+        <DefaultDropdown
+            value={ value }
+            setValue={ setValue }
+            labels = { labels }
+            placeholder="Цель"
+        />
+        </>
     )
 }

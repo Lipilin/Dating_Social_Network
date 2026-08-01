@@ -42,9 +42,7 @@ export function SearchForm({ setData, loadStatus, categories }: SeacrhFormProps)
                                 genderValue={genderPreference}
                                 setGender={ (value) => setGenderPreference(value) }
                             />
-                            <div className="search__top-item">
-                                <SearchInterests categories={ categories }/>
-                            </div>
+                            <SearchInterests value={ purpose } setValue={ setPurpose } categories={ categories }/>
                             <div className="search__top-item">
                                 <div className="place">
                                     <DefaultInput 
