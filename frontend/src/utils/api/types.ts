@@ -43,3 +43,20 @@ export enum GENDER_PREFERENCE{
     FEMALE='FEMALE',
     ANYBODY='ANYBODY',
 }
+
+export interface Post{
+
+}
+
+export interface UserResource{
+    id: string, 
+    email: string, 
+    name: string,
+    surname: string, 
+    description: string,
+    avatar?: string, 
+    banner?: string, 
+    announcements: AnnouncementResource[],
+    posts: Post[], 
+    lastSeen: string,
+}

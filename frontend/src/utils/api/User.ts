@@ -1,3 +1,5 @@
+import type { UserResource } from './types'
+
 export class User{
     async getInfo(){
 
@@ -9,5 +11,9 @@ export class User{
 
     async updateRefreshToken(){
 
+    }
+
+    async getProfile(): Promise<UserResource | null>{
+        return null
     }
 }
