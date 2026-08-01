@@ -14,7 +14,7 @@ export function Announcement(item: AnnouncementResource) {
                     <div className="card__item">
                         <h3>{item.user.name} {item.user.surname}</h3>
                     </div>
-                    <small>{ 22 } года</small>
+                    <small>{ item.user.age } года</small>
                     <AnnouncementGenderBLock gender={item.genderInterest} />
                     <p className="limited-text">
                         {item.description}

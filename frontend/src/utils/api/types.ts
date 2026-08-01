@@ -60,4 +60,5 @@ export interface UserResource{
     announcements: AnnouncementResource[],
     posts: Post[], 
     lastSeen: string,
+    age: number,
 }

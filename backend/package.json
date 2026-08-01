@@ -11,7 +11,8 @@
     "build": "tsc"
   },
   "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts", 
+    "clear": "tsx prisma/clear.ts"
   },
   "dependencies": {
     "@adminjs/express": "^6.1.0",

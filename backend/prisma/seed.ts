@@ -1,20 +1,26 @@
 import { PrismaClient, GenderPreference, UserContentStatus } from '@prisma/client'
-import { faker } from '@faker-js/faker'
+import { faker } from '@faker-js/faker/locale/ru'   // ← русская локаль
 import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
 
+// Категории уже на русском (одна помечена как страна)
 const CATEGORIES = [
-  { name: 'Спорт' },
-  { name: 'Путешествия' },
-  { name: 'Искусство' },
-  { name: 'Технологии' },
-  { name: 'Кулинария' },
+  { name: 'Спорт', isCountry: false },
+  { name: 'Путешествия', isCountry: true }, // только одна
+  { name: 'Искусство', isCountry: false },
+  { name: 'Технологии', isCountry: false },
+  { name: 'Кулинария', isCountry: false },
 ]
 
+// Интересы на русском
 const INTERESTS_BY_CATEGORY: Record<string, string[]> = {
   Спорт: ['Футбол', 'Баскетбол', 'Теннис', 'Плавание'],
-  Путешествия: ['Автостоп', 'Походы', 'Велотуризм', 'Пляжный отдых'],
+  Путешествия: [
+    'США', 'Турция', 'Италия', 'Франция', 'Испания',
+    'Германия', 'Великобритания', 'Греция', 'Египет', 'Таиланд',
+    'ОАЭ', 'Мексика', 'Бразилия', 'Австралия', 'Япония'
+  ],
   Искусство: ['Музыка', 'Живопись', 'Театр', 'Фотография'],
   Технологии: ['Программирование', 'Робототехника', 'Искусственный интеллект', 'Кибербезопасность'],
   Кулинария: ['Азиатская кухня', 'Итальянская кухня', 'Выпечка', 'Вегетарианство'],
@@ -23,26 +29,24 @@ const INTERESTS_BY_CATEGORY: Record<string, string[]> = {
 const GENDERS = [GenderPreference.MALE, GenderPreference.FEMALE, GenderPreference.ANYBODY]
 
 async function seed() {
-  console.log('🌱 Начало заполнения базы...')
+  console.log('🌱 Начинаем заполнение базы данных...')
 
-  // 1. Очистка таблиц (в порядке зависимостей)
+  // Очистка
   console.log('🧹 Очистка старых данных...')
   await prisma.announcement.deleteMany()
   await prisma.interest.deleteMany()
   await prisma.category.deleteMany()
   await prisma.user.deleteMany()
 
-  // 2. Создание категорий и интересов
+  // Создание категорий и интересов
   console.log('📂 Создание категорий и интересов...')
-  const createdCategories: Record<string, any> = {}
-
   for (const cat of CATEGORIES) {
     const category = await prisma.category.create({
       data: {
         name: cat.name,
+        isCountry: cat.isCountry,
       },
     })
-    createdCategories[cat.name] = category
 
     const interestNames = INTERESTS_BY_CATEGORY[cat.name] || []
     for (const interestName of interestNames) {
@@ -55,11 +59,10 @@ async function seed() {
     }
   }
 
-  // 3. Получение всех интересов для дальнейшего использования
   const allInterests = await prisma.interest.findMany()
-  console.log(`✅ Создано ${allInterests.length} интересов`)
+  console.log(`✅ Создано интересов: ${allInterests.length}`)
 
-  // 4. Создание пользователей
+  // Создание пользователей (все данные на русском)
   console.log('👤 Создание пользователей...')
   const users = []
   const userCount = 10
@@ -73,7 +76,8 @@ async function seed() {
       data: {
         email,
         password,
-        name: `${firstName} ${lastName}`,
+        age: faker.number.int({ min: 18, max: 99 }),
+        name: firstName,
         surname: lastName,
         description: faker.lorem.sentence({ min: 5, max: 15 }),
         status: faker.helpers.arrayElement(['NEW', 'REGISTERED', 'PENDING_APPROVEMENT', 'BANNED']),
@@ -91,27 +95,20 @@ async function seed() {
     })
     users.push(user)
   }
-  console.log(`✅ Создано ${users.length} пользователей`)
+  console.log(`✅ Создано пользователей: ${users.length}`)
 
-  // 5. Создание объявлений
+  // Создание объявлений (всё на русском)
   console.log('📢 Создание объявлений...')
   const announcementCount = 50
   const createdAnnouncements = []
 
   for (let i = 0; i < announcementCount; i++) {
-    // Случайный пользователь
     const user = faker.helpers.arrayElement(users)
-
-    // Случайные интересы (от 1 до 3)
     const selectedInterests = faker.helpers.arrayElements(allInterests, faker.number.int({ min: 1, max: 3 }))
 
-    // Случайные даты (dateFrom и dateTo могут быть в прошлом, настоящем или будущем)
     const dateFrom = faker.date.between({ from: '2023-01-01', to: '2025-12-31' })
     const dateTo = faker.date.between({ from: dateFrom, to: '2026-01-01' })
 
-    const genderInterest = faker.helpers.arrayElement(GENDERS)
-
-    // Случайный статус: чаще PUBLISHED
     const status = faker.helpers.arrayElement([
       UserContentStatus.PUBLISHED,
       UserContentStatus.PUBLISHED,
@@ -128,7 +125,7 @@ async function seed() {
         dateTo,
         departure: faker.location.city(),
         destination: faker.location.city(),
-        genderInterest,
+        genderInterest: faker.helpers.arrayElement(GENDERS),
         status,
         userId: user.id,
         interests: {
@@ -139,9 +136,8 @@ async function seed() {
     createdAnnouncements.push(announcement)
   }
 
-  console.log(`✅ Создано ${createdAnnouncements.length} объявлений`)
-
-  console.log('🎉 Сиды успешно применены!')
+  console.log(`✅ Создано объявлений: ${createdAnnouncements.length}`)
+  console.log('🎉 Сиды успешно применены поздравляем!')
 }
 
 seed()
