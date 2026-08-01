@@ -1,4 +1,5 @@
 import type { CategoryWithInterestResource } from '@/utils/api/types'
+import { ROUTES } from '@/config/General'
 
 interface CategoryBlockProps {
     category: CategoryWithInterestResource
@@ -13,7 +14,7 @@ export function CategoryBLock({ category }: CategoryBlockProps) {
             </h4>
             <div className="friends__actions">
                 {category.interests.map((interest) => (
-                    <a href="#" key={interest.id}>{interest.name}</a>
+                    <a href={ROUTES.INTEREST.URL} key={interest.id}>{interest.name}</a>
                 ))}
             </div>
         </div>

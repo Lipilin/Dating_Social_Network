@@ -1,4 +1,5 @@
 import { images } from '../Header.images'
+import { ROUTES } from '@/config/General'
 
 export function HeaderMessages() {
   return (
@@ -7,7 +8,7 @@ export function HeaderMessages() {
                       <div className="card-wrapper">
                           <div className="cards">
                               <div className="card">
-                                  <a href="#" className="img">
+                                  <a href={ROUTES.PROFILE.URL} className="img">
                                       <img src={images["account_img.png"]} alt="User Avatar" className="avatar" />
                                       <div className="badge">
                                           9
@@ -16,7 +17,7 @@ export function HeaderMessages() {
                                   <div className="info">
                                       <div className="info-item">
                                           <h3>
-                                              <a href="#">Олеся Смирнова</a>
+                                              <a href={ROUTES.PROFILE.URL}>Олеся Смирнова</a>
                                           </h3>
                                           <p>Товарищи! Дальнейшее развитие различных форм деятельности играет важную роль в
                                               формировании соответствующий условий ...</p>
@@ -28,7 +29,7 @@ export function HeaderMessages() {
                                   </div>
                               </div>
                               <div className="card">
-                                  <a href="#" className="img">
+                                  <a href={ROUTES.PROFILE.URL} className="img">
                                       <img src={images["account_img.png"]} alt="User Avatar" className="avatar" />
                                       <div className="badge">
                                           9
@@ -37,7 +38,7 @@ export function HeaderMessages() {
                                   <div className="info">
                                       <div className="info-item">
                                           <h3>
-                                              <a href="#">Олеся Смирнова</a>
+                                              <a href={ROUTES.PROFILE.URL}>Олеся Смирнова</a>
                                           </h3>
                                           <p>Товарищи! Дальнейшее развитие различных форм деятельности играет важную роль в
                                               формировании соответствующий условий ...</p>
@@ -49,7 +50,7 @@ export function HeaderMessages() {
                                   </div>
                               </div>
                               <div className="card">
-                                  <a href="#" className="img">
+                                  <a href={ROUTES.PROFILE.URL} className="img">
                                       <img src={images["account_img.png"]} alt="User Avatar" className="avatar" />
                                       <div className="badge">
                                           9
@@ -58,7 +59,7 @@ export function HeaderMessages() {
                                   <div className="info">
                                       <div className="info-item">
                                           <h3>
-                                              <a href="#">Олеся Смирнова</a>
+                                              <a href={ROUTES.PROFILE.URL}>Олеся Смирнова</a>
                                           </h3>
                                           <p>Товарищи! Дальнейшее развитие различных форм деятельности играет важную роль в
                                               формировании соответствующий условий ...</p>

@@ -1,4 +1,5 @@
 import { images } from '../Header.images'
+import { ROUTES } from '@/config/General'
 
 export function HeaderLeft() {
   return (
@@ -12,13 +13,13 @@ export function HeaderLeft() {
                               </path>
                           </svg>
                       </a>
-                      <a href="#" className="header__logo"><img src={images["header_logo.svg"]} alt="" /></a>
+                      <a href={ROUTES.HOME.URL} className="header__logo"><img src={images["header_logo.svg"]} alt="" /></a>
                       <form className="header__search">
                           <input type="text" placeholder="Поиск" />
                           <button type="button"><img src={images["header_search.svg"]} alt="" /></button>
                       </form>
                       <ul>
-                          <li><a href="#">Объявления</a></li>
+                          <li><a href={ROUTES.ANNOUNCEMENT.URL}>Объявления</a></li>
                       </ul>
                   </div>
     </>

@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router'
-import { MainPage } from '@/components/pages/MainPage'
+import { ROUTES } from '@/config/General'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 
@@ -10,11 +10,9 @@ function App() {
             <div className="main__sections">
                 <main className="main">
                     <Routes>
-                        <Route path="/" element={<MainPage />} />
-                        <Route path="/instruction" element={<></>} />
-                        <Route path="/announcements" element={<></>} />
-                        <Route path="/destinations" element={<></>} />
-                        <Route path="/interests" element={<></>} />
+                        {Object.values(ROUTES).map(({ URL, COMPONENT: Component }) => (
+                            <Route key={URL} path={URL} element={<Component />} />
+                        ))}
                     </Routes>
                     <Footer />
                 </main>

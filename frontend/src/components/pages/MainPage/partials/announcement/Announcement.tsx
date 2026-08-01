@@ -1,6 +1,7 @@
 import type { AnnouncementResource } from '@/utils/api/types'
 import { images } from './AnnouncementSlider.images'
 import { AnnouncementGenderBLock } from './AnnouncementGenderBlock'
+import { ROUTES } from '@/config/General'
 
 export function Announcement(item: AnnouncementResource) {
     return (
@@ -22,7 +23,7 @@ export function Announcement(item: AnnouncementResource) {
                 </div>
                 <div className="card__info-bottom">
                     <h4>
-                        <a href="#" className="city">
+                        <a href={ROUTES.DESTINATION.URL} className="city">
                             {item.departure}
                         </a>
                         <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,7 +34,7 @@ export function Announcement(item: AnnouncementResource) {
                                 strokeWidth="1.80724"
                             />
                         </svg>
-                        <a href="#" className="city">
+                        <a href={ROUTES.DESTINATION.URL} className="city">
                             {item.destination}
                         </a>
                     </h4>

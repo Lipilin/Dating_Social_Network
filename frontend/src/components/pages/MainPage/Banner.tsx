@@ -1,3 +1,5 @@
+import { ROUTES } from '@/config/General'
+
 export function Banner() {
     return (
         <section className="hero">
@@ -13,7 +15,7 @@ export function Banner() {
                         <div className="hero__card-name">
                             Найти собеседника на карте
                         </div>
-                        <a href="#">Поиск на карте</a>
+                        <a href={ROUTES.DESTINATION.URL}>Поиск на карте</a>
                     </div>
                 </div>
             </div>

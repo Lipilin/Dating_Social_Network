@@ -1,4 +1,5 @@
 import { images } from '../Header.images'
+import { ROUTES } from '@/config/General'
 
 export function HeaderNotifications() {
   return (
@@ -11,7 +12,7 @@ export function HeaderNotifications() {
                       <div className="cards-wrapper">
                           <div className="cards">
                               <div className="card">
-                                  <a href="#" className="img">
+                                  <a href={ROUTES.PROFILE.URL} className="img">
                                       <img src={images["forum_1.png"]} alt="User Avatar" className="avatar" />
                                       <div className="badge">
                                           9
@@ -20,14 +21,14 @@ export function HeaderNotifications() {
                                   <div className="info">
                                       <div className="info-item">
                                           <h3>
-                                              <a href="#">Олеся Смирнова,</a> отправила вам заявку в друзья
+                                              <a href={ROUTES.PROFILE.URL}>Олеся Смирнова,</a> отправила вам заявку в друзья
                                           </h3>
                                           <p>7 минуты назад</p>
                                       </div>
                                   </div>
                               </div>
                               <div className="card">
-                                  <a href="#" className="img">
+                                  <a href={ROUTES.PROFILE.URL} className="img">
                                       <img src={images["forum_2.png"]} alt="User Avatar" className="avatar" />
                                       <div className="badge">
                                           9
@@ -36,14 +37,14 @@ export function HeaderNotifications() {
                                   <div className="info">
                                       <div className="info-item">
                                           <h3>
-                                              <a href="#">Олеся Смирнова,</a> отправила вам заявку в друзья
+                                              <a href={ROUTES.PROFILE.URL}>Олеся Смирнова,</a> отправила вам заявку в друзья
                                           </h3>
                                           <p>7 минуты назад</p>
                                       </div>
                                   </div>
                               </div>
                               <div className="card">
-                                  <a href="#" className="img">
+                                  <a href={ROUTES.PROFILE.URL} className="img">
                                       <img src={images["forum_2.png"]} alt="User Avatar" className="avatar" />
                                       <div className="badge">
                                           9
@@ -52,14 +53,14 @@ export function HeaderNotifications() {
                                   <div className="info">
                                       <div className="info-item">
                                           <h3>
-                                              <a href="#">Олеся Смирнова,</a> отправила вам заявку в друзья
+                                              <a href={ROUTES.PROFILE.URL}>Олеся Смирнова,</a> отправила вам заявку в друзья
                                           </h3>
                                           <p>7 минуты назад</p>
                                       </div>
                                   </div>
                               </div>
                               <div className="card">
-                                  <a href="#" className="img">
+                                  <a href={ROUTES.PROFILE.URL} className="img">
                                       <img src={images["forum_1.png"]} alt="User Avatar" className="avatar" />
                                       <div className="badge">
                                           9
@@ -68,7 +69,7 @@ export function HeaderNotifications() {
                                   <div className="info">
                                       <div className="info-item">
                                           <h3>
-                                              <a href="#">Олеся Смирнова,</a> отправила вам заявку в друзья
+                                              <a href={ROUTES.PROFILE.URL}>Олеся Смирнова,</a> отправила вам заявку в друзья
                                           </h3>
                                           <p>7 минуты назад</p>
                                       </div>
