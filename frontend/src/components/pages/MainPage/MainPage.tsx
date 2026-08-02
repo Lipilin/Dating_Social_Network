@@ -12,6 +12,7 @@ import type { AnnouncementResource } from '@/utils/api/types'
 import { LoadStatus } from './types'
 import { API_SETTINGS } from '@/config/General'
 import type { CategoryWithInterestResource } from '@/utils/api/types'
+import type { SearchFormRequest } from '@/utils/api/types'
 
 const announcement = new Announcement()
 const category = new Category()
@@ -43,7 +44,7 @@ export function MainPage() {
         getCategories()
     }, [])
 
-    const setData = useCallback(async (_data: unknown) => {
+    const setData = useCallback(async (data: SearchFormRequest) => {
         setLoadStatus(LoadStatus.LOADING)
         const response: AnnouncementResource[] = await announcement.getDataWithClauses({
             pagination: API_SETTINGS.DEFAULT_PAGINATION

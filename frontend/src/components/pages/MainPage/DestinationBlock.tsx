@@ -20,7 +20,7 @@ export function DestinationBlock({ categories }: DestinationBlockProps) {
                         <div className="countries">
                             {destinationCategory.interests.slice(0, MAX_DESTINATION_ITEMS).map((category) => (
                                 <a href={ROUTES.DESTINATION.URL} className="country__item" key={category.id}>
-                                    <img src={category.image || ""}/>
+                                    <img src={category.image || "test.svg"}/>
                                     {category.name}
                                 </a>
                             ))}

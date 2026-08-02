@@ -5,9 +5,10 @@ import { DefaultInput } from '@/components/ui/inputs/DefaultInput'
 import { LoadStatus } from './types'
 import { GENDER_PREFERENCE, type CategoryWithInterestResource } from '@/utils/api/types'
 import { DefaultButton } from "@/components/ui/buttons/DefaultButton"
+import type { SearchFormRequest } from '@/utils/api/types'
 
 interface SeacrhFormProps{
-    setData: (data: any) => void,
+    setData: (data: SearchFormRequest) => void,
     loadStatus: LoadStatus, 
     categories: CategoryWithInterestResource[]
 }
@@ -29,7 +30,12 @@ export function SearchForm({ setData, loadStatus, categories }: SeacrhFormProps)
             setError((errorObject as Error).message)
             return
         }
-        setData({})
+        setData({
+            gender: genderPreference,
+            purpose: purpose,
+            departure: departure,
+            destination: destination,
+        })
     }, [genderPreference, departure, destination, purpose, setData])
     useEffect(() => setError(''), [genderPreference, departure, destination, purpose])
     return (

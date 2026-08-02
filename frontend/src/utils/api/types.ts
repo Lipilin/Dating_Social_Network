@@ -62,3 +62,10 @@ export interface UserResource{
     lastSeen: string,
     age: number,
 }
+
+export interface SearchFormRequest{
+    gender: GENDER_PREFERENCE,
+    purpose: CategoryWithInterestResource,
+    departure: string,
+    destination: string
+}
