@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react'
-import '@/assets/css/main.css'
 import {
     SearchForm,
     InterestBlock,

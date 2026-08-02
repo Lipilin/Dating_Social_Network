@@ -1,14 +1,22 @@
 interface DefaultInputProps{
-    label?: string,
-    value: string, 
+    label?: string
+    value: string
     setValue: (value: string) => void
+    type?: 'text' | 'email' | 'password'
+    id?: string
 }
 
-export function DefaultInput({ label, value, setValue }: DefaultInputProps){
+export function DefaultInput({ label, value, setValue, id = 'default-input', type = 'text' }: DefaultInputProps){
     return (
         <>
-            <input type="text" placeholder=" " value = { value } onChange = { (e) => setValue(e.target.value) }/>
-            <label className="label">
+            <input 
+                type = { type } 
+                placeholder = " " 
+                value = { value } 
+                onChange = { (e) => setValue(e.target.value) }
+                id = { id }
+            />
+            <label className="label" htmlFor = { id }  >
                 { label }
             </label>
         </>

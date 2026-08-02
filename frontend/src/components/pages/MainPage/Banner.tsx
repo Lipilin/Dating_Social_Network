@@ -9,7 +9,7 @@ export function Banner() {
                         <div className="hero__card-name">
                         Отдыхайте и общайтесь вместе
                         </div>
-                        <button className="hero__card-btn" id="openAuth">Пройти регистрацию</button>
+                        <button className="hero__card-btn" id="openAuth" onClick = { (e) => null }>Пройти регистрацию</button>
                     </div>
                     <div className="hero__card small">
                         <div className="hero__card-name">

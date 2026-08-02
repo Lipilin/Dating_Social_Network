@@ -63,4 +63,7 @@ export interface UserResource{
     posts: Post[], 
     lastSeen: string,
     age: number,
+    city: string, 
+    createdAt: Date,
+    updatedAt: Date,
 }

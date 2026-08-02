@@ -4,14 +4,22 @@ import { HeaderUserPanel } from './partials/HeaderUserPanel'
 import { HeaderMessages } from './partials/HeaderMessages'
 import { HeaderNotifications } from './partials/HeaderNotifications'
 
-export function Header() {
-  return (
-    <header className="header">
-      <HeaderLeft />
-      <HeaderGuestActions />
-      <HeaderUserPanel />
-      <HeaderMessages />
-      <HeaderNotifications />
-    </header>
-  )
+interface HeaderProps {
+    onOpenAuth?: () => void
+    onOpenRegistration?: () => void
+}
+
+export function Header({ onOpenAuth, onOpenRegistration }: HeaderProps) {
+    return (
+        <header className="header">
+            <HeaderLeft />
+            <HeaderGuestActions
+                onOpenAuth={onOpenAuth}
+                onOpenRegistration={onOpenRegistration}
+            />
+            <HeaderUserPanel />
+            <HeaderMessages />
+            <HeaderNotifications />
+        </header>
+    )
 }
