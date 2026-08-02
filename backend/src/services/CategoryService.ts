@@ -2,13 +2,14 @@ import { prisma } from '@/prisma.js'
 
 export class CategoryService{
 
-    async getCategories(pagination: number){
+    async getCategories(take: number, skip: number){
         const categories = await prisma.category.findMany(
             { 
                 include:{
                     interests: true
                 }, 
-                take: pagination
+                take: take, 
+                skip: skip
             }
         )
         return categories

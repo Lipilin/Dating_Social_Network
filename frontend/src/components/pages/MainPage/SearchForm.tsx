@@ -3,41 +3,32 @@ import { SearchGender } from './partials/searchForm/SearchGender'
 import { SearchInterests } from './partials/searchForm/SearchInterests'
 import { DefaultInput } from '@/components/ui/inputs/DefaultInput'
 import { LoadStatus } from './types'
-import { GENDER_PREFERENCE, type CategoryWithInterestResource } from '@/utils/api/types'
+import { GENDER_PREFERENCE, type CategoryWithInterestResource, type InterestResource } from '@/utils/api/types'
 import { DefaultButton } from "@/components/ui/buttons/DefaultButton"
-import type { SearchFormRequest } from '@/utils/api/types'
+import type { AnnouncementRequest } from '@/utils/api/types'
+import { API_SETTINGS } from '@/config/General'
 
 interface SeacrhFormProps{
-    setData: (data: SearchFormRequest) => void,
+    setData: (data: AnnouncementRequest) => void,
     loadStatus: LoadStatus, 
     categories: CategoryWithInterestResource[]
 }
 
 export function SearchForm({ setData, loadStatus, categories }: SeacrhFormProps) {
     const [genderPreference, setGenderPreference] = useState<GENDER_PREFERENCE | null>(null)
-    const [purpose, setPurpose] = useState<CategoryWithInterestResource | null>(null)
+    const [purpose, setPurpose] = useState<InterestResource | null>(null)
     const [departure, setDeparture] = useState('')
     const [destination, setDestination] = useState('')
-    const [error, setError] = useState<string>('')
     const find = useCallback(async () => {
-        setError('')
-        try {
-            if(!genderPreference) throw Error('Поле Я ищу нe может быть пустым')
-            if(!purpose) throw Error('Поле Цель не может быть пустым')
-            if(departure == '') throw Error('Поле Откуда нe может быть пустым')
-            if(destination == '') throw Error('Поле Куда нe может быть пустым')
-        } catch (errorObject) {
-            setError((errorObject as Error).message)
-            return
-        }
         setData({
             gender: genderPreference,
-            purpose: purpose,
+            purpose: purpose ? [purpose] : [],
             departure: departure,
             destination: destination,
+            take: API_SETTINGS.DEFAULT_PAGINATION, 
+            skip: 0
         })
     }, [genderPreference, departure, destination, purpose, setData])
-    useEffect(() => setError(''), [genderPreference, departure, destination, purpose])
     return (
         <section className="search">
             <div className="container">
@@ -72,11 +63,6 @@ export function SearchForm({ setData, loadStatus, categories }: SeacrhFormProps)
                                 </div>
                             </div>
                         </div>
-                        { error ? (
-                            <span className='text-red-600 text-sm mt-1 block'>
-                                {error}
-                            </span>
-                        ) : null }
                         <div className="search__bottom">
                             <div className="search__bottom-right">
                                 <DefaultButton 

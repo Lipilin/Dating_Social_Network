@@ -1,6 +1,8 @@
 import { AnnouncementService } from "@/services/AnnouncementService.js"
 import type { Request, Response } from "express"
 import { API_RESPONSE } from "@/types.js"
+import { Prisma } from "@prisma/client"
+import { GenderPreference } from "@prisma/client"
 
 export class AnnouncementController{
     #annoucementProvider: AnnouncementService 
@@ -10,12 +12,31 @@ export class AnnouncementController{
     }
 
     async getLastAnnouncements(request: Request, response: Response){
-        const pagination = Number(request?.query?.pagination)
-        if(!pagination){
+        const take = Number(request?.query?.take)
+        const skip = Number(request?.query?.skip) || 0
+        const { gender, destination, departure, purpose } = request?.query
+        const clauses: Prisma.AnnouncementWhereInput = {}
+        const interestsId: string[] = []
+
+        if(!take){
             return response.status(API_RESPONSE.BAD_REQUEST).json([])
         }
+        if(gender && Object.values(GenderPreference).includes(gender as GenderPreference)){
+            clauses.genderInterest = gender as GenderPreference
+        }
+        if(destination) clauses.destination = String(destination)
+        if(departure) clauses.departure = String(departure)
+        console.log(purpose)
+        if(Array.isArray(purpose)) {
+            (purpose as any[]).forEach((purpose) => {
+                if(purpose.id) {
+                    interestsId.push(purpose.id)
+                }
+            })
+        }
+
         try{
-            const entites = await this.#annoucementProvider.getAnnouncements(pagination)
+            const entites = await this.#annoucementProvider.getAnnouncements(take, skip, clauses, interestsId)
             response.status(API_RESPONSE.OK).json(entites)
         }catch(error){
             response.status(API_RESPONSE.ERROR).json([])

@@ -1,20 +1,29 @@
 import { prisma } from "@/prisma.js"
-import type { Announcement } from "@prisma/client"
+import type { Announcement, Prisma } from "@prisma/client"
 import { UserContentStatus } from "@prisma/client"
 
 export class AnnouncementService{
-    async getAnnouncements(pagination: number): Promise<Announcement[]>{
+    async getAnnouncements(take: number, skip: number, clauses: Prisma.AnnouncementWhereInput, interestsId: string[]): Promise<Announcement[]>{
+        if(interestsId.length > 0) {
+            clauses.interests = {
+                some: {
+                    id: { in: interestsId }
+                }
+            }
+        }
         const response = await prisma.announcement.findMany({
             orderBy: {
                 createdAt: 'desc'
             }, 
             where: {
-                status: UserContentStatus.PUBLISHED
+                status: UserContentStatus.PUBLISHED, 
+                ...clauses
             },
             include: {
                 user: true,
             }, 
-            take: pagination, 
+            take: take, 
+            skip: skip, 
         })
         return response
     }

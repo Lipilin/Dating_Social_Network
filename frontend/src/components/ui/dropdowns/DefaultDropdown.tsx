@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from 'react'
+import { DefaultDropdownCheckboxes } from './DefaultDropdownCheckboxes'
 import selectArrowSvg from '@/assets/images/select_arrow.svg'
 
 export interface Label<T> {
@@ -11,10 +12,13 @@ export interface DefaultDropdownProps<T> {
     value: T | null, 
     setValue: (value: T) => void, 
     labels: Label<T>[], 
-    placeholder: string,
 }
 
-export function DefaultDropdown<T>({ value, setValue, labels, placeholder }: DefaultDropdownProps<T>){
+export interface DefaultDropdownExtendedProps<T> extends DefaultDropdownProps<T> {
+    placeholder: string
+}
+
+export function DefaultDropdown<T>({ value, setValue, labels, placeholder }: DefaultDropdownExtendedProps<T>){
     const [open, setOpen] = useState(false)
     const changeHandler = useCallback((e: React.FocusEvent<HTMLDivElement>) => {
         setOpen(e.currentTarget.contains(e.relatedTarget))
@@ -41,24 +45,7 @@ export function DefaultDropdown<T>({ value, setValue, labels, placeholder }: Def
                 <img src={ selectArrowSvg } alt="" className="arrow-toogle" />
                 { open ? 
                     <div id="checkbox-list" className="checkbox-list visible bottom" onMouseDown = { (e) => {e.preventDefault()} }>
-                        {labels.map((item) => 
-                            {
-                                return (
-                                    <label className="label-list" key = { item.id }>
-                                        <input 
-                                            type="checkbox"
-                                            name="search_option"
-                                            checked = { value == item.value }
-                                            onChange = { () => {
-                                                    setValue(item.value)
-                                                }
-                                            }
-                                        />
-                                        <span> { item.label } </span>
-                                    </label>
-                                )
-                            }
-                        )}
+                        <DefaultDropdownCheckboxes value={ value } setValue={ setValue } labels={ labels } />
                     </div>
                 : null}
             </div>

@@ -12,7 +12,7 @@ import type { AnnouncementResource } from '@/utils/api/types'
 import { LoadStatus } from './types'
 import { API_SETTINGS } from '@/config/General'
 import type { CategoryWithInterestResource } from '@/utils/api/types'
-import type { SearchFormRequest } from '@/utils/api/types'
+import type { AnnouncementRequest } from '@/utils/api/types'
 
 const announcement = new Announcement()
 const category = new Category()
@@ -26,7 +26,8 @@ export function MainPage() {
     useEffect(() => {
         async function getAnnouncements() {
             const data: AnnouncementResource[] = await announcement.getLast({
-                pagination: API_SETTINGS.DEFAULT_PAGINATION
+                take: API_SETTINGS.DEFAULT_PAGINATION, 
+                skip: 0
             })
             setAnnouncements(data)
             setLoadStatus(LoadStatus.READY)
@@ -37,18 +38,17 @@ export function MainPage() {
     useEffect(() => {
         async function getCategories() {
             const data: CategoryWithInterestResource[] = await category.getCategories({
-                pagination: CATEGORY_DEFAULT_PAGINATION
-            })
+                take: CATEGORY_DEFAULT_PAGINATION, 
+                skip: 0
+            })  
             setCategories(data)
         }
         getCategories()
     }, [])
 
-    const setData = useCallback(async (data: SearchFormRequest) => {
+    const setData = useCallback(async (request: AnnouncementRequest) => {
         setLoadStatus(LoadStatus.LOADING)
-        const response: AnnouncementResource[] = await announcement.getDataWithClauses({
-            pagination: API_SETTINGS.DEFAULT_PAGINATION
-        })
+        const response: AnnouncementResource[] = await announcement.getDataWithClauses(request)
         setAnnouncements(response)
         setLoadStatus(LoadStatus.READY)
     }, [])

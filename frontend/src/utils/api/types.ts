@@ -12,7 +12,8 @@ export interface AnnouncementResource{
 }
 
 export interface Request{
-    pagination: number
+    take: number, 
+    skip: number, 
 }
 
 export interface InterestResource{
@@ -34,9 +35,10 @@ export interface CategoryRequest extends Request{
 }
 
 export interface AnnouncementRequest extends Request{
-    genderPreference?: GENDER_PREFERENCE, 
+    gender?: GENDER_PREFERENCE | null,
+    purpose?: InterestResource[],
+    departure?: string,
     destination?: string
-    departure?: string
 }
 
 export enum GENDER_PREFERENCE{
@@ -61,11 +63,4 @@ export interface UserResource{
     posts: Post[], 
     lastSeen: string,
     age: number,
-}
-
-export interface SearchFormRequest{
-    gender: GENDER_PREFERENCE,
-    purpose: CategoryWithInterestResource,
-    departure: string,
-    destination: string
 }

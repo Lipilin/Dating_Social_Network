@@ -44,17 +44,17 @@ export const API_SETTINGS: ApiSettings = {
         ANNOUNCEMENT: {
             LIST: '/announcement/list', 
             CREATE: '', 
-            UPDATE: ''
+            UPDATE: '', 
         }, 
         CATEGORIES: {
             LIST: '/category/list', 
             CREATE: '', 
-            UPDATE: ''
+            UPDATE: '', 
         }, 
         USER: {
             LIST: '/user/list', 
             CREATE: '', 
-            UPDATE: ''
+            UPDATE: '', 
         }
     },
 } as const
