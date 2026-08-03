@@ -1,13 +1,24 @@
 import arrowRightSvg from '@/assets/images/arrow_right.svg'
 import { ModalCloseButton } from '@/components/ui/buttons/ModalCloseButton'
-import type { UserPostRequest } from '@/utils/api/types'
-import { useState, useMemo, useCallback } from 'react'
-
+import type { 
+    UserPostRequest, 
+    CategoryWithInterestResource, 
+    UserResource } 
+from '@/utils/api/types'
+import { 
+    useState, 
+    useMemo, 
+    useCallback, 
+    useEffect 
+} from 'react'
 import { 
     LoginStep, 
     InterestsStep, 
     InfoStep } 
 from './partials'
+import { Category } from '@/utils/api/Category'
+import { API_SETTINGS } from '@/config/General'
+import { User } from '@/utils/api/User'
 
 enum RegistrationStep {
     LOGIN = 1,
@@ -20,13 +31,18 @@ interface RegistrationMainProps {
     onClose?: () => void
     onSwitchToAuth?: () => void
     onSuccess?: () => void
+    onError?: () => void
 }
+
+const categoryProvider = new Category()
+const userProvider = new User()
 
 export function RegistrationMain({
     isOpen = false,
     onClose,
     onSwitchToAuth,
     onSuccess,
+    onError,
 }: RegistrationMainProps) {
     const [userPostRequest, setUserPostRequest] = useState<UserPostRequest>({
         login: '',
@@ -39,12 +55,34 @@ export function RegistrationMain({
         city: '',
         gender: '',
         description: '',
+        acceptService: false,
+        acceptSecurity: false,
+        interests: [],
     })
     const [step, setStep] = useState<RegistrationStep>(RegistrationStep.LOGIN)
-    const onSubmit = useCallback(() => {
+    const [categories, setCategories] = useState<CategoryWithInterestResource[]>([])
+    const onSubmit = useCallback(async () => {
         console.log(userPostRequest)
-        onSuccess?.()
+        await userProvider.createUser(userPostRequest).then((data: UserResource | null) => {
+            if(data != null) onSuccess?.()
+            else onError?.()
+        })
     }, [userPostRequest])
+
+    useEffect(() => {
+        if(isOpen && categories.length === 0) {
+            async function getCategories(){
+                await categoryProvider.getCategories({
+                    take: API_SETTINGS.DEFAULT_PAGINATION,
+                    skip: 0
+                }).then((data) => {
+                    setCategories(data)
+                })
+                
+            }
+            getCategories()
+        }
+    }, [isOpen])
     
     const stepComponent = useMemo(() => {
         switch (step) {
@@ -62,7 +100,9 @@ export function RegistrationMain({
                     <InterestsStep
                         onNext={() => setStep(RegistrationStep.INFO)}
                         onBack={() => setStep(RegistrationStep.LOGIN)}
-                        categories={ [] } 
+                        categories={ categories } 
+                        user = { userPostRequest }
+                        setUserData = { setUserPostRequest }
                     />
                 )
             case RegistrationStep.INFO:

@@ -1,11 +1,13 @@
 import { ModalCloseButton } from '@/components/ui/buttons/ModalCloseButton'
 
-interface RegistrationSuccessProps {
+interface RegistrationMessageProps{
     isOpen?: boolean
     onClose?: () => void
+    body: string
+    head: string
 }
 
-export function RegistrationSuccess({ isOpen = false, onClose }: RegistrationSuccessProps) {
+export function RegistrationMessage({isOpen = false, onClose, head, body}: RegistrationMessageProps) {
     const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
         if (e.target === e.currentTarget) {
             onClose?.()
@@ -16,18 +18,18 @@ export function RegistrationSuccess({ isOpen = false, onClose }: RegistrationSuc
         <div className={`modal success${isOpen ? ' show' : ''}`} onClick={handleBackdropClick}>
             <div className="modal__content">
                 <div className="modal__head">
-                    <h4>Регистрация успешна!</h4>
+                    <h4>{ head }</h4>
                     <ModalCloseButton onClick={onClose} />
                 </div>
                 <div className="modal__body">
                     <div className="modal__body-form">
-                        <p>На вашу электронную почту mail@mail.ru отправлено письмо с подтверждением.</p>
+                        <p> { body } </p>
                         <div className="row">
                             <button
                                 type="button"
                                 className="blue modal__close"
                                 style={{ paddingLeft: 36, paddingRight: 36 }}
-                                onClick={onClose}
+                                onClick={ onClose }
                             >
                                 Закрыть
                             </button>

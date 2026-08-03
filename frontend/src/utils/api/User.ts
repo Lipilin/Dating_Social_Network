@@ -1,5 +1,7 @@
 import axios from 'axios'
 import type { UserResource } from './types'
+import type { UserPostRequest } from './types'
+import { API_SETTINGS } from '@/config/General'
 
 export class User{
     async getInfo(){
@@ -18,9 +20,12 @@ export class User{
         return null
     }
 
-    async createUser(request: any): Promise<UserResource | null>{
+    async createUser(request: UserPostRequest): Promise<UserResource | null>{
         try{
-            const response = await axios.post('****/user/create', request)
+            const response = await axios.post(
+                `${ API_SETTINGS.API_HOST }${ API_SETTINGS.ENDPOINTS.ANNOUNCEMENT.LIST }`, 
+                request
+            )
             return response.data as UserResource
         } catch (error) {
             console.error(error)

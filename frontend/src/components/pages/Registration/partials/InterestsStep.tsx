@@ -1,48 +1,17 @@
 import { StepChanger } from './StepChanger'
-import type { CategoryWithInterestResource } from '@/utils/api/types'
-import { useState } from 'react'
+import type { CategoryWithInterestResource, UserPostRequest } from '@/utils/api/types'
+import { InterestCategoryItem } from './InterestCategoryItem'
 
-interface InterestCategoryItemProps {
-    category: CategoryWithInterestResource
-}
-
-function InterestCategoryItem({ category }: InterestCategoryItemProps) {
-    const [open, setOpen] = useState(false)
-
-    return (
-        <div className="interest__item">
-            <div
-                className={`interest__item-head${open ? ' active' : ''}`}
-                onClick={() => setOpen((prev) => !prev)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                    e.preventDefault()
-                    setOpen((prev) => !prev)
-                }}
-            >
-                <img src={ category.image } alt="" />
-                { category.name }
-            </div>
-            <div className={`interest__item-body${open ? ' show' : ''}`}>
-                {category.interests.map((interest) => (
-                    <label key={interest.id}>
-                        <input type="checkbox" />
-                        <span>{interest.name}</span>
-                    </label>
-                ))}
-            </div>
-        </div>
-    )
-}
 
 interface InterestsStepProps {
     onNext: () => void
     onBack: () => void
     categories: CategoryWithInterestResource[]
+    user: UserPostRequest
+    setUserData: (user: UserPostRequest) => void
 }
 
-export function InterestsStep({ onNext, onBack, categories }: InterestsStepProps) {
+export function InterestsStep({ onNext, onBack, categories, user, setUserData }: InterestsStepProps) {
     return (
         <div className="secondStep">
             <div className="modal__body-top">
@@ -54,6 +23,8 @@ export function InterestsStep({ onNext, onBack, categories }: InterestsStepProps
                         <InterestCategoryItem
                             key={category.id}
                             category={category}
+                            setUserData = { setUserData }
+                            user = { user }
                         />
                     ))}
                 </div>

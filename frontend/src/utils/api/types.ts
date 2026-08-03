@@ -89,4 +89,7 @@ export interface UserPostRequest extends PostRequest{
     city: string
     gender: GENDER | ''
     description: string
+    acceptService: boolean
+    acceptSecurity: boolean
+    interests: InterestResource[]
 }

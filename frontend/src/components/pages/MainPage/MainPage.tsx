@@ -15,7 +15,7 @@ import type { AnnouncementRequest } from '@/utils/api/types'
 
 const announcement = new Announcement()
 const category = new Category()
-const CATEGORY_DEFAULT_PAGINATION = 4
+const CATEGORY_DEFAULT_PAGINATION = 5
 
 export function MainPage() {
     const [announcements, setAnnouncements] = useState<AnnouncementResource[]>([])

@@ -64,11 +64,23 @@ export function InfoStep(
                     <h4>Пол:</h4>
                     <div className="input_radio">
                         <label>
-                            <input type="radio" name="gender" value="male" />
+                            <input
+                            type="radio"
+                            name="gender"
+                            value= { GENDER.MALE } 
+                            onChange={ 
+                                (e) => setUserData({ ...user, gender: e.target.value as GENDER }) 
+                            }/>
                             <span>Мужской</span>
                         </label>
                         <label>
-                            <input type="radio" name="gender" value="female" />
+                            <input
+                            type="radio"
+                            name="gender"
+                            value= { GENDER.FEMALE } 
+                            onChange={ 
+                                (e) => setUserData({ ...user, gender: e.target.value as GENDER }) 
+                            }/>
                             <span>Женский</span>
                         </label>
                     </div>

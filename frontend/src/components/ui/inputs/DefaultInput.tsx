@@ -2,7 +2,7 @@ interface DefaultInputProps<T extends string | number = string>{
     label?: string
     value: T
     setValue: (value: T) => void
-    type?: 'text' | 'email' | 'password' | 'number'
+    type?: 'text' | 'email' | 'password' | 'number' | 'checkbox'
     id?: string
 }
 

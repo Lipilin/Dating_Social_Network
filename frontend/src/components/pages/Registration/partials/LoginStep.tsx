@@ -59,13 +59,23 @@ export function LoginStep(
                 </div>
                 <div className="checkboxes">
                     <div className="checkboxes__item">
-                        <input type="checkbox" id="acceptService" />
+                        <input
+                            type="checkbox" 
+                            id="acceptService" 
+                            checked = { user.acceptService } 
+                            onChange={ (e) => setUserData({ ...user, acceptService: e.target.checked }) 
+                        }/>
                         <label htmlFor="acceptService">
                             Я согласен с <a href="#">правилами сервиса</a>
                         </label>
                     </div>
                     <div className="checkboxes__item">
-                        <input type="checkbox" id="acceptSecurity" />
+                        <input
+                            type="checkbox" 
+                            id="acceptSecurity" 
+                            checked = { user.acceptSecurity } 
+                            onChange={ (e) => setUserData({ ...user, acceptSecurity: e.target.checked }) 
+                        }/>
                         <label htmlFor="acceptSecurity">
                             Я согласен с <a href="#">политикой обработки персональных данных</a>
                         </label>

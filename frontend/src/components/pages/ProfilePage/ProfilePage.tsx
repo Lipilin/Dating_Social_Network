@@ -63,7 +63,7 @@ export function ProfilePage() {
                             href="#"
                             className={activePartial === 'POSTS' ? 'active' : ''}
                             onClick={() => setActivePartial('POSTS')}>
-                                Посты ({ profile?.posts.length })
+                                Посты ({ profile?.posts.length || 0 })
                             </a>
                         </li>
                         <li>
@@ -71,7 +71,7 @@ export function ProfilePage() {
                             href="#" 
                             className={activePartial === 'ANNOUNCEMENTS' ? 'active' : ''} 
                             onClick={() => setActivePartial('ANNOUNCEMENTS')}>
-                                Объявления ( { profile?.announcements.length } )
+                                Объявления ({ profile?.announcements.length || 0 })
                             </a>
                         </li>
                     </ul>

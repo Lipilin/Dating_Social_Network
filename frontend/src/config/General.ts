@@ -53,7 +53,7 @@ export const API_SETTINGS: ApiSettings = {
         }, 
         USER: {
             LIST: '/user/list', 
-            CREATE: '', 
+            CREATE: '/user/create', 
             UPDATE: '', 
         }
     },

@@ -5,14 +5,17 @@ import { Header } from '@/components/layout/Header'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { Footer } from '@/components/layout/Footer'
 import { AuthMain } from '@/components/pages/Auth/AuthMain'
-import { RegistrationMain } from '@/components/pages/Registration/RegistrationMain'
-import { RegistrationSuccess } from '@/components/pages/Registration/RegistrationSuccess'
+import { 
+    RegistrationMain, 
+    RegistrationMessage
+} from '@/components/pages/Registration'
 import '@/assets/css/main.css'
 
 function App() {
     const [authOpen, setAuthOpen] = useState(false)
     const [registrationOpen, setRegistrationOpen] = useState(false)
     const [registrationSuccessOpen, setRegistrationSuccessOpen] = useState(false)
+    const [registrationErrorOpen, setRegistrationErrorOpen] = useState(false)
     const [sidebarActive, setSidebarActive] = useState(false)
 
     return (
@@ -49,10 +52,20 @@ function App() {
                     setAuthOpen(true)
                 }}
                 onSuccess={() => setRegistrationSuccessOpen(true)}
+                onError={() => setRegistrationErrorOpen(true)}
             />
-            <RegistrationSuccess
+            <RegistrationMessage
+                head='Регистрация успешна!'
+                body='На вашу электронную почту отправлено письмо с подтверждением! Подтвердите регистрацию!'
                 isOpen={registrationSuccessOpen}
                 onClose={() => setRegistrationSuccessOpen(false)}
+            />
+
+            <RegistrationMessage
+                head='Возникла Ошибка на стороне сервера!'
+                body='К сожалению, возникла ошибка на стороне сервера. Попробуйте зарегистрироваться позже'
+                isOpen={ registrationErrorOpen }
+                onClose={ () => setRegistrationErrorOpen(false) }
             />
         </div>
     )
