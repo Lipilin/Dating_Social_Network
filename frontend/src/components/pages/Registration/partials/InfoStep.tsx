@@ -2,15 +2,11 @@ import type { UserPostRequest } from "@/utils/api/types"
 import { StepChanger } from "./StepChanger"
 import { DefaultInput } from "@/components/ui/inputs/DefaultInput"
 import { GENDER } from "@/utils/api/types"
-
-const inputErrorClasses =
-    '[&_input]:!shadow-[inset_0_-2px_0_0_rgba(239,100,100,0.9)]'
-
-const textareaErrorClasses =
-    '!shadow-[inset_0_-2px_0_0_rgba(239,100,100,0.9)]'
-
-const errorListClasses =
-    'mt-3 flex flex-col gap-1 text-sm leading-snug text-red-500/90 break-words'
+import {
+    errorListClasses,
+    inputErrorClasses,
+    textareaErrorClasses,
+} from "@/styles/formErrors"
 
 const infoStepFields = ['name', 'surname', 'age', 'city', 'description'] as const
 
