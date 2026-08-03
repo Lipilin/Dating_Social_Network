@@ -1,11 +1,22 @@
 import { images } from '../Header.images'
 import { ROUTES } from '@/config/General'
 
-export function HeaderLeft() {
+interface HeaderLeftProps {
+    onToggleSidebar?: () => void
+}
+
+export function HeaderLeft({ onToggleSidebar }: HeaderLeftProps) {
   return (
     <>
                   <div className="header__left">
-                      <a className="header__burger" href="#">
+                      <a
+                          className="header__burger"
+                          href="#"
+                          onClick={(e) => {
+                              e.preventDefault()
+                              onToggleSidebar?.()
+                          }}
+                      >
                           <svg className="svg-icon svg-icon--size-large svg-icon--IconBurgerMenuIcon"
                               xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                               <path fill="#001346"

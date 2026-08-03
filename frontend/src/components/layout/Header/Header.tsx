@@ -7,12 +7,13 @@ import { HeaderNotifications } from './partials/HeaderNotifications'
 interface HeaderProps {
     onOpenAuth?: () => void
     onOpenRegistration?: () => void
+    onToggleSidebar?: () => void
 }
 
-export function Header({ onOpenAuth, onOpenRegistration }: HeaderProps) {
+export function Header({ onOpenAuth, onOpenRegistration, onToggleSidebar }: HeaderProps) {
     return (
         <header className="header">
-            <HeaderLeft />
+            <HeaderLeft onToggleSidebar={onToggleSidebar} />
             <HeaderGuestActions
                 onOpenAuth={onOpenAuth}
                 onOpenRegistration={onOpenRegistration}
