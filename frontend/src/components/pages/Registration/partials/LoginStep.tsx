@@ -3,11 +3,30 @@ import { StepChanger } from './StepChanger'
 import { AuthSwitcher } from './AuthSwitcher'
 import type { UserPostRequest } from '@/utils/api/types'
 
+const inputErrorClasses =
+    '[&_input]:!shadow-[inset_0_-2px_0_0_rgba(239,100,100,0.9)]'
+
+const checkboxErrorClasses =
+    '[&_input:not(:checked)]:!ring-2 [&_input:not(:checked)]:!ring-red-400/70 [&_input:not(:checked)]:!ring-offset-0'
+
+const errorListClasses =
+    'mt-3 flex flex-col gap-1 text-sm leading-snug text-red-500/90 break-words'
+
+const loginStepFields = [
+    'login',
+    'email',
+    'password',
+    'confirmPassword',
+    'acceptService',
+    'acceptSecurity',
+] as const
+
 interface LoginStepProps {
     onNext: () => void
     onSwitchToAuth: () => void
     user: UserPostRequest
     setUserData: (value: UserPostRequest) => void
+    errors: Record<string, string>
 }
 
 export function LoginStep(
@@ -16,12 +35,15 @@ export function LoginStep(
         onSwitchToAuth, 
         user, 
         setUserData,
+        errors,
     }: LoginStepProps) {
+    const errorMessages = loginStepFields.filter((field) => errors[field])
+
     return (
         <div className="firstStep">
             <div className="modal__body-form">
                 <div className="inputs two">
-                    <div className="input_item">
+                    <div className={`input_item ${errors.login ? inputErrorClasses : ''}`}>
                         <DefaultInput 
                         value={ user.login }
                         setValue={ (value: string) => setUserData({ ...user, login: value }) }
@@ -29,7 +51,7 @@ export function LoginStep(
                         id = { 'login_reg' }
                         />
                     </div>
-                    <div className="input_item">
+                    <div className={`input_item ${errors.email ? inputErrorClasses : ''}`}>
                         <DefaultInput 
                         value={ user.email}
                         setValue={ (value: string) => setUserData({ ...user, email: value }) }
@@ -38,7 +60,7 @@ export function LoginStep(
                         type = { 'email' }
                         />
                     </div>
-                    <div className="input_item">
+                    <div className={`input_item ${errors.password ? inputErrorClasses : ''}`}>
                         <DefaultInput 
                             value={ user.password }
                             setValue={ (value: string) => setUserData({ ...user, password: value }) }
@@ -47,7 +69,7 @@ export function LoginStep(
                             type = { 'password' }
                         />
                     </div>
-                    <div className="input_item">
+                    <div className={`input_item ${errors.confirmPassword ? inputErrorClasses : ''}`}>
                         <DefaultInput 
                             value={ user.confirmPassword }
                             setValue={ (value: string) => setUserData({ ...user, confirmPassword: value }) }
@@ -58,7 +80,7 @@ export function LoginStep(
                     </div>
                 </div>
                 <div className="checkboxes">
-                    <div className="checkboxes__item">
+                    <div className={`checkboxes__item ${errors.acceptService ? checkboxErrorClasses : ''}`}>
                         <input
                             type="checkbox" 
                             id="acceptService" 
@@ -69,7 +91,7 @@ export function LoginStep(
                             Я согласен с <a href="#">правилами сервиса</a>
                         </label>
                     </div>
-                    <div className="checkboxes__item">
+                    <div className={`checkboxes__item ${errors.acceptSecurity ? checkboxErrorClasses : ''}`}>
                         <input
                             type="checkbox" 
                             id="acceptSecurity" 
@@ -81,8 +103,15 @@ export function LoginStep(
                         </label>
                     </div>
                 </div>
+                {errorMessages.length > 0 && (
+                    <ul className={errorListClasses}>
+                        {errorMessages.map((field) => (
+                            <li key={field}>{errors[field]}</li>
+                        ))}
+                    </ul>
+                )}
                 <div className="row">
-                    <StepChanger direction="next" onChange={onNext} />
+                    <StepChanger direction="next" onChange={ onNext } />
                     <AuthSwitcher onSwitchToAuth={onSwitchToAuth} />
                 </div>
             </div>

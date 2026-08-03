@@ -3,11 +3,23 @@ import { StepChanger } from "./StepChanger"
 import { DefaultInput } from "@/components/ui/inputs/DefaultInput"
 import { GENDER } from "@/utils/api/types"
 
+const inputErrorClasses =
+    '[&_input]:!shadow-[inset_0_-2px_0_0_rgba(239,100,100,0.9)]'
+
+const textareaErrorClasses =
+    '!shadow-[inset_0_-2px_0_0_rgba(239,100,100,0.9)]'
+
+const errorListClasses =
+    'mt-3 flex flex-col gap-1 text-sm leading-snug text-red-500/90 break-words'
+
+const infoStepFields = ['name', 'surname', 'age', 'city', 'description'] as const
+
 interface InfoStepProps {
     onSubmit: () => void
     onBack: () => void
     user: UserPostRequest
     setUserData: (value: UserPostRequest) => void
+    errors: Record<string, string>
 }
 
 export function InfoStep(
@@ -16,7 +28,10 @@ export function InfoStep(
         onBack, 
         user, 
         setUserData,
+        errors,
     }: InfoStepProps) {
+    const errorMessages = infoStepFields.filter((field) => errors[field])
+
     return (
         <div className="thirdStep">
             <div className="modal__body-top">
@@ -24,7 +39,7 @@ export function InfoStep(
             </div>
             <div className="modal__body-form">
                 <div className="inputs two">
-                    <div className="input_item">
+                    <div className={`input_item ${errors.name ? inputErrorClasses : ''}`}>
                         <DefaultInput 
                             value={ user.name }
                             setValue={ (value: string) => setUserData({ ...user, name: value }) }
@@ -32,7 +47,7 @@ export function InfoStep(
                             id='name_reg'
                         />
                     </div>
-                    <div className="input_item">
+                    <div className={`input_item ${errors.surname ? inputErrorClasses : ''}`}>
                         <DefaultInput 
                             value={ user.surname }
                             setValue={ (value: string) => setUserData({ ...user, surname: value }) }
@@ -42,16 +57,16 @@ export function InfoStep(
                     </div>
                 </div>
                 <div className="inputs two">
-                    <div className="input_item">
+                    <div className={`input_item ${errors.age ? inputErrorClasses : ''}`}>
                         <DefaultInput 
                             value={ user.age }
-                            setValue={ (value: number) => setUserData({ ...user, age: value }) }
+                            setValue={ (value: number) => setUserData({ ...user, age: Number(value) }) }
                             label='Возраст'
                             id='age_reg'
                             type='number'
-                        />
+                        />  
                     </div>
-                    <div className="input_item">
+                    <div className={`input_item ${errors.city ? inputErrorClasses : ''}`}>
                         <DefaultInput 
                             value={ user.city }
                             setValue={ (value: string) => setUserData({ ...user, city: value }) }
@@ -65,6 +80,7 @@ export function InfoStep(
                     <div className="input_radio">
                         <label>
                             <input
+                            checked={ user.gender === GENDER.MALE }
                             type="radio"
                             name="gender"
                             value= { GENDER.MALE } 
@@ -75,6 +91,7 @@ export function InfoStep(
                         </label>
                         <label>
                             <input
+                            checked={ user.gender === GENDER.FEMALE }
                             type="radio"
                             name="gender"
                             value= { GENDER.FEMALE } 
@@ -86,11 +103,21 @@ export function InfoStep(
                     </div>
                 </div>
                 <textarea
-                name="about"
-                placeholder="Краткая информация" 
-                value={ user.description }
-                onChange = { (e) => setUserData({ ...user, description: e.target.value }) }
+                    className={errors.description ? textareaErrorClasses : undefined}
+                    name="about"
+                    placeholder="Краткая информация" 
+                    value={ user.description }
+                    onChange = { (e) => setUserData({ ...user, description: e.target.value }) }
                 />
+                {errorMessages.length > 0 && (
+                    <div className={errorListClasses} role="alert">
+                        {errorMessages.map((field) => (
+                            <span key={field} className="block">
+                                {errors[field]}
+                            </span>
+                        ))}
+                    </div>
+                )}
                 <div className="row buttons">
                     <button type="button" className="blue" onClick={onSubmit}>
                         Регистрация

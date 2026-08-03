@@ -19,6 +19,8 @@ from './partials'
 import { Category } from '@/utils/api/Category'
 import { API_SETTINGS } from '@/config/General'
 import { User } from '@/utils/api/User'
+import { LoginStepSchema, InfoStepSchema } from '@/utils/validation/UserCreationRules'
+import { GENDER } from '@/utils/api/types'
 
 enum RegistrationStep {
     LOGIN = 1,
@@ -53,7 +55,7 @@ export function RegistrationMain({
         confirmPassword: '',
         age: 0,
         city: '',
-        gender: '',
+        gender: GENDER.MALE,
         description: '',
         acceptService: false,
         acceptSecurity: false,
@@ -61,6 +63,8 @@ export function RegistrationMain({
     })
     const [step, setStep] = useState<RegistrationStep>(RegistrationStep.LOGIN)
     const [categories, setCategories] = useState<CategoryWithInterestResource[]>([])
+    const [errors, setErrors] = useState<Record<string, string>>({})
+
     const onSubmit = useCallback(async () => {
         console.log(userPostRequest)
         await userProvider.createUser(userPostRequest).then((data: UserResource | null) => {
@@ -83,13 +87,53 @@ export function RegistrationMain({
             getCategories()
         }
     }, [isOpen])
+
+    const handleBackdropClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+        if (e.target === e.currentTarget) {
+            setStep(RegistrationStep.LOGIN)
+            onClose?.()
+        }
+    }, [onClose])
+
+    const handleClose = useCallback(() => {
+        setStep(RegistrationStep.LOGIN)
+        onClose?.()
+    }, [onClose])
+
+    const validate: () => boolean = useCallback(() => {
+        const validationRule = (step: RegistrationStep) => {
+            switch(step){
+                case RegistrationStep.LOGIN:
+                    return LoginStepSchema
+                case RegistrationStep.INFO:
+                    return InfoStepSchema
+            }
+        }
+        setErrors({})
+        const result = validationRule(step)?.safeParse(userPostRequest)
+        if(result?.error){
+            const messages: Record<string, string> = {}
+            result.error.issues.forEach(issue => {
+                if(issue.path.length > 0){
+                    messages[issue.path.join(".")] = issue.message
+                }
+            })
+            setErrors(messages)
+            return false
+        }
+        return true
+    }, [step, userPostRequest, setErrors])
     
     const stepComponent = useMemo(() => {
         switch (step) {
             case RegistrationStep.LOGIN:
                 return (
                     <LoginStep
-                        onNext={() => setStep(RegistrationStep.INTERESTS)}
+                        errors={errors}
+                        onNext={() => {
+                            if(!validate()) return
+                            setStep(RegistrationStep.INTERESTS)
+                        }}
                         onSwitchToAuth={() => onSwitchToAuth?.()}   
                         user = { userPostRequest }
                         setUserData = { setUserPostRequest }
@@ -109,28 +153,18 @@ export function RegistrationMain({
                 return (
                     <InfoStep
                         onSubmit={() => {
+                            if(!validate()) return
                             onClose?.()
                             onSubmit?.()
                         }}
                         onBack={() => setStep(RegistrationStep.INTERESTS)}
                         user = { userPostRequest }
                         setUserData = { setUserPostRequest }
+                        errors = {errors}
                     />
                 )
         }
-    }, [step, userPostRequest])
-
-    const handleBackdropClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-        if (e.target === e.currentTarget) {
-            setStep(RegistrationStep.LOGIN)
-            onClose?.()
-        }
-    }, [onClose])
-
-    const handleClose = useCallback(() => {
-        setStep(RegistrationStep.LOGIN)
-        onClose?.()
-    }, [onClose])
+    }, [step, userPostRequest, errors, validate])
 
     return (
         <div className={`modal registration${isOpen ? ' show' : ''}`} onClick={handleBackdropClick}>
