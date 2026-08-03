@@ -1,31 +1,21 @@
+import type { UserPostRequest } from "@/utils/api/types"
 import { StepChanger } from "./StepChanger"
 import { DefaultInput } from "@/components/ui/inputs/DefaultInput"
+import { GENDER } from "@/utils/api/types"
 
 interface InfoStepProps {
     onSubmit: () => void
     onBack: () => void
-    name: string
-    setName: (value: string) => void
-    secondName: string
-    setSecondName: (value: string) => void
-    date: string
-    setDate: (value: string) => void
-    city: string
-    setCity: (value: string) => void
+    user: UserPostRequest
+    setUserData: (value: UserPostRequest) => void
 }
 
 export function InfoStep(
     { 
         onSubmit, 
         onBack, 
-        name, 
-        setName,
-        secondName,
-        setSecondName,
-        date,
-        setDate,
-        city,
-        setCity 
+        user, 
+        setUserData,
     }: InfoStepProps) {
     return (
         <div className="thirdStep">
@@ -36,16 +26,16 @@ export function InfoStep(
                 <div className="inputs two">
                     <div className="input_item">
                         <DefaultInput 
-                            value={ name }
-                            setValue={ setName }
+                            value={ user.name }
+                            setValue={ (value: string) => setUserData({ ...user, name: value }) }
                             label='Имя'
                             id='name_reg'
                         />
                     </div>
                     <div className="input_item">
                         <DefaultInput 
-                            value={ secondName }
-                            setValue={ setSecondName }
+                            value={ user.surname }
+                            setValue={ (value: string) => setUserData({ ...user, surname: value }) }
                             label='Фамилия'
                             id='secondName_reg'
                         />
@@ -54,16 +44,17 @@ export function InfoStep(
                 <div className="inputs two">
                     <div className="input_item">
                         <DefaultInput 
-                            value={ date }
-                            setValue={ setDate }
-                            label='Дата рождения'
-                            id='date_reg'
+                            value={ user.age }
+                            setValue={ (value: number) => setUserData({ ...user, age: value }) }
+                            label='Возраст'
+                            id='age_reg'
+                            type='number'
                         />
                     </div>
                     <div className="input_item">
                         <DefaultInput 
-                            value={ city }
-                            setValue={ setCity }
+                            value={ user.city }
+                            setValue={ (value: string) => setUserData({ ...user, city: value }) }
                             label='Родной город'
                             id='language_city_reg'
                         />
@@ -82,7 +73,12 @@ export function InfoStep(
                         </label>
                     </div>
                 </div>
-                <textarea name="about" placeholder="Краткая информация" />
+                <textarea
+                name="about"
+                placeholder="Краткая информация" 
+                value={ user.description }
+                onChange = { (e) => setUserData({ ...user, description: e.target.value }) }
+                />
                 <div className="row buttons">
                     <button type="button" className="blue" onClick={onSubmit}>
                         Регистрация

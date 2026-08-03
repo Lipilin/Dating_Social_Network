@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react'
 import arrowRightSvg from '@/assets/images/arrow_right.svg'
 import { ModalCloseButton } from '@/components/ui/buttons/ModalCloseButton'
+import type { UserPostRequest } from '@/utils/api/types'
+import { useState, useMemo, useCallback } from 'react'
 
 import { 
     LoginStep, 
@@ -27,32 +28,33 @@ export function RegistrationMain({
     onSwitchToAuth,
     onSuccess,
 }: RegistrationMainProps) {
+    const [userPostRequest, setUserPostRequest] = useState<UserPostRequest>({
+        login: '',
+        email: '',
+        name: '',
+        surname: '',
+        password: '',
+        confirmPassword: '',
+        age: 0,
+        city: '',
+        gender: '',
+        description: '',
+    })
     const [step, setStep] = useState<RegistrationStep>(RegistrationStep.LOGIN)
-    const [email, setEmail] = useState('')
-    const [login, setLogin] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [name, setName] = useState('')
-    const [secondName, setSecondName] = useState('')
-    const [date, setDate] = useState('')
-    const [city, setCity] = useState('')
-    const [gender, setGender] = useState('')
+    const onSubmit = useCallback(() => {
+        console.log(userPostRequest)
+        onSuccess?.()
+    }, [userPostRequest])
     
-    const stepComponent = () => {
+    const stepComponent = useMemo(() => {
         switch (step) {
             case RegistrationStep.LOGIN:
                 return (
                     <LoginStep
                         onNext={() => setStep(RegistrationStep.INTERESTS)}
                         onSwitchToAuth={() => onSwitchToAuth?.()}   
-                        login={login}
-                        setLogin={setLogin}
-                        email={email}
-                        setEmail={setEmail}
-                        password={password}
-                        setPassword={setPassword}
-                        confirmPassword={confirmPassword}
-                        setConfirmPassword={setConfirmPassword}
+                        user = { userPostRequest }
+                        setUserData = { setUserPostRequest }
                     />
                 )
             case RegistrationStep.INTERESTS:
@@ -68,33 +70,27 @@ export function RegistrationMain({
                     <InfoStep
                         onSubmit={() => {
                             onClose?.()
-                            onSuccess?.()
+                            onSubmit?.()
                         }}
                         onBack={() => setStep(RegistrationStep.INTERESTS)}
-                        name={name}
-                        setName={setName}
-                        secondName={secondName}
-                        setSecondName={setSecondName}
-                        date={date}
-                        setDate={setDate}
-                        city = {city}
-                        setCity={setCity}
+                        user = { userPostRequest }
+                        setUserData = { setUserPostRequest }
                     />
                 )
         }
-    }
+    }, [step, userPostRequest])
 
-    const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleBackdropClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
         if (e.target === e.currentTarget) {
             setStep(RegistrationStep.LOGIN)
             onClose?.()
         }
-    }
+    }, [onClose])
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         setStep(RegistrationStep.LOGIN)
         onClose?.()
-    }
+    }, [onClose])
 
     return (
         <div className={`modal registration${isOpen ? ' show' : ''}`} onClick={handleBackdropClick}>
@@ -113,7 +109,7 @@ export function RegistrationMain({
                 </div>
                 <div className="modal__body">
                     <form onSubmit={(e) => e.preventDefault()}>
-                        {stepComponent()}
+                        { stepComponent }
                     </form>
                 </div>
             </div>

@@ -1,32 +1,21 @@
 import { DefaultInput } from '@/components/ui/inputs/DefaultInput'
 import { StepChanger } from './StepChanger'
 import { AuthSwitcher } from './AuthSwitcher'
+import type { UserPostRequest } from '@/utils/api/types'
 
 interface LoginStepProps {
     onNext: () => void
     onSwitchToAuth: () => void
-    login: string
-    setLogin: (value: string) => void
-    email: string
-    setEmail: (value: string) => void
-    password: string
-    setPassword: (value: string) => void
-    confirmPassword: string
-    setConfirmPassword: (value: string) => void
+    user: UserPostRequest
+    setUserData: (value: UserPostRequest) => void
 }
 
 export function LoginStep(
     { 
         onNext, 
         onSwitchToAuth, 
-        login, 
-        setLogin,
-        email, 
-        setEmail, 
-        password,
-        setPassword,    
-        confirmPassword,
-        setConfirmPassword,
+        user, 
+        setUserData,
     }: LoginStepProps) {
     return (
         <div className="firstStep">
@@ -34,16 +23,16 @@ export function LoginStep(
                 <div className="inputs two">
                     <div className="input_item">
                         <DefaultInput 
-                        value={ login }
-                        setValue={ setLogin }
+                        value={ user.login }
+                        setValue={ (value: string) => setUserData({ ...user, login: value }) }
                         label='Логин'
                         id = { 'login_reg' }
                         />
                     </div>
                     <div className="input_item">
                         <DefaultInput 
-                        value={ email}
-                        setValue={ setEmail }
+                        value={ user.email}
+                        setValue={ (value: string) => setUserData({ ...user, email: value }) }
                         label='Почта'
                         id = { 'email_reg' }
                         type = { 'email' }
@@ -51,8 +40,8 @@ export function LoginStep(
                     </div>
                     <div className="input_item">
                         <DefaultInput 
-                            value={ password }
-                            setValue={ setPassword }
+                            value={ user.password }
+                            setValue={ (value: string) => setUserData({ ...user, password: value }) }
                             label='Пароль'
                             id = { 'password_reg' }
                             type = { 'password' }
@@ -60,8 +49,8 @@ export function LoginStep(
                     </div>
                     <div className="input_item">
                         <DefaultInput 
-                            value={ confirmPassword }
-                            setValue={ setConfirmPassword }
+                            value={ user.confirmPassword }
+                            setValue={ (value: string) => setUserData({ ...user, confirmPassword: value }) }
                             label='Пароль ещё раз'  
                             id = { 'confirm_password_reg' }
                             type = { 'password' }

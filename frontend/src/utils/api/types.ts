@@ -16,6 +16,10 @@ export interface Request{
     skip: number, 
 }
 
+export interface PostRequest{
+
+}
+
 export interface InterestResource{
     id: number, 
     name: string,
@@ -41,11 +45,17 @@ export interface AnnouncementRequest extends Request{
     destination?: string
 }
 
+export enum GENDER{
+    MALE='MALE',
+    FEMALE='FEMALE'
+}
+
 export enum GENDER_PREFERENCE{
     MALE='MALE',
     FEMALE='FEMALE',
     ANYBODY='ANYBODY',
 }
+
 
 export interface Post{
 
@@ -66,4 +76,17 @@ export interface UserResource{
     city: string, 
     createdAt: Date,
     updatedAt: Date,
+}
+
+export interface UserPostRequest extends PostRequest{
+    login: string 
+    email: string
+    name: string  
+    surname: string 
+    password: string  
+    confirmPassword: string
+    age: number
+    city: string
+    gender: GENDER | ''
+    description: string
 }
