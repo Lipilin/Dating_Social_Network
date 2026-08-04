@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import headBackground from '@/assets/images/head_bg.png'
-import messageIcon from '@/assets/images/type_icon.png'
 import type { UserResource } from '@/utils/api/types'
-import { User } from '@/utils/api/User'
 import { DescriptionBlock, PostBlock, AnouncementBlock } from './partials'
 import type { ComponentType } from 'react'
+import { default as femaleAvatar } from '@/assets/images/avatar_female.svg'
+import { default as maleAvatar } from '@/assets/images/avatar_male.svg'
+import { GENDER } from '@/utils/api/types'
 
-const user = new User()
 const UserPartial: Record<string, ComponentType< {user: UserResource }>> = {
     DESCRIPTION: DescriptionBlock,
     POSTS: PostBlock,
@@ -14,16 +14,13 @@ const UserPartial: Record<string, ComponentType< {user: UserResource }>> = {
 }
 type UserPartialType = 'DESCRIPTION' | 'POSTS' | 'ANNOUNCEMENTS'
 
-export function ProfilePage() {
-    const [profile, setProfile] = useState<UserResource | null>(null)
+interface ProfilePageProps {
+    profile: UserResource
+    UserActions: ComponentType<any>
+}
+
+export function ProfilePage({profile, UserActions}: ProfilePageProps) {
     const [activePartial, setActivePartial] = useState<UserPartialType>('DESCRIPTION')
-    useEffect(() => {
-        async function fetchUser(){
-            const profile: UserResource | null = await user.getProfile()
-            setProfile(profile)
-        }
-        fetchUser()
-    }, [])
     const Partial = UserPartial[activePartial]
     return (
         <section className="head">
@@ -34,18 +31,17 @@ export function ProfilePage() {
                 <div className="head__profile">
                     <div className="head__profile-infos">
                         <div className="head__profile-avatar">
-                            <img src={ profile?.avatar } alt="" />
+                            <img 
+                            src={ 
+                                profile?.avatar 
+                            } 
+                            alt="" />
                         </div>
                         <div>
-                            <h4 className="head__profile-name">{ profile?.name }</h4>
-                            <div className="time"> { profile?.lastSeen } </div>
+                            <h4 className="head__profile-name">{ profile?.name } { profile?.surname }</h4>
+                            <div className="time"> { new Date(profile?.lastSeen).toLocaleString('ru-RU') } </div>
                         </div>
-                    </div>
-                    <div className="head__profile-buttons">
-                        <a href="#" className="write">
-                            <img src={messageIcon} alt="" />
-                            <span>Написать</span>
-                        </a>
+                        <UserActions />
                     </div>
                 </div>
                 <div className="profile__menu">

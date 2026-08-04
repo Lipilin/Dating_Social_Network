@@ -10,6 +10,7 @@ import {
     RegistrationMessage
 } from '@/components/pages/Registration'
 import '@/assets/css/main.css'
+import { NotFound } from './components/pages/Errors/NotFound'
 
 function App() {
     const [authOpen, setAuthOpen] = useState(false)
@@ -28,11 +29,12 @@ function App() {
             <div className="main__sections">
                 <Sidebar isActive={sidebarActive} />
                 <main className={`main${sidebarActive ? ' active' : ''}`}>
-                    <Routes>
-                        {Object.values(ROUTES).map(({ URL, COMPONENT: Component }) => (
-                            <Route key={URL} path={URL} element={<Component />} />
-                        ))}
-                    </Routes>
+                        <Routes>
+                            {Object.values(ROUTES).map(({ URL, COMPONENT: Component, PROPS: Props }) => (
+                                <Route key={URL} path={URL} element={<Component />} />
+                            ))}
+                            <Route path="*" element={<NotFound />} />
+                        </Routes>
                     <Footer />
                 </main>
             </div>

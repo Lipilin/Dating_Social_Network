@@ -39,6 +39,22 @@ interface RegistrationMainProps {
 const categoryProvider = new Category()
 const userProvider = new User()
 
+const UserPostRequestDefault: UserPostRequest = {
+    login: '',
+    email: '',
+    name: '',
+    surname: '',
+    password: '',
+    confirmPassword: '',
+    age: 0,
+    city: '',
+    gender: GENDER.MALE,
+    description: '',
+    acceptService: false,
+    acceptSecurity: false,
+    interests: [],
+}
+
 export function RegistrationMain({
     isOpen = false,
     onClose,
@@ -46,21 +62,7 @@ export function RegistrationMain({
     onSuccess,
     onError,
 }: RegistrationMainProps) {
-    const [userPostRequest, setUserPostRequest] = useState<UserPostRequest>({
-        login: '',
-        email: '',
-        name: '',
-        surname: '',
-        password: '',
-        confirmPassword: '',
-        age: 0,
-        city: '',
-        gender: GENDER.MALE,
-        description: '',
-        acceptService: false,
-        acceptSecurity: false,
-        interests: [],
-    })
+    const [userPostRequest, setUserPostRequest] = useState<UserPostRequest>(UserPostRequestDefault)
     const [step, setStep] = useState<RegistrationStep>(RegistrationStep.LOGIN)
     const [categories, setCategories] = useState<CategoryWithInterestResource[]>([])
     const [errors, setErrors] = useState<Record<string, string>>({})
@@ -170,7 +172,7 @@ export function RegistrationMain({
         <div className={`modal registration${isOpen ? ' show' : ''}`} onClick={handleBackdropClick}>
             <div className="modal__content">
                 <div className="modal__head">
-                    <h4>
+                    <h4 className="min-w-0">
                         Регистрация
                         <div className="icon">
                             <img src={arrowRightSvg} alt="" />

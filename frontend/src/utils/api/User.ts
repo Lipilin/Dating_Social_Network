@@ -16,8 +16,16 @@ export class User{
 
     }
 
-    async getProfile(): Promise<UserResource | null>{
-        return null
+    async getProfile(id: string): Promise<UserResource | null>{
+        try{
+            const response = await axios.get(
+                `${ API_SETTINGS.API_HOST }${ API_SETTINGS.ENDPOINTS.USER.LIST }?id=${ id }`
+            )
+            return response.data as UserResource
+        } catch (error) {
+            console.error(error)
+            return null
+        }
     }
 
     async createUser(request: UserPostRequest): Promise<UserResource | null>{
@@ -32,4 +40,5 @@ export class User{
             return null
         }
     }
+
 }

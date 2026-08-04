@@ -76,6 +76,7 @@ export interface UserResource{
     city: string, 
     createdAt: Date,
     updatedAt: Date,
+    gender?: GENDER
 }
 
 export interface UserPostRequest extends PostRequest{

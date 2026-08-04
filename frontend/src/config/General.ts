@@ -4,8 +4,8 @@ import { InstructionPage } from '@/components/pages/InstructionPage'
 import { AnnouncementPage } from '@/components/pages/AnnouncementPage'
 import { DestinationPage } from '@/components/pages/DestinationPage'
 import { InterestPage } from '@/components/pages/InterestPage'
-import { ProfilePage } from '@/components/pages/ProfilePage'
 import type { ComponentType } from 'react'
+import { UserPage } from '@/components/pages/UserPage/UserPage'
 
 export const genderLabels = {
     [GENDER_PREFERENCE.MALE]: {
@@ -61,7 +61,8 @@ export const API_SETTINGS: ApiSettings = {
 
 interface Route{
     URL: string, 
-    COMPONENT: ComponentType
+    COMPONENT: ComponentType<any>
+    PROPS?: Record<string, any>
 }
 
 export const ROUTES: Record<string, Route> = {
@@ -87,6 +88,10 @@ export const ROUTES: Record<string, Route> = {
     },
     PROFILE: {
         URL: '/profile', 
-        COMPONENT: ProfilePage,
+        COMPONENT: UserPage,
+    }, 
+    USER: {
+        URL: '/user/:id', 
+        COMPONENT: UserPage,
     }
 } as const
