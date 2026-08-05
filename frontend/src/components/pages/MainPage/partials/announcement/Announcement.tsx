@@ -18,7 +18,11 @@ export function Announcement(item: AnnouncementResource) {
                     <p className="limited-text">
                         {item.description}
                     </p>
-                    <a className="show-mores">Показать дальше</a>
+                    <a 
+                        href = {ROUTES.ANNOUNCEMENT_DETAIL.URL.replace(':id', item.id)} 
+                        className="show-mores">
+                        Показать дальше
+                    </a>
                 </div>
                 <div className="card__info-bottom">
                     <h4>

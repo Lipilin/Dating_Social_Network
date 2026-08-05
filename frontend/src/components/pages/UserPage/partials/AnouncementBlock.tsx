@@ -4,12 +4,11 @@ import { Announcement } from './Announcement'
 export function AnouncementBlock({ user }: { user: UserResource }) {
     return (
         <div className="locations__wrapper">
-            {user.announcements.map((announcement, index) => (
+            {user.announcements.map((announcement) => (
                 <Announcement
                     key={announcement.id}
                     {...announcement}
                     user={user}
-                    imageIndex={index}
                 />
             ))}
         </div>

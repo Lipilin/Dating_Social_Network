@@ -43,4 +43,20 @@ export class Announcement{
     async createAnouncement(): Promise<void>{
 
     }
+
+    async getById(id: string): Promise<AnnouncementResource | null>{
+        try{
+            const result = await axios.get(
+                `${ API_SETTINGS.API_HOST }${ API_SETTINGS.ENDPOINTS.ANNOUNCEMENT.GET }`, 
+                {
+                    params: {id: id}
+                }
+            )
+            const data = result.data as AnnouncementResource
+            return data
+        }catch(error){
+            console.log((error as Error).message)
+            return null
+        }
+    }
 }

@@ -7,6 +7,7 @@ import { InterestPage } from '@/components/pages/InterestPage'
 import type { ComponentType } from 'react'
 import { UserPage } from '@/components/pages/UserPage/UserPage'
 import { ProfilePage } from '@/components/pages/UserPage/ProfilePage'
+import { AnnouncementDetail } from '@/components/pages/AnnouncementDetail/AnnouncementDetail'
 
 export const genderLabels = {
     [GENDER_PREFERENCE.MALE]: {
@@ -36,6 +37,7 @@ interface Endpoint{
     LIST: string
     CREATE: string
     UPDATE: string  
+    GET: string
 }
 
 export const API_SETTINGS: ApiSettings = {
@@ -46,16 +48,19 @@ export const API_SETTINGS: ApiSettings = {
             LIST: '/announcement/list', 
             CREATE: '', 
             UPDATE: '', 
+            GET: '/announcement/get',
         }, 
         CATEGORIES: {
             LIST: '/category/list', 
             CREATE: '', 
             UPDATE: '', 
+            GET: '/category/get',
         }, 
         USER: {
             LIST: '/user/list', 
             CREATE: '/user/create', 
             UPDATE: '', 
+            GET: '/user/get',
         }
     },
 } as const
@@ -94,5 +99,9 @@ export const ROUTES: Record<string, Route> = {
     USER: {
         URL: '/user/:id', 
         COMPONENT: UserPage,
+    }, 
+    ANNOUNCEMENT_DETAIL: {
+        URL: '/announcement/:id', 
+        COMPONENT: AnnouncementDetail,
     }
 } as const

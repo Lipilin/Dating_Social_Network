@@ -10,6 +10,7 @@ export interface AnnouncementResource{
     departure: string, 
     user: UserResource, 
     icon?: string
+    createdAt: string
 }
 
 export interface Request{
@@ -45,6 +46,7 @@ export interface AnnouncementRequest extends Request{
     purpose?: InterestResource[],
     departure?: string,
     destination?: string
+    id?: string
 }
 
 export enum GENDER{
