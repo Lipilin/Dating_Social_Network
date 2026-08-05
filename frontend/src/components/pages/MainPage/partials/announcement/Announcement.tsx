@@ -1,5 +1,4 @@
 import type { AnnouncementResource } from '@/utils/api/types'
-import { images } from './AnnouncementSlider.images'
 import { AnnouncementGenderBLock } from './AnnouncementGenderBlock'
 import { ROUTES } from '@/config/General'
 
@@ -7,7 +6,7 @@ export function Announcement(item: AnnouncementResource) {
     return (
         <>
             <div className="card__image">
-                <img src={images['announcement_1.png']} alt={ item.user.avatar } />
+                <img src={ item.user.avatar } alt={ item.user.avatar } />
             </div>
             <div className="card__info">
                 <div className="card__info-top">

@@ -6390,6 +6390,9 @@ img.mfp-img {
     width: 100%;
   }
 }
+.about__block .friends__interests {
+  margin: 35px 0px 35px 0px;
+}
 .about__content {
   border-radius: 8px;
   background: #FFF;
@@ -7437,6 +7440,10 @@ img.mfp-img {
 
 .head {
   margin-top: 31px;
+}
+.head .about {
+  padding: 0;
+  position: static;
 }
 .head__image {
   width: 100%;

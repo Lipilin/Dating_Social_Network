@@ -8,7 +8,8 @@ export interface AnnouncementResource{
     dateTo: string, 
     destination: string, 
     departure: string, 
-    user: UserResource
+    user: UserResource, 
+    icon?: string
 }
 
 export interface Request{
@@ -24,6 +25,7 @@ export interface InterestResource{
     id: number, 
     name: string,
     image?: string,
+    category?: CategoryWithInterestResource
 }
 
 export interface CategoryWithInterestResource{
@@ -58,7 +60,12 @@ export enum GENDER_PREFERENCE{
 
 
 export interface Post{
-
+    id: string
+    title: string
+    content: string
+    image: string
+    tags?: string[]
+    createdAt: string
 }
 
 export interface UserResource{
@@ -77,6 +84,7 @@ export interface UserResource{
     createdAt: Date,
     updatedAt: Date,
     gender?: GENDER
+    interests?: InterestResource[]
 }
 
 export interface UserPostRequest extends PostRequest{

@@ -1,9 +1,22 @@
 import type { UserResource } from '@/utils/api/types'
+import { AboutMeBlock } from './description/AboutMeBlock'
+import { InterestsBlock } from './description/InterestsBlock'
+import { MapBlock } from './description/MapBlock'
+import { VisitedCountriesBlock } from './description/VisitedCountriesBlock'
 
-export function DescriptionBlock({ user }: {user: UserResource}) {
+export function DescriptionBlock({ user }: { user: UserResource }) {
     return (
-        <div>
-            <h2>Описание</h2>
+        <div className="about">
+            <div className="about__block">
+                <div className="about__block-left">
+                    <AboutMeBlock user={user} />
+                    <InterestsBlock interests = { user.interests || []}/>
+                </div>
+                <div className="about__block-right">
+                    <MapBlock />
+                    <VisitedCountriesBlock interests = { user.interests || []}/>
+                </div>
+            </div>
         </div>
     )
 }
