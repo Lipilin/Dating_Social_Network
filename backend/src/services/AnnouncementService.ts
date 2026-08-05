@@ -27,4 +27,17 @@ export class AnnouncementService{
         })
         return response
     }
+
+    async getAnnouncementById(id: string): Promise<Announcement | null>{
+        const response = await prisma.announcement.findUnique({
+            where: {
+                id: id
+            }, 
+            include: {
+                user: true,
+                interests: true,
+            }
+        })
+        return response
+    }
 }

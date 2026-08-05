@@ -42,4 +42,15 @@ export class AnnouncementController{
             response.status(API_RESPONSE.ERROR).json([])
         }
     }
+
+    async getAnnouncementById(request: Request, response: Response){
+        const id = request?.query?.id
+        if(!id) return response.status(API_RESPONSE.BAD_REQUEST).json(null)
+        try{
+            const entity = await this.#annoucementProvider.getAnnouncementById(String(id))
+            response.status(API_RESPONSE.OK).json(entity)
+        }catch(error){
+            response.status(API_RESPONSE.ERROR).json(null)
+        }
+    }
 }
