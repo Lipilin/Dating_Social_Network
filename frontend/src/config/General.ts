@@ -8,6 +8,7 @@ import type { ComponentType } from 'react'
 import { UserPage } from '@/components/pages/UserPage/UserPage'
 import { ProfilePage } from '@/components/pages/UserPage/ProfilePage'
 import { AnnouncementDetail } from '@/components/pages/AnnouncementDetail/AnnouncementDetail'
+import { PostsPage } from '@/components/pages/PostsPage/PostsPage'
 
 export const genderLabels = {
     [GENDER_PREFERENCE.MALE]: {
@@ -72,6 +73,10 @@ interface Route{
 }
 
 export const ROUTES: Record<string, Route> = {
+    POSTS: {
+        URL: '/posts', 
+        COMPONENT: PostsPage,
+    },
     HOME: {
         URL: '/', 
         COMPONENT: MainPage,

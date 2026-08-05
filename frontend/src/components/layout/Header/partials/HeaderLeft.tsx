@@ -31,6 +31,7 @@ export function HeaderLeft({ onToggleSidebar }: HeaderLeftProps) {
                       </form>
                       <ul>
                           <li><a href={ROUTES.ANNOUNCEMENT.URL}>Объявления</a></li>
+                          <li><a href={ROUTES.POSTS.URL}>Публикации</a></li>
                       </ul>
                   </div>
     </>
