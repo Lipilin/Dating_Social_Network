@@ -1,4 +1,5 @@
-.not-found {
+.not-found,
+.need-registration {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,25 +30,6 @@
 
         @media #{$mobile} {
             padding: 48px 24px;
-        }
-
-        &::before {
-            content: '404';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: Gilroy, sans-serif;
-            font-size: 220px;
-            font-weight: 700;
-            line-height: 1;
-            color: rgba(0, 65, 242, 0.06);
-            pointer-events: none;
-            user-select: none;
-
-            @media #{$mobile} {
-                font-size: 160px;
-            }
         }
     }
 
@@ -81,6 +63,84 @@
 
         @media #{$mobile} {
             font-size: 22px;
+        }
+    }
+}
+
+.not-found {
+    &__card {
+        &::before {
+            content: '404';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: Gilroy, sans-serif;
+            font-size: 220px;
+            font-weight: 700;
+            line-height: 1;
+            color: rgba(0, 65, 242, 0.06);
+            pointer-events: none;
+            user-select: none;
+
+            @media #{$mobile} {
+                font-size: 160px;
+            }
+        }
+    }
+}
+
+.need-registration {
+    &__card {
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(0, 65, 242, 0.08) 0%, rgba(0, 65, 242, 0) 55%);
+            pointer-events: none;
+        }
+    }
+
+    &__text {
+        position: relative;
+        z-index: 1;
+        margin: 16px 0 0;
+        color: #6D727E;
+        font-family: "TT Commons", sans-serif;
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 140%;
+
+        @media #{$mobile} {
+            font-size: 15px;
+        }
+    }
+
+    &__button {
+        position: relative;
+        z-index: 1;
+        margin-top: 32px;
+        border: none;
+        border-radius: 12px;
+        background: #0041F2;
+        padding: 15px 58px 13px;
+        cursor: pointer;
+        color: #FFF;
+        font-family: "TT Commons", sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: normal;
+        transition: background-color 0.3s ease;
+
+        @media #{$mobile} {
+            width: 100%;
+            margin-top: 24px;
+            padding: 14px 24px 12px;
+            font-size: 15px;
+        }
+
+        &:hover {
+            background: rgba(0, 65, 242, 0.8);
         }
     }
 }

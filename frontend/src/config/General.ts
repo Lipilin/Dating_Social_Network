@@ -6,6 +6,7 @@ import { DestinationPage } from '@/components/pages/DestinationPage'
 import { InterestPage } from '@/components/pages/InterestPage'
 import type { ComponentType } from 'react'
 import { UserPage } from '@/components/pages/UserPage/UserPage'
+import { ProfilePage } from '@/components/pages/UserPage/ProfilePage'
 
 export const genderLabels = {
     [GENDER_PREFERENCE.MALE]: {
@@ -88,7 +89,7 @@ export const ROUTES: Record<string, Route> = {
     },
     PROFILE: {
         URL: '/profile', 
-        COMPONENT: UserPage,
+        COMPONENT: ProfilePage,
     }, 
     USER: {
         URL: '/user/:id', 

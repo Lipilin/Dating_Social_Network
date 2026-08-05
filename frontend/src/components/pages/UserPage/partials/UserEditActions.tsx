@@ -5,7 +5,7 @@ export function UserEditActions(){
         <div className="head__profile-buttons">
             <a href="#" className="write">
                 <img src={ messageIcon } alt="" />
-                <span>Написать</span>
+                <span>Редактировать</span>
             </a>
         </div>
     ) 

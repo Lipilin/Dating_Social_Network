@@ -1,26 +1,30 @@
-import { useState } from 'react'
+import type { UserResource } from "@/utils/api/types"
+import type { ComponentType } from "react"
+import { useState, useMemo } from "react"
+import { DescriptionBlock, PostBlock, AnouncementBlock } from '.'
 import headBackground from '@/assets/images/head_bg.png'
-import type { UserResource } from '@/utils/api/types'
-import { DescriptionBlock, PostBlock, AnouncementBlock } from './partials'
-import type { ComponentType } from 'react'
-import { default as femaleAvatar } from '@/assets/images/avatar_female.svg'
-import { default as maleAvatar } from '@/assets/images/avatar_male.svg'
+import { default as femaleAvatar } from '@/assets/images/avatar_female.png'
+import { default as maleAvatar } from '@/assets/images/avatar_male.webp'
 import { GENDER } from '@/utils/api/types'
+
+interface UserContentProps {
+    profile: UserResource
+    UserActions: ComponentType<any>
+}
 
 const UserPartial: Record<string, ComponentType< {user: UserResource }>> = {
     DESCRIPTION: DescriptionBlock,
     POSTS: PostBlock,
     ANNOUNCEMENTS: AnouncementBlock,
 }
-type UserPartialType = 'DESCRIPTION' | 'POSTS' | 'ANNOUNCEMENTS'
 
-interface ProfilePageProps {
-    profile: UserResource
-    UserActions: ComponentType<any>
-}
-
-export function ProfilePage({profile, UserActions}: ProfilePageProps) {
-    const [activePartial, setActivePartial] = useState<UserPartialType>('DESCRIPTION')
+export function UserContent({ profile, UserActions }: UserContentProps){
+    const [activePartial, setActivePartial] = useState<keyof typeof UserPartial>('DESCRIPTION')
+    const userAvatar = useMemo(() => {
+        if(profile?.avatar) return profile.avatar
+        else if(profile?.gender === GENDER.FEMALE) return femaleAvatar
+        else return maleAvatar
+    }, [profile])
     const Partial = UserPartial[activePartial]
     return (
         <section className="head">
@@ -33,7 +37,7 @@ export function ProfilePage({profile, UserActions}: ProfilePageProps) {
                         <div className="head__profile-avatar">
                             <img 
                             src={ 
-                                profile?.avatar 
+                                userAvatar 
                             } 
                             alt="" />
                         </div>

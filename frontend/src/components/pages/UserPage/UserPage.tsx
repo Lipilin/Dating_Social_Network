@@ -2,9 +2,9 @@ import { useParams } from 'react-router'
 import type { UserResource } from '@/utils/api/types'
 import { useEffect, useState } from 'react'
 import { NotFound } from '@/components/pages/Errors/NotFound'
-import { ProfilePage } from '@/components/pages/ProfilePage/ProfilePage'
 import { UserCommunicationActions } from './partials/UserCommunicationActions'
 import { User } from '@/utils/api/User'
+import { UserContent } from './partials/UserContent'
 
 const userProvider = new User()
 
@@ -26,7 +26,7 @@ export function UserPage(){
     return (
         <div className="container">
             { user && (
-                <ProfilePage profile = { user } UserActions = { UserCommunicationActions } />
+                <UserContent profile = { user } UserActions = { UserCommunicationActions } />
             ) || hasError && (
                 <>
                     <NotFound />
