@@ -14,7 +14,7 @@ export function DescriptionBlock({ user }: { user: UserResource }) {
                 </div>
                 <div className="about__block-right">
                     <MapBlock />
-                    <VisitedCountriesBlock interests = { user.interests || []}/>
+                    <VisitedCountriesBlock interests = { user.interests?.filter((interest) => interest.category?.isCountry) || []}/>
                 </div>
             </div>
         </div>

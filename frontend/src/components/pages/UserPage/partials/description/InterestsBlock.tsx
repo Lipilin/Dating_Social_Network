@@ -11,8 +11,13 @@ function createInterestBlock(interests: InterestResource[]): Record<string, Inte
     interests.forEach((interest) => {
         if(!interest.category) return
         if(interest.category.isCountry) return
+        if(!interest.category.name) return
         const block: InterestResource[] = interestBlock[interest?.category?.name] || []
-        block.push(interest)
+        if(block.length == 0){
+            interestBlock[interest?.category?.name] = block
+        }else{
+            block.push(interest)
+        }
     })
     return interestBlock
 }
@@ -45,7 +50,7 @@ export function InterestsBlock({interests}: InterestsBlockProps) {
                                     <Fragment key = { name }>
                                         <div className="friends__interests-item">
                                             <h4>
-                                                <img src = "" alt="" />
+                                                
                                                 { name }
                                             </h4>
                                         </div>

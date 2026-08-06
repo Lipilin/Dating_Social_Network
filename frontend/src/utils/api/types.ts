@@ -32,7 +32,7 @@ export interface InterestResource{
 export interface CategoryWithInterestResource{
     id: string,
     name: string, 
-    image: string, 
+    icon: string, 
     isCountry: boolean, 
     interests: InterestResource[],
 }

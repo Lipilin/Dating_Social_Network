@@ -40,7 +40,6 @@ function buildInterestRows(groups: Record<string, InterestResource[]>): string[]
 export function AnnouncementInterestsBlock({ interests = [] }: AnnouncementInterestsBlockProps) {
     const interestGroups = useMemo(() => groupInterestsByCategory(interests), [interests])
     const interestRows = useMemo(() => buildInterestRows(interestGroups), [interestGroups])
-
     if (interests.length === 0) {
         return (
             <div className={styles.block}>
@@ -59,9 +58,9 @@ export function AnnouncementInterestsBlock({ interests = [] }: AnnouncementInter
                             <Fragment key={categoryName}>
                                 <div className={styles.category}>
                                     <h4 className={styles.categoryTitle}>
-                                        {interestGroups[categoryName][0]?.category?.image && (
+                                        {interestGroups[categoryName][0]?.category?.icon && (
                                             <img
-                                                src={interestGroups[categoryName][0].category!.image}
+                                                src={interestGroups[categoryName][0].category!.icon}
                                                 alt=""
                                             />
                                         )}
