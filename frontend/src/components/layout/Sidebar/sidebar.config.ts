@@ -12,6 +12,7 @@ export const sidebarMainItems: SidebarMenuItem[] = [
     { label: 'Профиль', href: ROUTES.PROFILE.URL, icon: 'side_author_icon.svg' },
     { label: 'Лента', href: ROUTES.HOME.URL, icon: 'side_lenta_icon.svg' }, 
     { label: 'Объявления', href: ROUTES.ANNOUNCEMENT.URL, icon: 'side_date_icon.svg', alt: 'Frame 31' },
+    { label: 'Публикации', href: ROUTES.POSTS.URL, icon: 'side_help_icon.svg', alt: 'Frame 34' },
     { label: 'Карта', href: '#', icon: 'side_location_icon.svg', alt: 'Frame 33' },
 ]
 

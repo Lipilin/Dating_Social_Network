@@ -3572,6 +3572,9 @@ img.mfp-img {
     width: 100%;
   }
 }
+.friends__content_full {
+  width: 100%;
+}
 .friends__right {
   width: calc(41% - 15px);
 }
@@ -3687,6 +3690,9 @@ img.mfp-img {
   .friends__directions {
     padding: 40px 20px;
   }
+}
+.friends__directions_full {
+  width: 100%;
 }
 .friends__directions .countries {
   display: flex;
