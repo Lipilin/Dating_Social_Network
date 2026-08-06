@@ -1,13 +1,13 @@
-import messageIcon from '@/assets/images/type_icon.png'
+import messageIcon from '@/assets/images/type_icon.svg'
 import { Link } from 'react-router'
 
-export function UserEditActions(){
+export function UserEditActions() {
     return (
-        <div className="head__profile-buttons">
+        <div className="profile__card-actions">
             <Link to="#" className="write">
-                <img src={ messageIcon } alt="" />
-                <span>Редактировать</span>
+                <img src={messageIcon} alt="" />
+                Редактировать
             </Link>
         </div>
-    ) 
+    )
 }

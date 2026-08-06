@@ -5812,16 +5812,55 @@ img.mfp-img {
   padding-top: 233px;
   position: relative;
 }
+@media (max-width: 768px) {
+  .about {
+    padding-top: 160px;
+  }
+}
+@media (max-width: 480px) {
+  .about {
+    padding-top: 120px;
+  }
+}
+.about .container {
+  position: relative;
+  z-index: 1;
+}
 .about__bg {
-  width: calc(100% + 40px);
   position: absolute;
-  z-index: -1;
-  left: 0;
+  z-index: 0;
   top: 0;
+  left: -100px;
+  width: 100vw;
   height: 490px;
+  max-width: none;
   object-fit: cover;
-  object-position: bottom;
-  left: -20px;
+  object-position: center;
+  display: block;
+}
+@media (max-width: 768px) {
+  .about__bg {
+    left: -10px;
+    height: 280px;
+  }
+}
+@media (max-width: 480px) {
+  .about__bg {
+    height: 200px;
+  }
+}
+.main.active .about__bg {
+  left: -250px;
+}
+@media (max-width: 1370px) {
+  .main.active .about__bg {
+    left: -100px;
+  }
+}
+@media (max-width: 768px) {
+  .main.active .about__bg {
+    left: -10px;
+  }
 }
 .about h3 {
   color: #001346;
@@ -5836,6 +5875,8 @@ img.mfp-img {
   background: #FFF;
   box-shadow: 1px 1px 4px 0px rgba(94, 92, 154, 0.06);
   display: flex;
+  position: relative;
+  z-index: 1;
 }
 @media (max-width: 1370px) {
   .about__top {
@@ -6365,6 +6406,44 @@ img.mfp-img {
 }
 .about__top .profile__card-details {
   width: 100%;
+}
+.about__top .profile__card-actions {
+  margin-top: 17px;
+}
+@media (max-width: 480px) {
+  .about__top .profile__card-actions {
+    margin-top: 12px;
+  }
+}
+.about__top .profile__card-actions .write {
+  border-radius: 12px;
+  background: #0041F2;
+  color: #FFF;
+  font-family: "Gilroy";
+  font-size: 15.07px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  display: inline-flex;
+  padding: 13px 18px;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  transition: .3s all ease;
+}
+.about__top .profile__card-actions .write img {
+  width: 19px;
+}
+.about__top .profile__card-actions .write:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%), linear-gradient(267deg, rgba(235, 13, 111, 0.5) -9.97%, rgba(235, 13, 111, 0) 64.02%), #0041F2;
+}
+@media (max-width: 480px) {
+  .about__top .profile__card-actions .write {
+    font-size: 13px;
+    padding: 11px 14px;
+    gap: 8px;
+  }
 }
 .about__top .map {
   width: 794px;

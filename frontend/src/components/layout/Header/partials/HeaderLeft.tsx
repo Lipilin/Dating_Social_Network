@@ -26,10 +26,6 @@ export function HeaderLeft({ onToggleSidebar }: HeaderLeftProps) {
                           </svg>
                       </Link>
                       <Link to={ROUTES.HOME.URL} className="header__logo"><img src={images["header_logo.svg"]} alt="" /></Link>
-                      <form className="header__search">
-                          <input type="text" placeholder="Поиск" />
-                          <button type="button"><img src={images["header_search.svg"]} alt="" /></button>
-                      </form>
                       <ul>
                           <li><Link to={ROUTES.ANNOUNCEMENT.URL}>Объявления</Link></li>
                           <li><Link to={ROUTES.POSTS.URL}>Публикации</Link></li>
