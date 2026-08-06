@@ -1,5 +1,6 @@
 import { images } from '../Sidebar.images'
 import type { SidebarMenuItem as SidebarMenuItemType } from '../sidebar.config'
+import { Link } from 'react-router'
 
 interface SidebarMenuItemProps {
     item: SidebarMenuItemType
@@ -9,10 +10,10 @@ interface SidebarMenuItemProps {
 export function SidebarMenuItem({ item, isActive }: SidebarMenuItemProps) {
     return (
         <div className={`sidebar__item${isActive ? ' active' : ''}`}>
-            <a href={item.href} className="sidebar__link">
+            <Link to={item.href} className="sidebar__link">
                 <img src={images[item.icon]} alt={item.alt ?? ''} />
                 <span>{item.label}</span>
-            </a>
+            </Link>
         </div>
     )
 }

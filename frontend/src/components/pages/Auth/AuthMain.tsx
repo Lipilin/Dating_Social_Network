@@ -3,6 +3,7 @@ import { ModalCloseButton } from '@/components/ui/buttons/ModalCloseButton'
 import { DefaultInput } from '@/components/ui/inputs/DefaultInput'
 import { UserLoginSchema } from '@/utils/validation/UserLoginRules'
 import { errorListClasses, inputErrorClasses } from '@/styles/formErrors'
+import { Link } from 'react-router'
 
 const authFields = ['email', 'password'] as const
 
@@ -79,16 +80,16 @@ export function AuthMain({ isOpen = false, onClose, onSwitchToRegistration }: Au
                                 </ul>
                             )}
                             <div className="links">
-                                <a href="#">Забыли пароль?</a>
-                                <a
-                                    href="#"
+                                <Link to="#">Забыли пароль?</Link>
+                                <Link
+                                    to="#"
                                     onClick={(e) => {
                                         e.preventDefault()
                                         onSwitchToRegistration?.()
                                     }}
                                 >
                                     Регистрация
-                                </a>
+                                </Link>
                             </div>
                             <div className="row">
                                 <button type="submit" className="blue" onClick={(e) => {

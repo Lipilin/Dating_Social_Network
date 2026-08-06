@@ -1,5 +1,6 @@
 import type { InterestResource } from '@/utils/api/types'
 import { Fragment, useMemo } from 'react'
+import { Link } from 'react-router'
 
 interface InterestsBlockProps {
     interests: InterestResource[]
@@ -51,7 +52,7 @@ export function InterestsBlock({interests}: InterestsBlockProps) {
                                         <div className="friends__actions">
                                             { 
                                                 interestsBLocks[name].map((interest) => (
-                                                    <a key = { interest.id } href="#">{interest.name}</a>
+                                                    <Link key = { interest.id } to="#">{interest.name}</Link>
                                                 ))
                                             }
                                         </div>

@@ -1,12 +1,13 @@
 import messageIcon from '@/assets/images/type_icon.png'
+import { Link } from 'react-router'
 
 export function UserCommunicationActions(){
     return (
         <div className="head__profile-buttons">
-            <a href="#" className="write">
+            <Link to="#" className="write">
                 <img src={messageIcon} alt="" />
                 <span>Написать</span>
-            </a>
+            </Link>
         </div>
     ) 
 }

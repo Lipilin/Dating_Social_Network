@@ -3,6 +3,7 @@ import { ROUTES } from '@/config/General'
 import { AnnouncementInterestsBlock } from './AnnouncementInterestsBlock'
 import { GenderPreferenceBlock } from './GenderPreferenceBlock'
 import styles from './AnnouncementInfoBlock.module.css'
+import { Link } from 'react-router'
 
 interface AnnouncementInfoBlockProps {
     announcement: AnnouncementResource & { interests?: InterestResource[] }
@@ -26,9 +27,9 @@ export function AnnouncementInfoBlock({ announcement }: AnnouncementInfoBlockPro
             <h1 className={styles.title}>{title}</h1>
 
             <div className={styles.route}>
-                <a href={ROUTES.DESTINATION.URL} className={styles.city}>
+                <Link to={ROUTES.DESTINATION.URL} className={styles.city}>
                     {departure}
-                </a>
+                </Link>
                 <svg
                     className={styles.arrow}
                     width="6"
@@ -45,9 +46,9 @@ export function AnnouncementInfoBlock({ announcement }: AnnouncementInfoBlockPro
                         strokeWidth="1.80724"
                     />
                 </svg>
-                <a href={ROUTES.DESTINATION.URL} className={styles.city}>
+                <Link to={ROUTES.DESTINATION.URL} className={styles.city}>
                     {destination}
-                </a>
+                </Link>
             </div>
 
             <GenderPreferenceBlock gender={genderInterest} />

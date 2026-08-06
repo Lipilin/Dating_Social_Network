@@ -6,6 +6,7 @@ import headBackground from '@/assets/images/head_bg.png'
 import { default as femaleAvatar } from '@/assets/images/avatar_female.png'
 import { default as maleAvatar } from '@/assets/images/avatar_male.webp'
 import { GENDER } from '@/utils/api/types'
+import { Link } from 'react-router'
 
 interface UserContentProps {
     profile: UserResource
@@ -51,28 +52,28 @@ export function UserContent({ profile, UserActions }: UserContentProps){
                 <div className="profile__menu">
                     <ul>
                         <li>
-                            <a
+                            <Link
                             className={activePartial === 'DESCRIPTION' ? 'active' : ''}
-                            href="#" 
+                            to="#" 
                             onClick={() => setActivePartial('DESCRIPTION')}>
                                 О себе
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a
-                            href="#"
+                            <Link
+                            to="#"
                             className={activePartial === 'POSTS' ? 'active' : ''}
                             onClick={() => setActivePartial('POSTS')}>
                                 Посты ({ profile?.posts.length || 0 })
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a 
-                            href="#" 
+                            <Link 
+                            to="#" 
                             className={activePartial === 'ANNOUNCEMENTS' ? 'active' : ''} 
                             onClick={() => setActivePartial('ANNOUNCEMENTS')}>
                                 Объявления ({ profile?.announcements.length || 0 })
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>

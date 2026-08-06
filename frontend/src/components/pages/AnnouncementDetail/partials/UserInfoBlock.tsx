@@ -5,6 +5,7 @@ import { ROUTES } from '@/config/General'
 import { default as femaleAvatar } from '@/assets/images/avatar_female.png'
 import { default as maleAvatar } from '@/assets/images/avatar_male.webp'
 import styles from './UserInfoBlock.module.css'
+import { Link } from 'react-router'
 
 interface UserInfoBlockProps {
     user: UserResource
@@ -26,9 +27,9 @@ export function UserInfoBlock({ user }: UserInfoBlockProps) {
             </div>
 
             <div className={styles.info}>
-                <a href={profileUrl} className={styles.name}>
+                <Link to={profileUrl} className={styles.name}>
                     {user.name} {user.surname}
-                </a>
+                </Link>
 
                 <p className={styles.meta}>{user.age} года</p>
 
@@ -42,9 +43,9 @@ export function UserInfoBlock({ user }: UserInfoBlockProps) {
                 )}
             </div>
 
-            <a href={profileUrl} className={styles.profileLink}>
+            <Link to={profileUrl} className={styles.profileLink}>
                 Перейти в профиль
-            </a>
+            </Link>
         </aside>
     )
 }

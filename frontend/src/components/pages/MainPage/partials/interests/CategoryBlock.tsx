@@ -1,5 +1,6 @@
 import type { CategoryWithInterestResource } from '@/utils/api/types'
 import { ROUTES } from '@/config/General'
+import { Link } from 'react-router'
 
 interface CategoryBlockProps {
     category: CategoryWithInterestResource
@@ -14,7 +15,7 @@ export function CategoryBLock({ category }: CategoryBlockProps) {
             </h4>
             <div className="friends__actions">
                 {category.interests.map((interest) => (
-                    <a href={ROUTES.INTEREST.URL} key={interest.id}>{interest.name}</a>
+                    <Link to={ROUTES.INTEREST.URL} key={interest.id}>{interest.name}</Link>
                 ))}
             </div>
         </div>

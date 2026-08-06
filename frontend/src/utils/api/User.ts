@@ -41,4 +41,8 @@ export class User{
         }
     }
 
+    async getMe(): Promise<UserResource | null>{
+        return null
+    }
+
 }

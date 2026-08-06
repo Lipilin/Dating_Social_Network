@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 interface AuthSwitcherProps{
     onSwitchToAuth: () => void
 }
@@ -6,15 +7,15 @@ export function AuthSwitcher({ onSwitchToAuth }: AuthSwitcherProps){
     return (
         <span>
             У меня есть аккаунт{' '}
-            <a
-                href="#"
+            <Link
+                to="#"
                 onClick={(e) => {
                     e.preventDefault()
                     onSwitchToAuth()
                 }}
             >
                 Войти
-            </a>
+            </Link>
         </span>
     )
 }

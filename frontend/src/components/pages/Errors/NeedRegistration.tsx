@@ -1,8 +1,8 @@
-interface NeedRegistrationProps {
-    onOpenRegistration?: () => void
-}
+import { ProfileContext } from "@/utils/context/ProfileContext"
+import { useContext } from "react"
 
-export function NeedRegistration({ onOpenRegistration }: NeedRegistrationProps) {
+export function NeedRegistration() {
+    const { openAuthModal } = useContext(ProfileContext)
     return (
         <section className="need-registration">
             <div className="container">
@@ -35,7 +35,7 @@ export function NeedRegistration({ onOpenRegistration }: NeedRegistrationProps) 
                     <button
                         type="button"
                         className="need-registration__button"
-                        onClick={onOpenRegistration}
+                        onClick={ (e) => openAuthModal?.() }
                     >
                         Зарегистрироваться
                     </button>

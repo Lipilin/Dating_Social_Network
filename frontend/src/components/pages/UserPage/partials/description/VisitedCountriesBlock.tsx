@@ -1,4 +1,5 @@
 import type { InterestResource } from '@/utils/api/types'
+import { Link } from 'react-router'
 
 interface VisitedCountriesBlockProps{
     interests: InterestResource[]
@@ -12,10 +13,10 @@ export function VisitedCountriesBlock({ interests }: VisitedCountriesBlockProps)
                 { interests.length == 0 ? (<p>Пока нет любимых направлений</p>) : (
                     <>
                         {interests.map((country) => (
-                            <a key={ country.id } href="#" className="country__item">
+                            <Link key={ country.id } to="#" className="country__item">
                                 <img src={ country.image } alt="" />
                                 { country.name }
-                            </a>
+                            </Link>
                         ))}
                     </>
                 ) }

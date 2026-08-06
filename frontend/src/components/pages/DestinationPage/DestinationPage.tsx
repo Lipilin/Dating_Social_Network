@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Category } from '@/utils/api/Category'
 import type { CategoryWithInterestResource } from '@/utils/api/types'
 import { ROUTES } from '@/config/General'
+import { Link } from 'react-router'
 
 const categoryService = new Category()
 const ALL_CATEGORIES_TAKE = 100
@@ -30,14 +31,14 @@ export function DestinationPage() {
                         <h3>Направления</h3>
                         <div className="countries">
                             {destinationCategory.interests.map((destination) => (
-                                <a
-                                    href={ROUTES.DESTINATION.URL}
+                                <Link
+                                    to={ROUTES.DESTINATION.URL}
                                     className="country__item"
                                     key={destination.id}
                                 >
                                     <img src={destination.image || 'test.svg'} alt="" />
                                     {destination.name}
-                                </a>
+                                </Link>
                             ))}
                         </div>
                     </div>

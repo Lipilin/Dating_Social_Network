@@ -1,4 +1,5 @@
 import { images } from '../Header.images'
+import { Link } from 'react-router'
 
 export function HeaderToasts() {
   return (
@@ -36,7 +37,7 @@ export function HeaderToasts() {
                                       формировании соответствующий условий ...
                                   </p>
                                   <div className="toast__item-text-bottom">
-                                      <a href="#" className="answer">Ответить</a>
+                                      <Link to="#" className="answer">Ответить</Link>
                                       <div className="time">8:41</div>
                                   </div>
                               </div>

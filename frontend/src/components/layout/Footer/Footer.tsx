@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 export function Footer() {
   return (
     <footer className="footer">
@@ -5,9 +6,9 @@ export function Footer() {
         <div className="row">
           <div className="copy_write">2005-2021 © Boltaem. </div>
           <div className="footer__links">
-            <a href="#">Условия использования</a>
-            <a href="#">Политика конфиденциальности</a>
-            <a href="#">Помощь</a>
+            <Link to="#">Условия использования</Link>
+            <Link to="#">Политика конфиденциальности</Link>
+            <Link to="#">Помощь</Link>
           </div>
         </div>
       </div>

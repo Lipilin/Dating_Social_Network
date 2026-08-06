@@ -6,6 +6,7 @@ import location1Png from '@/assets/images/location_1.png'
 import avatarFemaleSvg from '@/assets/images/avatar_female.svg'
 import avatarMaleSvg from '@/assets/images/avatar_male.svg'
 import avatarGroupSvg from '@/assets/images/avatar_group.svg'
+import { Link } from 'react-router'
 
 
 const genderAvatarClass: Record<GENDER_PREFERENCE, string> = {
@@ -39,13 +40,13 @@ export function Announcement({
                 <img className="locations__item-img" src={ icon || location1Png } alt="" />
                 <div className="locations__item-info">
                     <div className="locations__item-place">
-                        <a href={ROUTES.DESTINATION.URL} className="city">
+                        <Link to={ROUTES.DESTINATION.URL} className="city">
                             {departure}
-                        </a>
+                        </Link>
                         <img src={arrowRightSvg} alt="" />
-                        <a href={ROUTES.DESTINATION.URL} className="city">
+                        <Link to={ROUTES.DESTINATION.URL} className="city">
                             {destination}
-                        </a>
+                        </Link>
                     </div>
                     <p>
                         с {new Date(dateFrom).toLocaleDateString('ru-RU')} по {new Date(dateTo).toLocaleDateString('ru-RU')}
@@ -64,12 +65,12 @@ export function Announcement({
             <div className="locations__item-right">
                 <div className="locations__item-desc">{description}</div>
                 <div className="locations__item-bottom">
-                    <a href={ ROUTES.ANNOUNCEMENT_DETAIL.URL.replace(':id', id) } className="locations__item-btn">
+                    <Link to={ ROUTES.ANNOUNCEMENT_DETAIL.URL.replace(':id', id) } className="locations__item-btn">
                         <span>Подробнее</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10" fill="none">
                             <path d="M1 9L5 5L1 1" stroke="#0041F2" strokeWidth="2" />
                         </svg>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>

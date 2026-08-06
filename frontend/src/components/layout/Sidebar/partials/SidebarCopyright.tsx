@@ -1,12 +1,13 @@
 import { sidebarCopyrightLinks } from '../sidebar.config'
+import { Link } from 'react-router'
 
 export function SidebarCopyright() {
     return (
         <div className="sidebar__copyright" style={{ display: 'none' }}>
             {sidebarCopyrightLinks.map((link) => (
-                <a key={link.label} href={link.href}>
+                <Link key={link.label} to={link.href}>
                     {link.label}
-                </a>
+                </Link>
             ))}
             <span>© 2025 BOLTAEM</span>
         </div>

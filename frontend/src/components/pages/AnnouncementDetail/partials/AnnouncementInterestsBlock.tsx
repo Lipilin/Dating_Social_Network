@@ -2,6 +2,7 @@ import { Fragment, useMemo } from 'react'
 import type { InterestResource } from '@/utils/api/types'
 import { ROUTES } from '@/config/General'
 import styles from './AnnouncementInterestsBlock.module.css'
+import { Link } from 'react-router'
 
 interface AnnouncementInterestsBlockProps {
     interests?: InterestResource[]
@@ -68,13 +69,13 @@ export function AnnouncementInterestsBlock({ interests = [] }: AnnouncementInter
                                     </h4>
                                     <div className={styles.tags}>
                                         {interestGroups[categoryName].map((interest) => (
-                                            <a
+                                            <Link
                                                 key={interest.id}
-                                                href={ROUTES.INTEREST.URL}
+                                                to={ROUTES.INTEREST.URL}
                                                 className={styles.tag}
                                             >
                                                 {interest.name}
-                                            </a>
+                                            </Link>
                                         ))}
                                     </div>
                                 </div>

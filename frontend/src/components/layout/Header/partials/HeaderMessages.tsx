@@ -1,5 +1,6 @@
 import { images } from '../Header.images'
 import { ROUTES } from '@/config/General'
+import { Link } from 'react-router'
 
 export function HeaderMessages() {
   return (
@@ -8,63 +9,63 @@ export function HeaderMessages() {
                       <div className="card-wrapper">
                           <div className="cards">
                               <div className="card">
-                                  <a href={ROUTES.PROFILE.URL} className="img">
+                                  <Link to={ROUTES.PROFILE.URL} className="img">
                                       <img src={images["account_img.png"]} alt="User Avatar" className="avatar" />
                                       <div className="badge">
                                           9
                                       </div>
-                                  </a>
+                                  </Link>
                                   <div className="info">
                                       <div className="info-item">
                                           <h3>
-                                              <a href={ROUTES.PROFILE.URL}>Олеся Смирнова</a>
+                                              <Link to={ROUTES.PROFILE.URL}>Олеся Смирнова</Link>
                                           </h3>
                                           <p>Товарищи! Дальнейшее развитие различных форм деятельности играет важную роль в
                                               формировании соответствующий условий ...</p>
                                           <div className="footer-sms">
-                                              <a className="otvetit-button" href="#">Ответить</a>
+                                              <Link className="otvetit-button" to="#">Ответить</Link>
                                               <span>8:41</span>
                                           </div>
                                       </div>
                                   </div>
                               </div>
                               <div className="card">
-                                  <a href={ROUTES.PROFILE.URL} className="img">
+                                  <Link to={ROUTES.PROFILE.URL} className="img">
                                       <img src={images["account_img.png"]} alt="User Avatar" className="avatar" />
                                       <div className="badge">
                                           9
                                       </div>
-                                  </a>
+                                  </Link>
                                   <div className="info">
                                       <div className="info-item">
                                           <h3>
-                                              <a href={ROUTES.PROFILE.URL}>Олеся Смирнова</a>
+                                              <Link to={ROUTES.PROFILE.URL}>Олеся Смирнова</Link>
                                           </h3>
                                           <p>Товарищи! Дальнейшее развитие различных форм деятельности играет важную роль в
                                               формировании соответствующий условий ...</p>
                                           <div className="footer-sms">
-                                              <a className="otvetit-button" href="#">Ответить</a>
+                                              <Link className="otvetit-button" to="#">Ответить</Link>
                                               <span>8:41</span>
                                           </div>
                                       </div>
                                   </div>
                               </div>
                               <div className="card">
-                                  <a href={ROUTES.PROFILE.URL} className="img">
+                                  <Link to={ROUTES.PROFILE.URL} className="img">
                                       <img src={images["account_img.png"]} alt="User Avatar" className="avatar" />
                                       <div className="badge">
                                           9
                                       </div>
-                                  </a>
+                                  </Link>
                                   <div className="info">
                                       <div className="info-item">
                                           <h3>
-                                              <a href={ROUTES.PROFILE.URL}>Олеся Смирнова</a>
+                                              <Link to={ROUTES.PROFILE.URL}>Олеся Смирнова</Link>
                                           </h3>
                                           <p>Товарищи! Дальнейшее развитие различных форм деятельности играет важную роль в
                                               формировании соответствующий условий ...</p>
                                           <div className="footer-sms">
-                                              <a className="otvetit-button" href="#">Ответить</a>
+                                              <Link className="otvetit-button" to="#">Ответить</Link>
                                               <span>8:41</span>
                                           </div>
                                       </div>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 interface HrefWithImageProps{
     content: string,
     image: string,
@@ -7,8 +8,8 @@ interface HrefWithImageProps{
 
 export function HrefWithImage({ content, image, link, classNames }: HrefWithImageProps){
     return (
-        <a href={link} className={classNames}><span>{content}</span>
+        <Link to={link} className={classNames}><span>{content}</span>
             <img src = { image } />
-        </a>
+        </Link>
     )
 }

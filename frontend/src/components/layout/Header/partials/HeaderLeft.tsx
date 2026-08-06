@@ -1,5 +1,6 @@
 import { images } from '../Header.images'
 import { ROUTES } from '@/config/General'
+import { Link } from 'react-router'
 
 interface HeaderLeftProps {
     onToggleSidebar?: () => void
@@ -9,9 +10,9 @@ export function HeaderLeft({ onToggleSidebar }: HeaderLeftProps) {
   return (
     <>
                   <div className="header__left">
-                      <a
+                      <Link
                           className="header__burger"
-                          href="#"
+                          to="#"
                           onClick={(e) => {
                               e.preventDefault()
                               onToggleSidebar?.()
@@ -23,15 +24,15 @@ export function HeaderLeft({ onToggleSidebar }: HeaderLeftProps) {
                                   d="M1.5 3.69c0-.38.268-.69.599-.69H21.9c.331 0 .599.31.599.69 0 .382-.268.691-.599.691H2.1c-.331 0-.599-.309-.599-.69Zm0 8.31c0-.382.268-.69.599-.69H17.4c.33 0 .598.308.598.69s-.268.69-.598.69H2.099c-.331 0-.599-.308-.599-.69m.599 7.619c-.331 0-.599.309-.599.69 0 .382.268.691.599.691H21.9c.331 0 .599-.31.599-.69 0-.382-.268-.691-.599-.691H2.1Z">
                               </path>
                           </svg>
-                      </a>
-                      <a href={ROUTES.HOME.URL} className="header__logo"><img src={images["header_logo.svg"]} alt="" /></a>
+                      </Link>
+                      <Link to={ROUTES.HOME.URL} className="header__logo"><img src={images["header_logo.svg"]} alt="" /></Link>
                       <form className="header__search">
                           <input type="text" placeholder="Поиск" />
                           <button type="button"><img src={images["header_search.svg"]} alt="" /></button>
                       </form>
                       <ul>
-                          <li><a href={ROUTES.ANNOUNCEMENT.URL}>Объявления</a></li>
-                          <li><a href={ROUTES.POSTS.URL}>Публикации</a></li>
+                          <li><Link to={ROUTES.ANNOUNCEMENT.URL}>Объявления</Link></li>
+                          <li><Link to={ROUTES.POSTS.URL}>Публикации</Link></li>
                       </ul>
                   </div>
     </>

@@ -1,16 +1,20 @@
 import { ROUTES } from '@/config/General'
+import { Link } from 'react-router'
+import { useContext, useMemo } from 'react'
+import { ProfileContext } from '@/utils/context/ProfileContext'
 
 export function AnnouncementBottom() {
+    const { user, openAuthModal } = useContext(ProfileContext)
     return (
         <div className="announcement__bottom">
-            <a href={ROUTES.ANNOUNCEMENT.URL} className="link link1">
+            <Link to={ROUTES.ANNOUNCEMENT.URL} className="link link1">
                 <span>Показать все объявления </span>
                 <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1.5 14.5L8 8L1.5 1.5" stroke="#0041F2" strokeWidth="2" />
                 </svg>
-            </a>
+            </Link>
             <div className="right-links">
-                <a href={ROUTES.INSTRUCTION.URL} className="link">
+                <Link to={ROUTES.INSTRUCTION.URL} className="link">
                     <span> Как подать объявление</span>
                     <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clipPath="url(#clip0_101_5619)">
@@ -25,8 +29,8 @@ export function AnnouncementBottom() {
                             </clipPath>
                         </defs>
                     </svg>
-                </a>
-                <a href={ROUTES.ANNOUNCEMENT.URL} className="link">
+                </Link>
+                <Link to={user ? ROUTES.ANNOUNCEMENT.URL : '#'} className="link" onClick = { (e) => user ? null : openAuthModal?.() }>
                     <span>Добавить свое объявление</span>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -42,7 +46,7 @@ export function AnnouncementBottom() {
                             fill="#0041F2"
                         />
                     </svg>
-                </a>
+                </Link>
             </div>
         </div>
     )

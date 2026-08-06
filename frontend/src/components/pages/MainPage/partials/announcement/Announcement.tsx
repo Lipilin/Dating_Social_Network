@@ -1,6 +1,7 @@
 import type { AnnouncementResource } from '@/utils/api/types'
 import { AnnouncementGenderBLock } from './AnnouncementGenderBlock'
 import { ROUTES } from '@/config/General'
+import { Link } from 'react-router'
 
 export function Announcement(item: AnnouncementResource) {
     return (
@@ -18,17 +19,17 @@ export function Announcement(item: AnnouncementResource) {
                     <p className="limited-text">
                         {item.description}
                     </p>
-                    <a 
-                        href = {ROUTES.ANNOUNCEMENT_DETAIL.URL.replace(':id', item.id)} 
+                    <Link 
+                        to= {ROUTES.ANNOUNCEMENT_DETAIL.URL.replace(':id', item.id)} 
                         className="show-mores">
                         Показать дальше
-                    </a>
+                    </Link>
                 </div>
                 <div className="card__info-bottom">
                     <h4>
-                        <a href={ROUTES.DESTINATION.URL} className="city">
+                        <Link to={ROUTES.DESTINATION.URL} className="city">
                             {item.departure}
-                        </a>
+                        </Link>
                         <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 opacity="0.4"
@@ -37,9 +38,9 @@ export function Announcement(item: AnnouncementResource) {
                                 strokeWidth="1.80724"
                             />
                         </svg>
-                        <a href={ROUTES.DESTINATION.URL} className="city">
+                        <Link to={ROUTES.DESTINATION.URL} className="city">
                             {item.destination}
-                        </a>
+                        </Link>
                     </h4>
                     <h5>
                         с { new Date(item.dateFrom).toLocaleDateString('ru-RU') } по { new Date(item.dateTo).toLocaleDateString('ru-RU') }

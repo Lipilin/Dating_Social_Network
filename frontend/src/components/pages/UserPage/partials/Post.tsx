@@ -2,6 +2,7 @@ import type { Post as PostResource } from '@/utils/api/types'
 import location1Png from '@/assets/images/location_1.png'
 import location2Png from '@/assets/images/location_2.png'
 import location3Png from '@/assets/images/location_3.png'
+import { Link } from 'react-router'
 
 const locationImages = [location1Png, location2Png, location3Png]
 
@@ -37,9 +38,9 @@ export function Post({
                         {tags.length > 0 && (
                             <div className="locations__item-tags">
                                 {tags.map((tag) => (
-                                    <a key={tag} href="#" className="tag">
+                                    <Link key={tag} to="#" className="tag">
                                         {tag}
-                                    </a>
+                                    </Link>
                                 ))}
                             </div>
                         )}
@@ -52,12 +53,12 @@ export function Post({
             <div className="locations__item-right">
                 <div className="locations__item-desc">{content}</div>
                 <div className="locations__item-bottom">
-                    <a href="#" className="locations__item-btn">
+                    <Link to="#" className="locations__item-btn">
                         <span>Подробнее</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10" fill="none">
                             <path d="M1 9L5 5L1 1" stroke="#0041F2" strokeWidth="2" />
                         </svg>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>

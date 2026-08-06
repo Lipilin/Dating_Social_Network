@@ -2,6 +2,7 @@ import { DefaultInput } from '@/components/ui/inputs/DefaultInput'
 import { StepChanger } from './StepChanger'
 import { AuthSwitcher } from './AuthSwitcher'
 import type { UserPostRequest } from '@/utils/api/types'
+import { Link } from 'react-router'
 import {
     checkboxErrorClasses,
     errorListClasses,
@@ -84,7 +85,7 @@ export function LoginStep(
                             onChange={ (e) => setUserData({ ...user, acceptService: e.target.checked }) 
                         }/>
                         <label htmlFor="acceptService">
-                            Я согласен с <a href="#">правилами сервиса</a>
+                            Я согласен с <Link to="#">правилами сервиса</Link>
                         </label>
                     </div>
                     <div className={`checkboxes__item ${errors.acceptSecurity ? checkboxErrorClasses : ''}`}>
@@ -95,7 +96,7 @@ export function LoginStep(
                             onChange={ (e) => setUserData({ ...user, acceptSecurity: e.target.checked }) 
                         }/>
                         <label htmlFor="acceptSecurity">
-                            Я согласен с <a href="#">политикой обработки персональных данных</a>
+                            Я согласен с <Link to="#">политикой обработки персональных данных</Link>
                         </label>
                     </div>
                 </div>

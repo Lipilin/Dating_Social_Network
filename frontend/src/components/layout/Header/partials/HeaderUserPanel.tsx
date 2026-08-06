@@ -1,4 +1,5 @@
 import { images } from '../Header.images'
+import { Link } from 'react-router'
 
 export function HeaderUserPanel() {
   return (
@@ -13,12 +14,12 @@ export function HeaderUserPanel() {
                           </div>
                       </div>
                       <div className="header__actions">
-                          <a href="#" id="openChat"><img src={images["header_chat.svg"]} alt="" /></a>
-                          <a href="#" id="openNotify">
+                          <Link to="#" id="openChat"><img src={images["header_chat.svg"]} alt="" /></Link>
+                          <Link to="#" id="openNotify">
                               <img src={images["header_notify.svg"]} alt="" />
                               <span></span>
-                          </a>
-                          <a href="#"><img src={images["header_settings.svg"]} alt="" /></a>
+                          </Link>
+                          <Link to="#"><img src={images["header_settings.svg"]} alt="" /></Link>
                       </div>
                       <div className="header__acc">
                           <div className="dropdown-toggle">
@@ -48,7 +49,7 @@ export function HeaderUserPanel() {
                               </div>
                               <ul>
                                   <li>
-                                      <a href="#">
+                                      <Link to="#">
                                           <div className="icon">
                                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="18"
                                                   viewBox="0 0 16 18" fill="none">
@@ -61,10 +62,10 @@ export function HeaderUserPanel() {
                                               </svg>
                                           </div>
                                           <span>Настройки</span>
-                                      </a>
+                                      </Link>
                                   </li>
                                   <li>
-                                      <a href="#">
+                                      <Link to="#">
                                           <div className="icon">
                                               <svg width="17" height="18" viewBox="0 0 17 18" fill="none"
                                                   xmlns="http://www.w3.org/2000/svg">
@@ -74,10 +75,10 @@ export function HeaderUserPanel() {
                                               </svg>
                                           </div>
                                           <span>Помощь</span>
-                                      </a>
+                                      </Link>
                                   </li>
                                   <li className="language_dropdown">
-                                      <a href="#" id="changeLanguage">
+                                      <Link to="#" id="changeLanguage">
                                           <div className="icon">
                                               <svg xmlns="http://www.w3.org/2000/svg" height="18" width="18"
                                                   viewBox="0 0 512 512">
@@ -92,11 +93,11 @@ export function HeaderUserPanel() {
                                                   <path fill="currentColor" d="m10 8 5 4-5 4z"></path>
                                               </svg>
                                           </div>
-                                      </a>
+                                      </Link>
                                       <div className="languages">
                                           <ul>
                                               <li>
-                                                  <a href="#" className="active">
+                                                  <Link to="#" className="active">
                                                       <div className="icon">
                                                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                               fill="none">
@@ -110,10 +111,10 @@ export function HeaderUserPanel() {
                                                           </svg>
                                                       </div>
                                                       <span>Русский</span>
-                                                  </a>
+                                                  </Link>
                                               </li>
                                               <li>
-                                                  <a href="#">
+                                                  <Link to="#">
                                                       <div className="icon">
                                                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                               fill="none">
@@ -137,10 +138,10 @@ export function HeaderUserPanel() {
                                                           </svg>
                                                       </div>
                                                       <span>English</span>
-                                                  </a>
+                                                  </Link>
                                               </li>
                                               <li>
-                                                  <a href="#">
+                                                  <Link to="#">
                                                       <div className="icon">
                                                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                               fill="none">
@@ -158,13 +159,13 @@ export function HeaderUserPanel() {
                                                           </svg>
                                                       </div>
                                                       <span>Turkish</span>
-                                                  </a>
+                                                  </Link>
                                               </li>
                                           </ul>
                                       </div>
                                   </li>
                                   <li>
-                                      <a href="#">
+                                      <Link to="#">
                                           <div className="icon">
                                               <svg width="18" height="19" viewBox="0 0 18 19" fill="none"
                                                   xmlns="http://www.w3.org/2000/svg">
@@ -174,7 +175,7 @@ export function HeaderUserPanel() {
                                               </svg>
                                           </div>
                                           <span>Выйти</span>
-                                      </a>
+                                      </Link>
                                   </li>
                               </ul>
                           </div>
