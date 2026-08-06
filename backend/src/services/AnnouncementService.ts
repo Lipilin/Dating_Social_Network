@@ -1,6 +1,6 @@
 import { prisma } from "@/prisma.js"
 import type { Announcement, Prisma } from "@prisma/client"
-import { UserContentStatus } from "@prisma/client"
+import { UserContentStatus, UserStatus } from "@prisma/client"
 
 export class AnnouncementService{
     async getAnnouncements(take: number, skip: number, clauses: Prisma.AnnouncementWhereInput, interestsId: string[]): Promise<Announcement[]>{
@@ -17,6 +17,9 @@ export class AnnouncementService{
             }, 
             where: {
                 status: UserContentStatus.PUBLISHED, 
+                user: {
+                    status: UserStatus.REGISTERED
+                }, 
                 ...clauses
             },
             include: {
@@ -31,11 +34,18 @@ export class AnnouncementService{
     async getAnnouncementById(id: string): Promise<Announcement | null>{
         const response = await prisma.announcement.findUnique({
             where: {
-                id: id
+                id: id,
+                user: {
+                    status: UserStatus.REGISTERED
+                }
             }, 
             include: {
                 user: true,
-                interests: true,
+                interests: {
+                    include: {
+                        category: true
+                    }
+                }
             }
         })
         return response

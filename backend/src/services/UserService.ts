@@ -10,6 +10,11 @@ export class UserService{
                 include: {
                     posts: true,
                     announcements: true,
+                    interests: {
+                        include: {
+                            category: true
+                        }
+                    },
                 }
             })
             return entity

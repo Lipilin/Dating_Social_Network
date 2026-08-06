@@ -1,5 +1,4 @@
 .adminjs
-resources
 node_modules
 dist
 .git

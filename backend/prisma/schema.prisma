@@ -47,6 +47,7 @@ model User{
   metadata Json?
   announcements Announcement[]
   posts Post[]
+  interests Interest[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }
@@ -68,6 +69,7 @@ model Announcement{
   id String @id @default(cuid())
   title String?
   interests Interest[]
+  icon String?
   description String @db.Text
   dateFrom DateTime @map("date_from")
   dateTo DateTime @map("date_to")
@@ -83,6 +85,7 @@ model Announcement{
 
 model Category {
   id String @id @default(cuid())
+  icon String
   name String
   interests Interest[]
   createdAt   DateTime    @default(now())
@@ -92,10 +95,18 @@ model Category {
 
 model Interest{
   id String @id @default(cuid())
+  image String
   name String
   categoryId String @map("category_id")
   category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   announcements Announcement[]
+  users User[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+}
+
+model Page{
+  id  Int @id @default(autoincrement())
+  name String
+  content String @db.Text
 }
