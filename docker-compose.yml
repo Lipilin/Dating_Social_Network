@@ -6,7 +6,7 @@ services:
     depends_on:
       - mysql
     volumes:
-      - ./backend/src:/app/src
+      - ./backend:/app
     ports:
       - "3000:3000"
     env_file:
