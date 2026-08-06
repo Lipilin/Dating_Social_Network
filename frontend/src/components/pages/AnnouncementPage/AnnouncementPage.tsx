@@ -4,7 +4,9 @@ import { NoDataFound } from '../Errors/NoDataFound'
 import { Announcement } from '@/utils/api/Announcement'
 import { DefaultButton } from '@/components/ui/buttons/DefaultButton'
 import styles from './AnnouncementPage.module.css'
-import { Announcement as AnnouncementCard } from '@/components/pages/MainPage/partials/announcement/Announcement'
+import { Announcement as AnnouncementCard } 
+from '@/components/pages/MainPage/partials/announcement/Announcement'
+import { DefaultPagination } from '@/components/ui/pagination/DefaultPagination'
 
 const announcementService = new Announcement()
 const TAKE = 12
@@ -52,7 +54,13 @@ export function AnnouncementPage() {
                     </div>
                 </div>
                 <div className="announcements-block-pagination">
-                    asdasdsadasd
+                    <DefaultPagination 
+                        prevPageBlock = { pagination == 0 }
+                        nextPageBlock = { announcements.length < TAKE }
+                        onPrevPage = { () => setPagination(pagination - 1) }
+                        onNexPage = { () => setPagination(pagination + 1) }
+                        paginationNumber = { pagination + 1 }
+                    />
                 </div>
             </div>
         </section>
