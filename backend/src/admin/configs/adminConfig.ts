@@ -1,10 +1,19 @@
-import AdminJS, { Login, type ActionRequest } from 'adminjs'
+import AdminJS, { type ActionRequest } from 'adminjs'
 import { Database, Resource, getModelByName } from '@adminjs/prisma'
 import { ruLocale } from '@/admin/configs/locales/ruLocales.js'
+import { componentLoader } from '@/admin/configs/componentLoader.js'
+import {
+    createImageUpload,
+    hiddenKeyProperty,
+    uploadFilePropertyName,
+} from '@/admin/configs/uploadConfig.js'
 import bcrypt from 'bcryptjs'
-import { prisma } from '@/app.js'
+import { prisma } from '@/prisma.js'
+
 AdminJS.registerAdapter({ Database, Resource })
+
 export const admin = new AdminJS({
+    componentLoader,
     branding: {
         companyName: 'Boltaem Admin',
         logo: '/resources/header_logo.svg'
@@ -14,17 +23,17 @@ export const admin = new AdminJS({
             resource: { model: getModelByName('User'), client: prisma },
             options: {
                 titleProperty: 'email',
-                listProperties: [ 'id', 'email', 'name', 'role', 'status', 'createdAt' ],
-                editProperties: [ 
-                    'email', 
-                    'password', 
-                    'name', 
-                    'surname', 
-                    'description', 
-                    'status', 
-                    'role', 
-                    'avatar', 
-                    'banner' 
+                listProperties: [ 'id', 'email', 'name', 'role', 'status', uploadFilePropertyName('avatar'), 'createdAt' ],
+                editProperties: [
+                    'email',
+                    'password',
+                    'name',
+                    'surname',
+                    'description',
+                    'status',
+                    'role',
+                    uploadFilePropertyName('avatar'),
+                    uploadFilePropertyName('banner'),
                 ],
                 actions: {
                     new: {
@@ -47,17 +56,24 @@ export const admin = new AdminJS({
                             filter: false
                         }
                     },
+                    avatar: hiddenKeyProperty(),
+                    banner: hiddenKeyProperty(),
                     metadata: { type: 'json' }
                 }
-            }
+            },
+            features: [
+                createImageUpload('avatar', uploadFilePropertyName('avatar')),
+                createImageUpload('banner', uploadFilePropertyName('banner')),
+            ],
         },
         {
             resource: { model: getModelByName('Post'), client: prisma },
             options: {
                 titleProperty: 'title',
-                listProperties: [ 'id', 'title', 'status', 'createdAt' ],
-                editProperties: [ 'title', 'content', 'image', 'status', 'tags', 'user' ],
+                listProperties: [ 'id', 'title', 'status', uploadFilePropertyName('image'), 'createdAt' ],
+                editProperties: [ 'title', 'content', uploadFilePropertyName('image'), 'status', 'tags', 'user' ],
                 properties: {
+                    image: hiddenKeyProperty(),
                     tags: {
                         type: 'string',
                         isVisible: { edit: true, show: true, list: false, filter: false },
@@ -88,26 +104,31 @@ export const admin = new AdminJS({
                         }
                     }
                 }
-            }
+            },
+            features: [
+                createImageUpload('image', uploadFilePropertyName('image')),
+            ],
         },
         {
             resource: { model: getModelByName('Announcement'), client: prisma },
             options: {
                 titleProperty: 'title',
                 listProperties: [ 'id', 'title', 'status', 'departure', 'destination', 'createdAt' ],
-                editProperties: [ 
-                    'title', 
-                    'description', 
-                    'dateFrom', 
-                    'dateTo', 
-                    'departure', 
-                    'destination', 
-                    'genderInterest', 
-                    'status', 
-                    'user', 
-                    'interests' 
+                editProperties: [
+                    'title',
+                    'description',
+                    'dateFrom',
+                    'dateTo',
+                    'departure',
+                    'destination',
+                    'genderInterest',
+                    'status',
+                    uploadFilePropertyName('icon'),
+                    'user',
+                    'interests'
                 ],
                 properties: {
+                    icon: hiddenKeyProperty(),
                     user: {
                         reference: 'User',
                         isVisible: { edit: true, show: true }
@@ -119,27 +140,51 @@ export const admin = new AdminJS({
                     },
                     description: { type: 'richtext' }
                 }
-            }
+            },
+            features: [
+                createImageUpload('icon', uploadFilePropertyName('icon')),
+            ],
         },
         {
             resource: { model: getModelByName('Category'), client: prisma },
             options: {
                 titleProperty: 'name',
-                listProperties: [ 'id', 'name', 'createdAt' ],
-                editProperties: [ 'name' ]
-            }
+                listProperties: [ 'id', 'name', uploadFilePropertyName('icon'), 'createdAt' ],
+                editProperties: [ 'name', uploadFilePropertyName('icon'), 'isCountry' ],
+                properties: {
+                    icon: hiddenKeyProperty(),
+                }
+            },
+            features: [
+                createImageUpload('icon', uploadFilePropertyName('icon')),
+            ],
         },
         {
             resource: { model: getModelByName('Interest'), client: prisma },
             options: {
                 titleProperty: 'name',
-                listProperties: [ 'id', 'name', 'category', 'createdAt' ],
-                editProperties: [ 'name', 'category' ],
+                listProperties: [ 'id', 'name', 'category', uploadFilePropertyName('image'), 'createdAt' ],
+                editProperties: [ 'name', uploadFilePropertyName('image'), 'category' ],
                 properties: {
+                    image: hiddenKeyProperty(),
                     category: {
                         reference: 'Category',
                         isVisible: { edit: true, show: true }
                     }
+                }
+            },
+            features: [
+                createImageUpload('image', uploadFilePropertyName('image')),
+            ],
+        },
+        {
+            resource: { model: getModelByName('Page'), client: prisma },
+            options: {
+                titleProperty: 'name',
+                listProperties: [ 'id', 'name' ],
+                editProperties: [ 'name', 'content' ],
+                properties: {
+                    content: { type: 'richtext' }
                 }
             }
         }

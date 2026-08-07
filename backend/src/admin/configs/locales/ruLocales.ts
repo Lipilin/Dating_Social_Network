@@ -5,6 +5,7 @@ export const ruLocale = {
         Announcement: 'Объявления',
         Category: 'Категории',
         Interest: 'Интересы',
+        Page: 'Страницы',
         loginWelcome: 'Добро пожаловать',
         email: 'Email',
         password: 'Пароль',
@@ -45,6 +46,11 @@ export const ruLocale = {
         title: 'Заголовок',
         content: 'Содержание',
         image: 'Изображение',
+        icon: 'Иконка',
+        upload_avatar: 'Аватар',
+        upload_banner: 'Баннер',
+        upload_image: 'Изображение',
+        upload_icon: 'Иконка',
         tags: 'Теги',
         user: 'Пользователь',
         dateFrom: 'Дата от',
@@ -54,6 +60,7 @@ export const ruLocale = {
         genderInterest: 'Интерес к полу',
         interests: 'Интересы',
         category: 'Категория',
+        isCountry: 'Страна',
         createdAt: 'Создано',
         updatedAt: 'Обновлено',
         from: 'От',
@@ -163,6 +170,12 @@ export const ruLocale = {
             labels: {
                 singular: 'Интерес',
                 plural: 'Интересы'
+            }
+        },
+        Page: {
+            labels: {
+                singular: 'Страница',
+                plural: 'Страницы'
             }
         }
     }

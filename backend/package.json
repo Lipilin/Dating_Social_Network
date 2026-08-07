@@ -17,6 +17,10 @@
   "dependencies": {
     "@adminjs/express": "^6.1.0",
     "@adminjs/prisma": "^5.0.0",
+    "@adminjs/upload": "^4.0.2",
+    "@aws-sdk/client-s3": "^3.1104.0",
+    "@aws-sdk/s3-request-presigner": "^3.1104.0",
+    "@google-cloud/storage": "^7.21.0",
     "@prisma/client": "^5.22.0",
     "adminjs": "^7.8.17",
     "bcryptjs": "^3.0.3",

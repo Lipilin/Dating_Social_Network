@@ -37,7 +37,7 @@ function resolveResourcesDir(): string {
 }
 
 const RESOURCES_DIR = resolveResourcesDir()
-const DEV_BASE_URL = (process.env.BASE_URL ?? 'http://localhost:3000').replace(/\/$/, '')
+const DEV_BASE_URL = ''
 
 function toPublicUrl(relativePath: string): string {
   return `${DEV_BASE_URL}${relativePath}`
