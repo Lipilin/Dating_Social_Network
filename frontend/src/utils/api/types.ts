@@ -104,3 +104,7 @@ export interface UserPostRequest extends PostRequest{
     acceptSecurity: boolean
     interests: InterestResource[]
 }
+
+export interface PostRequest extends Request{
+    
+}

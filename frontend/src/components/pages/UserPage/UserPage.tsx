@@ -5,12 +5,14 @@ import { NotFound } from '@/components/pages/Errors/NotFound'
 import { UserCommunicationActions } from './partials/UserCommunicationActions'
 import { User } from '@/utils/api/User'
 import { UserContent } from './partials/UserContent'
+import { Loader } from '@/components/pages/Loader/Loader'
 
 const userProvider = new User()
 
 export function UserPage() {
     const [user, setUser] = useState<UserResource | null>(null)
     const [hasError, setHasError] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState(true)
     const { id } = useParams()
 
     useEffect(() => {
@@ -20,8 +22,14 @@ export function UserPage() {
             if (!user) return setHasError(true)
             else setUser(user)
         }
-        fetchUser()
+        fetchUser().finally(() => {
+            setIsLoading(false)
+        })
     }, [id])
+
+    if(isLoading){
+        return <Loader isLoading = { isLoading } />
+    }
 
     if (hasError) {
         return <NotFound />

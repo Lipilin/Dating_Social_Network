@@ -9,6 +9,7 @@ import { UserPage } from '@/components/pages/UserPage/UserPage'
 import { ProfilePage } from '@/components/pages/UserPage/ProfilePage'
 import { AnnouncementDetail } from '@/components/pages/AnnouncementDetail/AnnouncementDetail'
 import { PostsPage } from '@/components/pages/PostsPage/PostsPage'
+import { PostDetail } from '@/components/pages/PostDetail/PostDetail'
 
 export const genderLabels = {
     [GENDER_PREFERENCE.MALE]: {
@@ -62,6 +63,12 @@ export const API_SETTINGS: ApiSettings = {
             CREATE: '/user/create', 
             UPDATE: '', 
             GET: '/user/get',
+        }, 
+        POST: {
+            LIST: '/post/list', 
+            CREATE: '', 
+            UPDATE: '', 
+            GET: '/post/get',
         }
     },
 } as const
@@ -108,5 +115,9 @@ export const ROUTES: Record<string, Route> = {
     ANNOUNCEMENT_DETAIL: {
         URL: '/announcement/:id', 
         COMPONENT: AnnouncementDetail,
+    }, 
+    POST_DETAIL: {
+        URL: '/post/:id', 
+        COMPONENT: PostDetail,
     }
 } as const

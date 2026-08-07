@@ -7,12 +7,14 @@ import styles from './AnnouncementPage.module.css'
 import { Announcement as AnnouncementCard } 
 from '@/components/pages/MainPage/partials/announcement/Announcement'
 import { DefaultPagination } from '@/components/ui/pagination/DefaultPagination'
+import { Loader } from '@/components/pages/Loader/Loader'
 
 const announcementService = new Announcement()
 const TAKE = 12
 
 export function AnnouncementPage() {
     const [announcements, setAnnouncements] = useState<AnnouncementResource[]>([])
+    const [isLoading, setIsLoading] = useState(true)
     const [pagination, setPagination] = useState(0)
 
     useEffect(() => {
@@ -21,8 +23,14 @@ export function AnnouncementPage() {
             skip: pagination * TAKE,
         }).then((data) => {
             setAnnouncements(data)
+        }).finally(() => {
+            setIsLoading(false)
         })
     }, [pagination])
+
+    if(isLoading){
+        return <Loader isLoading = { isLoading } />
+    }
 
     if(announcements.length == 0){
         return (
