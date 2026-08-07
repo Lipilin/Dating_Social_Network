@@ -1,0 +1,132 @@
+.postDetailContent{
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 48px 56px;
+}
+
+.postDetailContainer{
+    margin: 0 auto;
+    padding: 40px 0 60px;
+    max-width: 1406px;
+    width: 100%;
+}
+
+.postDetailContent{
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.postDetailTitle{
+    color: #001346;
+    font-family: Gilroy, sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 120%;
+    margin: 0 0 28px;
+}
+
+.postDetailAuthor{
+    color: rgba(32, 33, 46, 0.8);
+    font-family: "TT Commons", sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.postDetailDate{
+    color: rgba(32, 33, 46, 0.6);
+    font-family: "TT Commons", sans-serif;
+    font-size: 15px;
+    margin-bottom: 32px;
+}
+
+.postDetailValue{
+    color: rgba(32, 33, 46, 0.85);
+    font-weight: 500;
+}
+
+.tagsList{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag{
+    background: rgba(0, 65, 242, 0.07);
+    color: #53565E;
+    font-family: "TT Commons";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%;
+    border-radius: 8px;
+    padding: 9px 12px 8px 12px;
+}
+
+.authorCta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 28px 32px;
+    border-radius: 8px;
+    background: rgba(0, 65, 242, 0.06);
+    border: 1px solid rgba(0, 65, 242, 0.1);
+}
+
+.authorCtaText {
+    margin: 0;
+    color: rgba(32, 33, 46, 0.8);
+    font-family: "TT Commons", sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 140%;
+}
+
+.authorCtaName {
+    color: #001346;
+    font-weight: 600;
+}
+
+.authorCtaLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    padding: 12px 20px;
+    border-radius: 7px;
+    background: rgba(0, 65, 242, 0.13);
+    color: #0041f2;
+    font-family: "TT Commons", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: normal;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.authorCtaLink svg {
+    transition: transform 0.3s ease;
+}
+
+.authorCtaLink:hover {
+    background: rgba(0, 65, 242, 0.2);
+    transform: translateY(-1px);
+}
+
+.authorCtaLink:hover svg {
+    transform: translate(3px, 0.5px);
+}
+
+@media (max-width: 768px) {
+    .authorCta {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 24px;
+    }
+
+    .authorCtaLink {
+        width: 100%;
+        justify-content: center;
+    }
+}

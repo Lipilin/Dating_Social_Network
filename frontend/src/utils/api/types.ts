@@ -68,6 +68,7 @@ export interface Post{
     image: string
     tags?: string[]
     createdAt: string
+    user?: UserResource
 }
 
 export interface UserResource{

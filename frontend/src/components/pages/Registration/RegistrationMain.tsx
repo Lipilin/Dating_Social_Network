@@ -53,6 +53,8 @@ const UserPostRequestDefault: UserPostRequest = {
     acceptService: false,
     acceptSecurity: false,
     interests: [],
+    take: API_SETTINGS.DEFAULT_PAGINATION,
+    skip: 0,
 }
 
 export function RegistrationMain({
