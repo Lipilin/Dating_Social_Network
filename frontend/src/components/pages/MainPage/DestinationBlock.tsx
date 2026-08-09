@@ -38,7 +38,7 @@ export function DestinationBlock({ categories }: DestinationBlockProps) {
             <div className="friends__help">
                 <div className="texts">
                     <h3>Нужна помощь?</h3>
-                    <Link to="#">Написать в поддержку</Link>
+                    <Link to={ROUTES.BOLTAEM_HELP.URL}>Написать в поддержку</Link>
                 </div>
                 <img src={Images.helpIconSvg} alt="" />
             </div>

@@ -109,3 +109,14 @@ export interface UserPostRequest extends PostRequest{
 export interface PostRequest extends Request{
     
 }
+
+export interface Page{
+    id: number
+    name: string
+    alias: string
+    content: string
+}
+
+export interface PageRequest extends Request{
+    alias?: string
+}

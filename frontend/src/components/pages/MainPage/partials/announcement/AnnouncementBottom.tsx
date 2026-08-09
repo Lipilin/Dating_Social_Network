@@ -14,7 +14,7 @@ export function AnnouncementBottom() {
                 </svg>
             </Link>
             <div className="right-links">
-                <Link to={ROUTES.INSTRUCTION.URL} className="link">
+                <Link to={ROUTES.BOLTAEM_HELP.URL} className="link">
                     <span> Как подать объявление</span>
                     <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clipPath="url(#clip0_101_5619)">

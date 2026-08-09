@@ -25,8 +25,8 @@ export const sidebarSupportItems: SidebarMenuItem[] = [
 ]
 
 export const sidebarCopyrightLinks = [
-    { label: 'О BOLTAEM', href: '#' },
-    { label: 'Помощь', href: '#' },
-    { label: 'Пользовательское соглашение', href: '#' },
-    { label: 'Конфиденциальность', href: '#' },
+    { label: 'О BOLTAEM', href: ROUTES.BOLTAEM_ABOUT.URL },
+    { label: 'Помощь', href: ROUTES.BOLTAEM_HELP.URL },
+    { label: 'Пользовательское соглашение', href: ROUTES.BOLTAEM_TERMS.URL },
+    { label: 'Конфиденциальность', href: ROUTES.BOLTAEM_PRIVACY.URL },
 ] as const

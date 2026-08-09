@@ -12,6 +12,8 @@ import {
 import '@/assets/css/main.css'
 import { NotFound } from './components/pages/Errors/NotFound'
 import { ProfileProvider } from '@/utils/context/ProfileProvider'
+import type { Page } from '@/utils/api/types'
+import { StaticPage } from '@/components/pages/StaticPage/StaticPage'
 
 function App() {
     const [authOpen, setAuthOpen] = useState(false)
@@ -19,6 +21,7 @@ function App() {
     const [registrationSuccessOpen, setRegistrationSuccessOpen] = useState(false)
     const [registrationErrorOpen, setRegistrationErrorOpen] = useState(false)
     const [sidebarActive, setSidebarActive] = useState(false)
+    const [staticPages, setStaticPages] = useState<Page[]>([])
 
     return (
         <div className="wrapper">
@@ -34,6 +37,9 @@ function App() {
                             <Routes>
                                 {Object.values(ROUTES).map(({ URL, COMPONENT: Component, PROPS: Props }) => (
                                     <Route key={URL} path={URL} element={<Component />} />
+                                ))}
+                                {staticPages.map((page) => (
+                                    <Route key={page.alias} path={page.alias} element={<StaticPage />} />
                                 ))}
                                 <Route path="*" element={<NotFound />} />
                             </Routes>

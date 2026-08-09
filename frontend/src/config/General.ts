@@ -10,6 +10,7 @@ import { ProfilePage } from '@/components/pages/UserPage/ProfilePage'
 import { AnnouncementDetail } from '@/components/pages/AnnouncementDetail/AnnouncementDetail'
 import { PostsPage } from '@/components/pages/PostsPage/PostsPage'
 import { PostDetail } from '@/components/pages/PostDetail/PostDetail'
+import { StaticPage } from '@/components/pages/StaticPage/StaticPage'
 
 export const genderLabels = {
     [GENDER_PREFERENCE.MALE]: {
@@ -69,6 +70,12 @@ export const API_SETTINGS: ApiSettings = {
             CREATE: '', 
             UPDATE: '', 
             GET: '/post/get',
+        },
+        PAGE: {
+            LIST: '/page/list',
+            CREATE: '',
+            UPDATE: '',
+            GET: '/page/get',
         }
     },
 } as const
@@ -119,5 +126,21 @@ export const ROUTES: Record<string, Route> = {
     POST_DETAIL: {
         URL: '/post/:id', 
         COMPONENT: PostDetail,
+    }, 
+    BOLTAEM_ABOUT: {
+        URL: '/about',
+        COMPONENT: StaticPage,
+    }, 
+    BOLTAEM_PRIVACY: {
+        URL: '/privacy',
+        COMPONENT: StaticPage,
+    }, 
+    BOLTAEM_TERMS: {
+        URL: '/terms',
+        COMPONENT: StaticPage,
+    }, 
+    BOLTAEM_HELP: {
+        URL: '/help',
+        COMPONENT: StaticPage,
     }
 } as const
