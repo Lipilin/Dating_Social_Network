@@ -6,8 +6,10 @@ export const ruLocale = {
         Category: 'Категории',
         Interest: 'Интересы',
         Page: 'Страницы',
+        EmailMessage: 'Email-сообщения',
         loginWelcome: 'Добро пожаловать',
         email: 'Email',
+        login: 'Логин',
         password: 'Пароль',
         loginButton: 'Войти',
         dashboard: 'Панель управления',
@@ -34,6 +36,7 @@ export const ruLocale = {
     properties: {
         id: 'ID',
         email: 'Email',
+        login: 'Логин',
         password: 'Пароль',
         name: 'Имя',
         surname: 'Фамилия',
@@ -65,7 +68,8 @@ export const ruLocale = {
         createdAt: 'Создано',
         updatedAt: 'Обновлено',
         from: 'От',
-        to: 'До'
+        to: 'До',
+        subject: 'Тема',
     },
     messages: {
         dashboard: 'Панель управления',
@@ -147,6 +151,9 @@ export const ruLocale = {
             labels: {
                 singular: 'Пользователь',
                 plural: 'Пользователи'
+            },
+            properties: {
+                login: 'Логин',
             }
         },
         Post: {
@@ -180,6 +187,17 @@ export const ruLocale = {
             },
             properties: {
                 alias: 'Алиас (например: about, privacy, terms, help)',
+            }
+        },
+        EmailMessage: {
+            labels: {
+                singular: 'Email-сообщение',
+                plural: 'Email-сообщения'
+            },
+            properties: {
+                from: 'Отправитель',
+                subject: 'Тема',
+                content: 'Содержание',
             }
         }
     }

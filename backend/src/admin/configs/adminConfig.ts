@@ -23,9 +23,10 @@ export const admin = new AdminJS({
             resource: { model: getModelByName('User'), client: prisma },
             options: {
                 titleProperty: 'email',
-                listProperties: [ 'id', 'email', 'name', 'role', 'status', uploadFilePropertyName('avatar'), 'createdAt' ],
+                listProperties: [ 'id', 'email', 'login', 'name', 'role', 'status', uploadFilePropertyName('avatar'), 'createdAt' ],
                 editProperties: [
                     'email',
+                    'login',
                     'password',
                     'name',
                     'surname',
@@ -190,7 +191,24 @@ export const admin = new AdminJS({
                     content: { type: 'richtext' }
                 }
             }
-        }
+        },
+        {
+            resource: { model: getModelByName('EmailMessage'), client: prisma },
+            options: {
+                titleProperty: 'subject',
+                listProperties: [ 'id', 'from', 'subject' ],
+                editProperties: [ 'from', 'subject', 'content' ],
+                showProperties: [ 'id', 'from', 'subject', 'content' ],
+                actions: {
+                    new: { isAccessible: false, isVisible: false },
+                    delete: { isAccessible: false, isVisible: false },
+                    bulkDelete: { isAccessible: false, isVisible: false },
+                },
+                properties: {
+                    content: { type: 'textarea' },
+                },
+            },
+        },
     ],
     rootPath: '/admin',
     locale: {

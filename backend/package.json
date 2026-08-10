@@ -15,8 +15,8 @@
     "clear": "tsx prisma/clear.ts"
   },
   "dependencies": {
-    "@adminjs/express": "^6.1.0",
-    "@adminjs/prisma": "^5.0.0",
+    "@adminjs/express": "^6.1.1",
+    "@adminjs/prisma": "^5.0.4",
     "@adminjs/upload": "^4.0.2",
     "@aws-sdk/client-s3": "^3.1104.0",
     "@aws-sdk/s3-request-presigner": "^3.1104.0",
