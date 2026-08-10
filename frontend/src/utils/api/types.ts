@@ -1,5 +1,5 @@
 export interface AnnouncementResource{
-    id: string, 
+    id: number, 
     title: string, 
     userAge: number, 
     genderInterest: GENDER_PREFERENCE, 
@@ -30,7 +30,7 @@ export interface InterestResource{
 }
 
 export interface CategoryWithInterestResource{
-    id: string,
+    id: number,
     name: string, 
     icon: string, 
     isCountry: boolean, 
@@ -46,7 +46,7 @@ export interface AnnouncementRequest extends Request{
     purpose?: InterestResource[],
     departure?: string,
     destination?: string
-    id?: string
+    id?: number
 }
 
 export enum GENDER{
@@ -62,7 +62,7 @@ export enum GENDER_PREFERENCE{
 
 
 export interface Post{
-    id: string
+    id: number
     title: string
     content: string
     image: string
@@ -72,7 +72,7 @@ export interface Post{
 }
 
 export interface UserResource{
-    id: string, 
+    id: number, 
     email: string, 
     name: string,
     surname: string, 

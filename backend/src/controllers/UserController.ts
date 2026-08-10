@@ -33,8 +33,11 @@ export class UserController{
     list = async(req: Request, res: Response) => {
         const { id } = req.query
         if(!id) return res.status(API_RESPONSE.BAD_REQUEST).json({})
+
+        const numericId = Number(id)
+        if(Number.isNaN(numericId)) return res.status(API_RESPONSE.BAD_REQUEST).json({})
         
-        const entity = await this.#userService?.getUser(String(id))
+        const entity = await this.#userService?.getUser(numericId)
         if(!entity) return res.status(API_RESPONSE.NOT_FOUND).json({})
         res.status(API_RESPONSE.OK).json(entity)
     }

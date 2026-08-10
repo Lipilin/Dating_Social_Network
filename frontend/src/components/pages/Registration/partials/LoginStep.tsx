@@ -3,7 +3,7 @@ import { StepChanger } from './StepChanger'
 import { AuthSwitcher } from './AuthSwitcher'
 import type { UserPostRequest } from '@/utils/api/types'
 import { Link } from 'react-router'
-import { ROUTES } from '@/config/General'
+import { STATIC_ROUTES_FOR_BUTTOS } from '@/config/General'
 import {
     checkboxErrorClasses,
     errorListClasses,
@@ -86,7 +86,7 @@ export function LoginStep(
                             onChange={ (e) => setUserData({ ...user, acceptService: e.target.checked }) 
                         }/>
                         <label htmlFor="acceptService">
-                            Я согласен с <Link to={ROUTES.BOLTAEM_TERMS.URL}>правилами сервиса</Link>
+                            Я согласен с <Link to={STATIC_ROUTES_FOR_BUTTOS.TERMS}>правилами сервиса</Link>
                         </label>
                     </div>
                     <div className={`checkboxes__item ${errors.acceptSecurity ? checkboxErrorClasses : ''}`}>
@@ -97,7 +97,7 @@ export function LoginStep(
                             onChange={ (e) => setUserData({ ...user, acceptSecurity: e.target.checked }) 
                         }/>
                         <label htmlFor="acceptSecurity">
-                            Я согласен с <Link to={ROUTES.BOLTAEM_PRIVACY.URL}>политикой обработки персональных данных</Link>
+                            Я согласен с <Link to={STATIC_ROUTES_FOR_BUTTOS.PRIVACY}>политикой обработки персональных данных</Link>
                         </label>
                     </div>
                 </div>

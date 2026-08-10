@@ -12,7 +12,7 @@ interface UserInfoBlockProps {
 }
 
 export function UserInfoBlock({ user }: UserInfoBlockProps) {
-    const profileUrl = ROUTES.USER.URL.replace(':id', user.id)
+    const profileUrl = ROUTES.USER.URL.replace(':id', String(user.id))
 
     const avatarSrc = useMemo(() => {
         if (user.avatar) return user.avatar

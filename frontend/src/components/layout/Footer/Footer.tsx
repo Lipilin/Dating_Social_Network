@@ -1,5 +1,5 @@
 import { Link } from 'react-router'
-import { ROUTES } from '@/config/General'
+import { STATIC_ROUTES_FOR_BUTTOS } from '@/config/General'
 
 export function Footer() {
   return (
@@ -8,9 +8,9 @@ export function Footer() {
         <div className="row">
           <div className="copy_write">2005-2021 © Boltaem. </div>
           <div className="footer__links">
-            <Link to={ROUTES.BOLTAEM_TERMS.URL}>Условия использования</Link>
-            <Link to={ROUTES.BOLTAEM_PRIVACY.URL}>Политика конфиденциальности</Link>
-            <Link to={ROUTES.BOLTAEM_HELP.URL}>Помощь</Link>
+            <Link to={STATIC_ROUTES_FOR_BUTTOS.TERMS}>Условия использования</Link>
+            <Link to={STATIC_ROUTES_FOR_BUTTOS.PRIVACY}>Политика конфиденциальности</Link>
+            <Link to={STATIC_ROUTES_FOR_BUTTOS.HELP}>Помощь</Link>
           </div>
         </div>
       </div>

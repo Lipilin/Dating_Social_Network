@@ -18,7 +18,7 @@ export function UserPage() {
     useEffect(() => {
         async function fetchUser() {
             if (!id) return setHasError(true)
-            const user: UserResource | null = await userProvider.getProfile(String(id))
+            const user: UserResource | null = await userProvider.getProfile(Number(id))
             if (!user) return setHasError(true)
             else setUser(user)
         }

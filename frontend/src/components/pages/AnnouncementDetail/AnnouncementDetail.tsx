@@ -15,7 +15,7 @@ export function AnnouncementDetail() {
     useEffect(() => {
         async function getAnnouncement(){
             if(!id) return
-            const result = await announcementService.getById(id)
+            const result = await announcementService.getById(Number(id))
             setAnnouncement(result)
         }
         getAnnouncement().finally(() => {

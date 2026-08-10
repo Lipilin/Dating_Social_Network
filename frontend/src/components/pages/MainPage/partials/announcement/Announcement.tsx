@@ -20,7 +20,7 @@ export function Announcement(item: AnnouncementResource) {
                         {item.description}
                     </p>
                     <Link 
-                        to= {ROUTES.ANNOUNCEMENT_DETAIL.URL.replace(':id', item.id)} 
+                        to= {ROUTES.ANNOUNCEMENT_DETAIL.URL.replace(':id', String(item.id))} 
                         className="show-mores">
                         Показать дальше
                     </Link>

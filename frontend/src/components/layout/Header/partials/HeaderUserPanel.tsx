@@ -1,6 +1,6 @@
 import { images } from '../Header.images'
 import { Link } from 'react-router'
-import { ROUTES } from '@/config/General'
+import { STATIC_ROUTES_FOR_BUTTOS } from '@/config/General'
 
 export function HeaderUserPanel() {
   return (
@@ -66,7 +66,7 @@ export function HeaderUserPanel() {
                                       </Link>
                                   </li>
                                   <li>
-                                      <Link to={ROUTES.BOLTAEM_HELP.URL}>
+                                      <Link to={STATIC_ROUTES_FOR_BUTTOS.HELP}>
                                           <div className="icon">
                                               <svg width="17" height="18" viewBox="0 0 17 18" fill="none"
                                                   xmlns="http://www.w3.org/2000/svg">

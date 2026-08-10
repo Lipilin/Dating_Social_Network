@@ -4,6 +4,7 @@ import type { Page as PageResource } from '@/utils/api/types'
 import { Page } from '@/utils/api/Page'
 import { Loader } from '@/components/pages/Loader/Loader'
 import styles from './StaticPage.module.css'
+import { NotFound } from '../Errors/NotFound'
 
 const pageProvider = new Page()
 
@@ -28,9 +29,7 @@ export function StaticPage() {
         return <Loader isLoading={isLoading} />
     }
 
-    if (!page) return (
-        ''
-    )
+    if (!page) return <NotFound />
 
     return (
         <div className={styles.page}>

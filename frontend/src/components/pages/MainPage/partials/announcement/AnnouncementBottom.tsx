@@ -1,4 +1,4 @@
-import { ROUTES } from '@/config/General'
+import { ROUTES, STATIC_ROUTES_FOR_BUTTOS } from '@/config/General'
 import { Link } from 'react-router'
 import { useContext, useMemo } from 'react'
 import { ProfileContext } from '@/utils/context/ProfileContext'
@@ -14,7 +14,7 @@ export function AnnouncementBottom() {
                 </svg>
             </Link>
             <div className="right-links">
-                <Link to={ROUTES.BOLTAEM_HELP.URL} className="link">
+                <Link to={STATIC_ROUTES_FOR_BUTTOS.HELP} className="link">
                     <span> Как подать объявление</span>
                     <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clipPath="url(#clip0_101_5619)">

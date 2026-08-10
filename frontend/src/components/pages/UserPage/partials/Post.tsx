@@ -55,7 +55,7 @@ export function Post({
             <div className="locations__item-right">
                 <div className="locations__item-desc">{content}</div>
                 <div className="locations__item-bottom">
-                    <Link to={ROUTES.POST_DETAIL.URL.replace(':id', id)} className="locations__item-btn">
+                    <Link to={ROUTES.POST_DETAIL.URL.replace(':id', String(id))} className="locations__item-btn">
                         <span>Подробнее</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10" fill="none">
                             <path d="M1 9L5 5L1 1" stroke="#0041F2" strokeWidth="2" />

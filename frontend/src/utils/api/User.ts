@@ -16,7 +16,7 @@ export class User{
 
     }
 
-    async getProfile(id: string): Promise<UserResource | null>{
+    async getProfile(id: number): Promise<UserResource | null>{
         try{
             const response = await axios.get(
                 `${ API_SETTINGS.API_HOST }${ API_SETTINGS.ENDPOINTS.USER.LIST }?id=${ id }`

@@ -1,4 +1,5 @@
 import { ROUTES } from '@/config/General'
+import { STATIC_ROUTES_FOR_BUTTOS } from '@/config/General'
 import { images } from './Sidebar.images'
 
 export interface SidebarMenuItem {
@@ -25,8 +26,8 @@ export const sidebarSupportItems: SidebarMenuItem[] = [
 ]
 
 export const sidebarCopyrightLinks = [
-    { label: 'О BOLTAEM', href: ROUTES.BOLTAEM_ABOUT.URL },
-    { label: 'Помощь', href: ROUTES.BOLTAEM_HELP.URL },
-    { label: 'Пользовательское соглашение', href: ROUTES.BOLTAEM_TERMS.URL },
-    { label: 'Конфиденциальность', href: ROUTES.BOLTAEM_PRIVACY.URL },
+    { label: 'О BOLTAEM', href: STATIC_ROUTES_FOR_BUTTOS.ABOUT },
+    { label: 'Помощь', href: STATIC_ROUTES_FOR_BUTTOS.HELP },
+    { label: 'Пользовательское соглашение', href: STATIC_ROUTES_FOR_BUTTOS.TERMS },
+    { label: 'Конфиденциальность', href: STATIC_ROUTES_FOR_BUTTOS.PRIVACY },
 ] as const

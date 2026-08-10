@@ -1,6 +1,6 @@
 import * as Images from './MainPage.images'
 import type { CategoryWithInterestResource } from '@/utils/api/types'
-import { ROUTES } from '@/config/General'
+import { ROUTES, STATIC_ROUTES_FOR_BUTTOS } from '@/config/General'
 import { Link } from 'react-router'
 
 interface DestinationBlockProps {
@@ -38,7 +38,7 @@ export function DestinationBlock({ categories }: DestinationBlockProps) {
             <div className="friends__help">
                 <div className="texts">
                     <h3>Нужна помощь?</h3>
-                    <Link to={ROUTES.BOLTAEM_HELP.URL}>Написать в поддержку</Link>
+                    <Link to={STATIC_ROUTES_FOR_BUTTOS.HELP}>Написать в поддержку</Link>
                 </div>
                 <img src={Images.helpIconSvg} alt="" />
             </div>

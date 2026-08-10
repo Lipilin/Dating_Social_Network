@@ -15,7 +15,7 @@ export function PostDetail() {
     useEffect(() => {
         async function getPost(){
             if(!id) return
-            const post = await postProvider.getPost(id)
+            const post = await postProvider.getPost(Number(id))
             setIsLoading(false)
             setPost(post)
         }

@@ -32,8 +32,9 @@ enum GenderPreference{
 }
 
 model User{
-  id String @id @default(cuid())
+  id Int @id @default(autoincrement())
   email String @unique
+  login String
   password String
   age Int
   name String
@@ -53,20 +54,20 @@ model User{
 }
 
 model Post{
-  id String @id @default(cuid())
+  id Int  @id @default(autoincrement())
   title String
   tags Json?
   content String @db.Text
   image String
   status UserContentStatus @default(PENDING_APPROVEMENT)
-  userId String @map("user_id")
+  userId Int @map("user_id")
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }
 
 model Announcement{
-  id String @id @default(cuid())
+  id Int  @id @default(autoincrement())
   title String?
   interests Interest[]
   icon String?
@@ -77,14 +78,14 @@ model Announcement{
   departure String
   destination String
   genderInterest GenderPreference @default(ANYBODY)
-  userId String @map("user_id")
+  userId Int @map("user_id")
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }
 
 model Category {
-  id String @id @default(cuid())
+  id Int  @id @default(autoincrement())
   icon String
   name String
   interests Interest[]
@@ -94,10 +95,10 @@ model Category {
 }
 
 model Interest{
-  id String @id @default(cuid())
+  id Int  @id @default(autoincrement())
   image String
   name String
-  categoryId String @map("category_id")
+  categoryId Int @map("category_id")
   category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   announcements Announcement[]
   users User[]
@@ -106,8 +107,17 @@ model Interest{
 }
 
 model Page{
-  id  Int @id @default(autoincrement())
+  id  Int  @id @default(autoincrement())
   name String
   alias String
   content String @db.Text
+  updatedAt       DateTime @updatedAt
+  createdAt       DateTime @default(now())
+}
+
+model EmailMessage{
+  id Int @id @default(1)
+  from String
+  subject String
+  content String
 }

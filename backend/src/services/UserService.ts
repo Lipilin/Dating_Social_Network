@@ -13,11 +13,11 @@ export interface CreateUserData {
     city: string
     description: string
     gender?: string
-    interests?: { id: string }[]
+    interests?: { id: number }[]
 }
 
 export class UserService{
-    async getUser(id: string): Promise<User | null>{
+    async getUser(id: number): Promise<User | null>{
         try{
             const entity = await prisma.user.findUnique({
                 where: { id, status: UserStatus.REGISTERED }, 

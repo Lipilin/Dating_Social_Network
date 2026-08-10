@@ -44,7 +44,7 @@ export class Announcement{
 
     }
 
-    async getById(id: string): Promise<AnnouncementResource | null>{
+    async getById(id: number): Promise<AnnouncementResource | null>{
         try{
             const result = await axios.get(
                 `${ API_SETTINGS.API_HOST }${ API_SETTINGS.ENDPOINTS.ANNOUNCEMENT.GET }`, 

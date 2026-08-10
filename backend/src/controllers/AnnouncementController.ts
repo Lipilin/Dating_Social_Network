@@ -16,7 +16,7 @@ export class AnnouncementController{
         const skip = Number(request?.query?.skip) || 0
         const { gender, destination, departure, purpose } = request?.query
         const clauses: Prisma.AnnouncementWhereInput = {}
-        const interestsId: string[] = []
+        const interestsId: number[] = []
 
         if(!take){
             return response.status(API_RESPONSE.BAD_REQUEST).json([])
@@ -30,24 +30,29 @@ export class AnnouncementController{
         if(Array.isArray(purpose)) {
             (purpose as any[]).forEach((purpose) => {
                 if(purpose.id) {
-                    interestsId.push(purpose.id)
+                    interestsId.push(Number(purpose.id))
                 }
             })
         }
 
         try{
             const entites = await this.#annoucementProvider.getAnnouncements(take, skip, clauses, interestsId)
+            console.error(123)
             response.status(API_RESPONSE.OK).json(entites)
         }catch(error){
-            response.status(API_RESPONSE.ERROR).json([])
+            response.status(API_RESPONSE.ERROR).json({})
         }
     }
 
     async getAnnouncementById(request: Request, response: Response){
         const id = request?.query?.id
         if(!id) return response.status(API_RESPONSE.BAD_REQUEST).json(null)
+
+        const numericId = Number(id)
+        if(Number.isNaN(numericId)) return response.status(API_RESPONSE.BAD_REQUEST).json(null)
+
         try{
-            const entity = await this.#annoucementProvider.getAnnouncementById(String(id))
+            const entity = await this.#annoucementProvider.getAnnouncementById(numericId)
             response.status(API_RESPONSE.OK).json(entity)
         }catch(error){
             response.status(API_RESPONSE.ERROR).json(null)

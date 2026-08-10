@@ -28,8 +28,12 @@ export class PostController {
     async getPostById(request: Request, response: Response) {
         const id = request?.query?.id
         if (!id) return response.status(API_RESPONSE.BAD_REQUEST).json(null)
+
+        const numericId = Number(id)
+        if (Number.isNaN(numericId)) return response.status(API_RESPONSE.BAD_REQUEST).json(null)
+
         try {
-            const entity = await this.#postProvider.getPostById(String(id))
+            const entity = await this.#postProvider.getPostById(numericId)
             response.status(API_RESPONSE.OK).json(entity)
         } catch (error) {
             response.status(API_RESPONSE.ERROR).json(null)

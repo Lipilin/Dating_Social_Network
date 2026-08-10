@@ -54,7 +54,7 @@ export function PostDetailContent({ post }: { post: Post }) {
                                 </span>
                             </p>
                             <Link
-                                to={ ROUTES.USER.URL.replace(':id', post.user.id) }
+                                to={ ROUTES.USER.URL.replace(':id', String(post.user.id)) }
                                 className={styles.authorCtaLink}
                             >
                                 <span>Больше постов</span>
