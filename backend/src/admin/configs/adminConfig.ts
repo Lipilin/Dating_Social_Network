@@ -181,9 +181,12 @@ export const admin = new AdminJS({
             resource: { model: getModelByName('Page'), client: prisma },
             options: {
                 titleProperty: 'name',
-                listProperties: [ 'id', 'name' ],
-                editProperties: [ 'name', 'content' ],
+                listProperties: [ 'id', 'name', 'alias' ],
+                editProperties: [ 'name', 'alias', 'content' ],
                 properties: {
+                    alias: {
+                        isRequired: true,
+                    },
                     content: { type: 'richtext' }
                 }
             }

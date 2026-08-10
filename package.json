@@ -1,7 +1,7 @@
 {
-  "name": "common",
+  "name": "base",
   "version": "1.0.0",
-  "description": "Общие зависимости для backend и frontend",
+  "description": "Главный конфиг монорепозитория Boltaem",
   "main": "index.js",
   "scripts": {
     "lint": "eslint . --ext .ts,.tsx",
@@ -25,5 +25,11 @@
     "eslint": "^10.7.0",
     "typescript-eslint": "^8.65.0"
   },
-  "type": "module"
+  "type": "module", 
+  "private": true, 
+  "workspaces": [
+    "backend",
+    "frontend", 
+    "common"
+  ]
 }

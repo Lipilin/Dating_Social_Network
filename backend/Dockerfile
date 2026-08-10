@@ -2,13 +2,18 @@
 FROM node:20-bookworm AS base
 WORKDIR /app
 COPY package*.json .
+COPY ./common/package*.json /app/common/
+COPY ./backend/package*.json /app/backend/
 RUN npm config set registry https://registry.npmmirror.com
 RUN npm install --no-audit --no-fund --prefer-offline
-COPY . .
+COPY ./backend/ /app/backend/
+COPY ./common/ /app/common/
+WORKDIR /app/backend
 RUN npx prisma generate
 
 # Develop-сборка
 FROM base AS develop
+WORKDIR /app/backend
 CMD ["npm", "run", "dev"]
 
 #Build для production-сборки

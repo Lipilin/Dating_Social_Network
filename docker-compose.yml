@@ -1,12 +1,14 @@
 services:
   backend:
     build: 
-      context: ./backend
+      context: .
+      dockerfile: ./backend/Dockerfile
       target: develop
     depends_on:
       - mysql
     volumes:
-      - ./backend:/app
+      - ./backend:/app/backend
+      - ./common:/app/common      
     ports:
       - "3000:3000"
     environment:
@@ -26,12 +28,14 @@ services:
 
   frontend:
     build: 
-      context: ./frontend
+      context: .
+      dockerfile: ./frontend/Dockerfile
     depends_on:
       - backend
     volumes:
-      - ./frontend/src:/app/src
-      - ./backend/resources:/app/public
+      - ./frontend/src:/app/frontend/src
+      - ./frontend/public:/app/frontend/public
+      - ./common:/app/common
     ports:
       - "5173:5173"
 

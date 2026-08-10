@@ -2,6 +2,7 @@ import type { UserService } from '@/services/UserService.js'
 import type { Request } from 'express'
 import type { Response } from 'express'
 import { API_RESPONSE } from '@/types.js'
+import { LoginStepSchema, InfoStepSchema } from '@/utils/validation/rules.js'
 
 export class UserController{
     #userService: UserService | null  = null
@@ -11,7 +12,14 @@ export class UserController{
     }
 
     register = async(req: Request, res: Response) => {
-        res.json({ message: 'OK' })
+        const userRequest = req.body
+        if(LoginStepSchema.safeParse(userRequest).error){
+            return res.status(API_RESPONSE.BAD_REQUEST).json(null)
+        }
+        if(InfoStepSchema.safeParse(userRequest).error){
+            return res.status(API_RESPONSE.BAD_REQUEST).json(null)
+        }
+        const user = await this.#userService?.createUser(userRequest)
     }
 
     refresh = async(req: Request, res: Response) => {

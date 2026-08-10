@@ -45,6 +45,7 @@ export const ruLocale = {
         metadata: 'Метаданные',
         title: 'Заголовок',
         content: 'Содержание',
+        alias: 'Алиас',
         image: 'Изображение',
         icon: 'Иконка',
         upload_avatar: 'Аватар',
@@ -176,6 +177,9 @@ export const ruLocale = {
             labels: {
                 singular: 'Страница',
                 plural: 'Страницы'
+            },
+            properties: {
+                alias: 'Алиас (например: about, privacy, terms, help)',
             }
         }
     }

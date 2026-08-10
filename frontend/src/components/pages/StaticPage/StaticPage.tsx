@@ -3,7 +3,6 @@ import { useLocation } from 'react-router'
 import type { Page as PageResource } from '@/utils/api/types'
 import { Page } from '@/utils/api/Page'
 import { Loader } from '@/components/pages/Loader/Loader'
-import { NotFound } from '@/components/pages/Errors/NotFound'
 import styles from './StaticPage.module.css'
 
 const pageProvider = new Page()
@@ -29,7 +28,9 @@ export function StaticPage() {
         return <Loader isLoading={isLoading} />
     }
 
-    if (!page) return <NotFound />
+    if (!page) return (
+        ''
+    )
 
     return (
         <div className={styles.page}>

@@ -1,6 +1,6 @@
 import { prisma } from "@/prisma.js"
-import type { Announcement, Prisma } from "@prisma/client"
-import { UserContentStatus, UserStatus } from "@prisma/client"
+import type { Announcement, Prisma } from '@prisma/client'
+import { UserContentStatus, UserStatus } from '@prisma/client'
 
 export class AnnouncementService{
     async getAnnouncements(take: number, skip: number, clauses: Prisma.AnnouncementWhereInput, interestsId: string[]): Promise<Announcement[]>{
