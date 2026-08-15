@@ -1,5 +1,5 @@
 import uploadFeature from '@adminjs/upload'
-import { componentLoader } from '@/admin/configs/componentLoader.js'
+import { Components, componentLoader } from '@/admin/configs/componentLoader.js'
 import { CrossDeviceLocalProvider } from '@/admin/configs/localPhotosProvider.js'
 
 const photosDir = 'resources/photos'
@@ -48,4 +48,24 @@ export function hiddenKeyProperty() {
 
 export function uploadFilePropertyName(keyProperty: string) {
     return `upload_${keyProperty}`
+}
+
+export function imagePreviewPropertyOverride(keyProperty: string) {
+    const fileProperty = uploadFilePropertyName(keyProperty)
+
+    return {
+        [fileProperty]: {
+            components: {
+                list: Components.ImagePreview,
+                show: Components.ImagePreview,
+            },
+        },
+    }
+}
+
+export function imagePreviewPropertyOverrides(keyProperties: string[]) {
+    return keyProperties.reduce<Record<string, object>>((acc, keyProperty) => ({
+        ...acc,
+        ...imagePreviewPropertyOverride(keyProperty),
+    }), {})
 }

@@ -10,7 +10,6 @@ import {
     RegistrationMessage
 } from '@/components/pages/Registration'
 import '@/assets/css/main.css'
-import { NotFound } from './components/pages/Errors/NotFound'
 import { ProfileProvider } from '@/utils/context/ProfileProvider'
 import { StaticPage } from '@/components/pages/StaticPage/StaticPage'
 

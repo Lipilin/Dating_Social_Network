@@ -3,6 +3,11 @@ import type { Request } from 'express'
 import type { Response } from 'express'
 import { API_RESPONSE } from '@/types.js'
 import { LoginStepSchema, InfoStepSchema } from '@/utils/validation/rules.js'
+import { 
+    SignJWT, 
+    jwtVerify, 
+    generateSecret 
+} from 'jose'
 
 export class UserController{
     #userService: UserService | null  = null
@@ -19,14 +24,24 @@ export class UserController{
         if(InfoStepSchema.safeParse(userRequest).error){
             return res.status(API_RESPONSE.BAD_REQUEST).json(null)
         }
-        const user = await this.#userService?.createUser(userRequest)
-    }
-
-    refresh = async(req: Request, res: Response) => {
-
+        try{
+            const user = await this.#userService?.createUser(userRequest)
+            return res.status(API_RESPONSE.OK).json(user)
+        }catch(error){
+            console.error(error)
+            return res.status(API_RESPONSE.ERROR).json({})
+        }
     }
 
     login = async(req: Request, res: Response) => {
+
+    }
+
+    access = async(req: Request, res: Response) => {
+
+    }
+
+    refresh = async(req: Request, res: Response) => {
 
     }
 

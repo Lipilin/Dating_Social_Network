@@ -38,6 +38,7 @@ model User{
   password String
   age Int
   name String
+  city String
   surname String?
   description String? @db.VarChar(255)
   status UserStatus @default(NEW)

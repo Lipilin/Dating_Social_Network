@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 import { UserRole } from '@prisma/client'
 import { UserStatus } from '@prisma/client'
-import { prisma } from '@/app.js'
+import { prisma } from '@/prisma.js'
 
 export async function adminAuth(email: string, password: string){
     const user = await prisma.user.findFirst({ where: {

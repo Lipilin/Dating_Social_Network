@@ -1,20 +1,8 @@
 import { prisma } from '@/prisma.js'
 import type { GenderPreference, User } from '@prisma/client'
-import { UserStatus } from '@prisma/client'
+import { UserStatus, UserRole } from '@prisma/client'
+import type { UserPostRequest } from '@boltaem/common/type.js'
 import bcrypt from 'bcryptjs'
-
-export interface CreateUserData {
-    login: string
-    email: string
-    password: string
-    name: string
-    surname: string
-    age: number
-    city: string
-    description: string
-    gender?: string
-    interests?: { id: number }[]
-}
 
 export class UserService{
     async getUser(id: number): Promise<User | null>{
@@ -38,7 +26,7 @@ export class UserService{
         }
     }
 
-    async createUser(data: CreateUserData): Promise<User | null> {
+    async createUser(data: UserPostRequest): Promise<User | null> {
         try {
             const normalizedEmail = data.email.toLowerCase().trim()
             const normalizedLogin = data.login.toLowerCase().trim()
@@ -71,10 +59,12 @@ export class UserService{
                     surname: data.surname,
                     description: data.description,
                     city: data.city,
-                    gender: data.gender as GenderPreference,
+                    //gender: data.gender as GenderPreference,
                     interests: {
                         connect: data.interests?.map((interest) => ({ id: interest.id })) || [],
                     },
+                    role: UserRole.USER,
+                    status: UserStatus.NEW,
                 },
             })
 

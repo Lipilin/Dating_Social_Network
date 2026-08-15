@@ -31,7 +31,7 @@ export class User{
     async createUser(request: UserPostRequest): Promise<UserResource | null>{
         try{
             const response = await axios.post(
-                `${ API_SETTINGS.API_HOST }${ API_SETTINGS.ENDPOINTS.ANNOUNCEMENT.LIST }`, 
+                `${ API_SETTINGS.API_HOST }${ API_SETTINGS.ENDPOINTS.USER.CREATE }`, 
                 request
             )
             return response.data as UserResource

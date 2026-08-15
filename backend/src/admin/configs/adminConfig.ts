@@ -1,16 +1,63 @@
-import AdminJS, { type ActionRequest } from 'adminjs'
+import AdminJS, { type ActionRequest, type RecordActionResponse, type RecordJSON } from 'adminjs'
 import { Database, Resource, getModelByName } from '@adminjs/prisma'
 import { ruLocale } from '@/admin/configs/locales/ruLocales.js'
 import { componentLoader } from '@/admin/configs/componentLoader.js'
 import {
     createImageUpload,
     hiddenKeyProperty,
+    imagePreviewPropertyOverrides,
     uploadFilePropertyName,
 } from '@/admin/configs/uploadConfig.js'
 import bcrypt from 'bcryptjs'
 import { prisma } from '@/prisma.js'
 
 AdminJS.registerAdapter({ Database, Resource })
+
+const passwordFieldProps = {
+    autoComplete: 'new-password',
+}
+
+async function hashPasswordInPayload(request: ActionRequest, passwordField: string) {
+    const password = request.payload?.[passwordField]
+    if (typeof password === 'string' && password.length > 0) {
+        request.payload![passwordField] = await bcrypt.hash(password, 10)
+    } else {
+        delete request.payload?.[passwordField]
+    }
+}
+
+function formatTagsForForm(record: RecordJSON) {
+    const tags = record.params.tags
+    if (!tags) {
+        return record
+    }
+
+    if (Array.isArray(tags)) {
+        record.params.tags = tags.join(', ')
+        return record
+    }
+
+    if (typeof tags === 'string') {
+        try {
+            const parsed: unknown = JSON.parse(tags)
+            if (Array.isArray(parsed)) {
+                record.params.tags = parsed.join(', ')
+            }
+        } catch {
+            // keep original string
+        }
+    }
+
+    return record
+}
+
+function parseTagsInPayload(request: ActionRequest) {
+    if (request.payload?.tags && typeof request.payload.tags === 'string') {
+        const tagsArray = request.payload.tags.split(',').map(t => t.trim()).filter(Boolean)
+        request.payload.tags = JSON.stringify(tagsArray)
+    }
+    return request
+}
 
 export const admin = new AdminJS({
     componentLoader,
@@ -24,12 +71,28 @@ export const admin = new AdminJS({
             options: {
                 titleProperty: 'email',
                 listProperties: [ 'id', 'email', 'login', 'name', 'role', 'status', uploadFilePropertyName('avatar'), 'createdAt' ],
-                editProperties: [
+                newProperties: [
                     'email',
                     'login',
                     'password',
                     'name',
                     'surname',
+                    'age',
+                    'city',
+                    'description',
+                    'status',
+                    'role',
+                    uploadFilePropertyName('avatar'),
+                    uploadFilePropertyName('banner'),
+                ],
+                editProperties: [
+                    'email',
+                    'login',
+                    'newPassword',
+                    'name',
+                    'surname',
+                    'age',
+                    'city',
                     'description',
                     'status',
                     'role',
@@ -39,9 +102,19 @@ export const admin = new AdminJS({
                 actions: {
                     new: {
                         before: async(request: ActionRequest) => {
-                            if (request.payload && request.payload.password) {
-                                request.payload.password = await bcrypt.hash(request.payload.password, 10)
+                            await hashPasswordInPayload(request, 'password')
+                            return request
+                        }
+                    },
+                    edit: {
+                        before: async(request: ActionRequest) => {
+                            if (request.payload?.newPassword) {
+                                request.payload.password = request.payload.newPassword
+                                await hashPasswordInPayload(request, 'password')
+                            } else {
+                                delete request.payload?.password
                             }
+                            delete request.payload?.newPassword
                             return request
                         }
                     }
@@ -49,6 +122,8 @@ export const admin = new AdminJS({
                 properties: {
                     password: {
                         type: 'password',
+                        isRequired: true,
+                        props: passwordFieldProps,
                         isVisible: {
                             new: true,
                             edit: false,
@@ -57,9 +132,23 @@ export const admin = new AdminJS({
                             filter: false
                         }
                     },
+                    newPassword: {
+                        type: 'password',
+                        props: passwordFieldProps,
+                        isVisible: {
+                            new: false,
+                            edit: true,
+                            show: false,
+                            list: false,
+                            filter: false
+                        }
+                    },
+                    age: { isRequired: true },
+                    city: { isRequired: true },
                     avatar: hiddenKeyProperty(),
                     banner: hiddenKeyProperty(),
-                    metadata: { type: 'json' }
+                    metadata: { type: 'json' },
+                    ...imagePreviewPropertyOverrides([ 'avatar', 'banner' ]),
                 }
             },
             features: [
@@ -83,25 +172,28 @@ export const admin = new AdminJS({
                     user: {
                         reference: 'User',
                         isVisible: { edit: true, show: true }
-                    }
+                    },
+                    ...imagePreviewPropertyOverrides([ 'image' ]),
                 },
                 actions: {
                     new: {
-                        before: async(request: ActionRequest) => {
-                            if (request.payload?.tags && typeof request.payload.tags === 'string') {
-                                const tagsArray = request.payload.tags.split(',').map(t => t.trim()).filter(Boolean)
-                                request.payload.tags = JSON.stringify(tagsArray)
-                            }
-                            return request
-                        }
+                        before: parseTagsInPayload
                     },
                     edit: {
-                        before: async(request: ActionRequest) => {
-                            if (request.payload?.tags && typeof request.payload.tags === 'string') {
-                                const tagsArray = request.payload.tags.split(',').map(t => t.trim()).filter(Boolean)
-                                request.payload.tags = JSON.stringify(tagsArray)
+                        before: parseTagsInPayload,
+                        after: async(response: RecordActionResponse) => {
+                            if (response.record) {
+                                response.record = formatTagsForForm(response.record)
                             }
-                            return request
+                            return response
+                        }
+                    },
+                    show: {
+                        after: async(response: RecordActionResponse) => {
+                            if (response.record) {
+                                response.record = formatTagsForForm(response.record)
+                            }
+                            return response
                         }
                     }
                 }
@@ -114,7 +206,7 @@ export const admin = new AdminJS({
             resource: { model: getModelByName('Announcement'), client: prisma },
             options: {
                 titleProperty: 'title',
-                listProperties: [ 'id', 'title', 'status', 'departure', 'destination', 'createdAt' ],
+                listProperties: [ 'id', 'title', 'status', 'departure', 'destination', uploadFilePropertyName('icon'), 'createdAt' ],
                 editProperties: [
                     'title',
                     'description',
@@ -139,7 +231,8 @@ export const admin = new AdminJS({
                         isArray: true,
                         isVisible: { edit: true, show: true }
                     },
-                    description: { type: 'richtext' }
+                    description: { type: 'richtext' },
+                    ...imagePreviewPropertyOverrides([ 'icon' ]),
                 }
             },
             features: [
@@ -154,6 +247,7 @@ export const admin = new AdminJS({
                 editProperties: [ 'name', uploadFilePropertyName('icon'), 'isCountry' ],
                 properties: {
                     icon: hiddenKeyProperty(),
+                    ...imagePreviewPropertyOverrides([ 'icon' ]),
                 }
             },
             features: [
@@ -171,7 +265,8 @@ export const admin = new AdminJS({
                     category: {
                         reference: 'Category',
                         isVisible: { edit: true, show: true }
-                    }
+                    },
+                    ...imagePreviewPropertyOverrides([ 'image' ]),
                 }
             },
             features: [
