@@ -5436,6 +5436,8 @@ img.mfp-img {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex: 1;
+  min-width: 0;
 }
 .locations__wrapper.blog .locations__item-right {
   display: flex;
@@ -5449,7 +5451,6 @@ img.mfp-img {
   overflow: hidden;
   display: flex;
   align-items: stretch;
-  height: 310px;
   min-height: 310px;
 }
 @media (max-width: 1024px) {
@@ -5462,17 +5463,18 @@ img.mfp-img {
 .locations__item-img {
   width: 314px;
   flex-shrink: 0;
-  align-self: stretch;
-  height: auto;
-  min-height: 310px;
+  height: 310px;
+  max-height: 310px;
   object-fit: cover;
+  object-position: center;
+  align-self: flex-start;
 }
 @media (max-width: 768px) {
   .locations__item-img {
     width: 100%;
     object-fit: cover;
     height: 300px;
-    min-height: 300px;
+    max-height: 300px;
     align-self: auto;
   }
 }

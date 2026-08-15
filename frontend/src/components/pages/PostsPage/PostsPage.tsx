@@ -5,10 +5,10 @@ import { DefaultPagination } from '@/components/ui/pagination/DefaultPagination'
 import { Loader } from '@/components/pages/Loader/Loader'
 import { NoDataFound } from '../Errors/NoDataFound'
 import { DefaultButton } from '@/components/ui/buttons/DefaultButton'
-import styles from './PostsPage.module.scss'
+import styles from './PostPage.module.css'
 import { Post as PostCard} from '@/components/pages/UserPage/partials/Post'
 
-const TAKE: number = 12
+const TAKE: number = 5
 const postService = new Post()
 
 export function PostsPage() {
@@ -16,19 +16,18 @@ export function PostsPage() {
     const [pagination, setPagination] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
-        setIsLoading(true)
-        async function getPosts(){
-            const posts = await postService.listPost({
-                take: TAKE,
-                skip: pagination * TAKE,
-            })
-            setPosts(posts)
+        postService.listPost({
+            take: TAKE,
+            skip: pagination * TAKE,
+        }).then((data) => {
+            setPosts(data)
             setIsLoading(false)
-        }
-        getPosts()
+        })
     }, [pagination])
     if(isLoading){
-        return <Loader isLoading={isLoading} />    
+        return (
+            <Loader isLoading={isLoading} />
+        )  
     }
 
     if(posts.length == 0){
@@ -37,7 +36,9 @@ export function PostsPage() {
                 content="Создать пост" 
                 classNames="need-registration__button" />
         }
-        return <NoDataFound Button={button} />
+        return (
+            <NoDataFound Button={button} />
+        )
     }
 
     return (
@@ -51,7 +52,7 @@ export function PostsPage() {
                     </div>
                 </div>
             </div>
-            <div className = { styles.postsContainer }>
+            <div className={`locations__wrapper blog ${styles.postsContainer}`}>
                 { 
                     posts.map((post) => <PostCard key={post.id} {...post} />)
                 }
@@ -60,7 +61,9 @@ export function PostsPage() {
                 <DefaultPagination 
                     paginationNumber={pagination + 1}
                     onPrevPage={() => setPagination(pagination - 1)}
-                    onNextPage={() => setPagination(pagination + 1)}
+                    onNextPage={() => { 
+                        setPagination(pagination + 1)
+                    }}
                     prevPageDisabled = { pagination ==  0 }
                     nextPageDisabled={ posts.length < TAKE }
                 />

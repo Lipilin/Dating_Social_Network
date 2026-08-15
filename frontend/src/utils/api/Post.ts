@@ -32,7 +32,8 @@ export class Post{
             )
             return response.data
         }catch(error){
-            return []
+            console.log((error as Error).message)
+            throw error
         }
     }
 }

@@ -23,7 +23,6 @@ export function AnnouncementPage() {
             skip: pagination * TAKE,
         }).then((data) => {
             setAnnouncements(data)
-        }).finally(() => {
             setIsLoading(false)
         })
     }, [pagination])
