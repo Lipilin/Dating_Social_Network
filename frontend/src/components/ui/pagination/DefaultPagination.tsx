@@ -1,30 +1,30 @@
 import styles from './DefaultPagination.module.css'
 
 interface DefaultPaginationProps{
-    prevPageBlock: boolean 
-    nextPageBlock: boolean
+    prevPageDisabled: boolean 
+    nextPageDisabled: boolean
     onPrevPage: () => void
-    onNexPage: () => void 
+    onNextPage: () => void 
     paginationNumber: number
 }
 
 
 export function DefaultPagination(
     { 
-        prevPageBlock, 
-        nextPageBlock, 
+        prevPageDisabled, 
+        nextPageDisabled, 
         onPrevPage, 
-        onNexPage, 
+        onNextPage, 
         paginationNumber
     }: DefaultPaginationProps) {
-        const prevPageButtonClass = prevPageBlock ? "need-registration__button_gray" : "need-registration__button"
-        const nextPageButtonClass = nextPageBlock ? "need-registration__button_gray" : "need-registration__button"
+        const prevPageButtonClass = prevPageDisabled ? "need-registration__button_gray" : "need-registration__button"
+        const nextPageButtonClass = nextPageDisabled ? "need-registration__button_gray" : "need-registration__button"
         return(
             <div className = { styles.paginationContainer }>
                 <div className = { styles.pagination }>
                     <button 
                         className = { styles.buttonPagination + ' ' + prevPageButtonClass }
-                        disabled = { prevPageBlock } 
+                        disabled = { prevPageDisabled } 
                         onClick = { (e) => onPrevPage() }>
                             Назад
                     </button>
@@ -42,8 +42,8 @@ export function DefaultPagination(
                     </div>
                     <button 
                         className = { styles.buttonPagination + ' ' + nextPageButtonClass }
-                        disabled = { nextPageBlock } 
-                        onClick = { (e) => onNexPage() }>
+                        disabled = { nextPageDisabled } 
+                        onClick = { (e) => onNextPage() }>
                             Далее
                     </button>
                 </div>

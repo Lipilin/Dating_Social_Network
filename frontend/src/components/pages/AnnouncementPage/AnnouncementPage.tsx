@@ -63,10 +63,10 @@ export function AnnouncementPage() {
                 </div>
                 <div className="announcements-block-pagination">
                     <DefaultPagination 
-                        prevPageBlock = { pagination == 0 }
-                        nextPageBlock = { announcements.length < TAKE }
+                        prevPageDisabled = { pagination == 0 }
+                        nextPageDisabled = { announcements.length < TAKE }
                         onPrevPage = { () => setPagination(pagination - 1) }
-                        onNexPage = { () => setPagination(pagination + 1) }
+                        onNextPage = { () => setPagination(pagination + 1) }
                         paginationNumber = { pagination + 1 }
                     />
                 </div>

@@ -11,5 +11,8 @@ export
     type AnnouncementResource,
     type Post,
     type Page,
+    type AnnouncementRequest,
+    type CategoryRequest,
+    type CategoryWithInterestResource,
 } 
 from '@boltaem/common/type'

@@ -1,0 +1,5 @@
+.postPageCotainer{
+    height: 100vh;
+    width: calc(100% - 220px);
+    margin: 0 auto;
+}
