@@ -1,8 +1,16 @@
-import type { UserLoginResponse, UserResource, GENDER_PREFERENCE, GENDER } from "@boltaem/common/type.js"
-import type { Prisma, User } from "@prisma/client"
+import type { UserLoginResponse, UserResource, GENDER_PREFERENCE, GENDER } from '@boltaem/common/type.js'
+import { Prisma } from '@prisma/client'
+import type { User } from '@prisma/client'
 import { SignJWT } from 'jose'
+import { encodedAccessSecret, encodedRefreshSecret } from '../other/authSecret.js'
+import {
+    ACCESS_TOKEN_EXPIRATION_TIME,
+    JWT_ALGORITHM,
+    REFRESH_TOKEN_EXPIRATION_TIME,
+    type JwtFormat,
+} from '@/types.js'
 
-type UserWithRelations = Prisma.UserGetPayload<{
+export const userWithRelationsArgs = Prisma.validator<Prisma.UserDefaultArgs>()({
     include: {
         interests: {
             include: {
@@ -11,29 +19,26 @@ type UserWithRelations = Prisma.UserGetPayload<{
         },
         announcements: true,
         posts: true
-    }, 
-}>
+    }
+})
 
-const accessSecret = process.env.ACCESS_TOKEN_GENERATION_SECRET
-const refreshSecret = process.env.REFRESH_TOKEN_GENERATION_SECRET
+export type UserWithRelations = Prisma.UserGetPayload<typeof userWithRelationsArgs>
 
-if(!accessSecret || !refreshSecret) throw new Error('No valid tokens')
-const encodedAccessSecret = new TextEncoder().encode(accessSecret)
-const encodedRefreshSecret = new TextEncoder().encode(refreshSecret)
+type UserScalars = Pick<UserResource, 'gender' | 'city'>
 
-async function generateJwtToken(user: User, secret: Uint8Array, expirationTime: string){
-    return await new SignJWT(
-        { 
-            id: user.id, 
-            login: user.login,
-        }
-    )
-    .setProtectedHeader({ alg: 'HS256' }).setExpirationTime(expirationTime).sign(secret)
+export async function generateJwtToken(user: JwtFormat, secret: Uint8Array, expirationTime: string){
+    const payload: JwtFormat = {
+        id: user.id,
+        login: user.login,
+    }
+    return await new SignJWT(payload)
+        .setProtectedHeader({ alg: JWT_ALGORITHM }).setExpirationTime(expirationTime).sign(secret)
 }
 
 export async function fromUserToUserResponse(user: UserWithRelations): Promise<UserLoginResponse>{
-    const accessToken = await generateJwtToken(user, encodedAccessSecret, '5m')
-    const refreshToken = await generateJwtToken(user, encodedRefreshSecret, '1d')
+    const accessToken = await generateJwtToken(user, encodedAccessSecret, ACCESS_TOKEN_EXPIRATION_TIME)
+    const refreshToken = await generateJwtToken(user, encodedRefreshSecret, REFRESH_TOKEN_EXPIRATION_TIME)
+    const { gender, city } = user as unknown as UserScalars
     const userResource: UserResource = {
         id: user.id,
         email: user.email,
@@ -44,8 +49,8 @@ export async function fromUserToUserResponse(user: UserWithRelations): Promise<U
         banner: user.banner ?? '',
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
-        gender: user.gender as GENDER,
-        city: user.city,
+        gender: gender,
+        city: city,
         announcements: user.announcements.map((announcement) => {
             return {
                 id: announcement.id,

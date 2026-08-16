@@ -2,13 +2,15 @@ import { Router } from 'express'
 import { UserController } from '@/controllers/UserController.js'
 import { UserService } from '@/services/UserService.js'
 import { securityMiddlewareDefault } from '@/middleware/security.js'
+import { RefreshTokenService } from '@/services/RefreshTokenService.js'
 
-const userSerivce = new UserService()
-const userController = new UserController(userSerivce)
+const userSerivce = new UserService()           
+const refreshTokenService = new RefreshTokenService()
+const userController = new UserController(userSerivce, refreshTokenService)
 export const router = Router()
 router.use(securityMiddlewareDefault)
 router.post('/login', userController.login)
 router.post('/create', userController.register)
-router.get('/refresh', userController.refresh)
-router.get('/access', userController.access)
+router.post('/refresh', userController.refresh)
+router.get('/me', userController.me)
 router.get('/list', userController.list)

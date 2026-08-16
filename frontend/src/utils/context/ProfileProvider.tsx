@@ -1,5 +1,5 @@
 import { User } from '@/utils/api/User'
-import type { UserResource } from '../api/types'
+import type { UserLoginResponse, UserResource } from '../api/types'
 import { useEffect, useState, useMemo } from 'react'
 import { ProfileContext } from './ProfileContext'
 import type { ProfileContextIntreface } from './ProfileContext'
@@ -14,7 +14,10 @@ const userProvider = new User()
 export function ProfileProvider({children, onAuthModalOpen}: ProfileProviderProps){
     const [user, setUser] = useState<UserResource | null>(null)
     useEffect(() => {
-        userProvider.getMe().then((response) => setUser(response))
+        userProvider.withRefreshing(async () => {
+            const response: UserLoginResponse = await userProvider.getMe()
+            setUser(response.user)
+        })
     }, [])
 
     const context: ProfileContextIntreface = useMemo(() => ({

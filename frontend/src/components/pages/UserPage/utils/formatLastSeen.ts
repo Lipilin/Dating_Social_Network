@@ -1,10 +1,13 @@
+const MS_IN_MINUTE = 60000
+const ONLINE_THRESHOLD_MINUTES = 10
+
 export function formatLastSeen(lastSeen: string): { text: string; isOnline: boolean } {
     const date = new Date(lastSeen)
     const now = new Date()
     const diffMs = now.getTime() - date.getTime()
-    const diffMinutes = Math.floor(diffMs / 60000)
+    const diffMinutes = Math.floor(diffMs / MS_IN_MINUTE)
 
-    if (diffMinutes < 5) {
+    if (diffMinutes < ONLINE_THRESHOLD_MINUTES) {
         return { text: 'сейчас в сети', isOnline: true }
     }
 

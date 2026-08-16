@@ -4,3 +4,7 @@ export const STATIC_ROUTES_FOR_BUTTOS = {
     TERMS: '/terms',
     HELP: '/help',
 } as const
+
+export const HTTP_STATUS = {
+    UNAUTHORIZED: 401,
+} as const

@@ -46,7 +46,7 @@ interface BaseEndpoint{
 type Endpoint = BaseEndpoint & Record<string, string> 
 
 export const API_SETTINGS: ApiSettings = {
-    API_HOST: 'http://localhost:3000/api', 
+    API_HOST: '/api', 
     DEFAULT_PAGINATION: 7, 
     ENDPOINTS: {
         ANNOUNCEMENT: {
@@ -64,9 +64,14 @@ export const API_SETTINGS: ApiSettings = {
         USER: {
             LIST: '/user/list', 
             CREATE: '/user/create', 
-            UPDATE: '', 
+            UPDATE: '/user/update', 
             GET: '/user/get',
             LOGIN: '/user/login',
+            ME: '/user/me',
+            CREATE_ANNOUNCEMENT: '/user/create-announcement',
+            CREATE_POST: '/user/create-post',
+            REFRESH: '/user/refresh',
+
         }, 
         POST: {
             LIST: '/post/list', 

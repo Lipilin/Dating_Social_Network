@@ -1,13 +1,16 @@
 import { prisma } from '@/prisma.js'
-import type { User } from '@prisma/client'
+import type { Prisma, User } from '@prisma/client'
 import { UserStatus, UserRole } from '@prisma/client'
 import type { UserPostRequest, UserLoginRequest, UserLoginResponse } from '@boltaem/common/type.js'
 import bcrypt from 'bcryptjs'
-import { fromUserToUserResponse } from '@/utils/mapping/user.mapper.js'
+import { fromUserToUserResponse, type UserWithRelations } from '@/utils/mapping/user.mapper.js'
 import { GENDER } from '@boltaem/common/type.js'
+import { jwtVerify } from 'jose'
+import { encodedAccessSecret } from '@/utils/other/authSecret.js'
+import { AUTH_ERROR_MESSAGE, type JwtFormat } from '@/types.js'
 
 export class UserService{
-    async getUser(id: number): Promise<User | null>{
+    async getUser(id: number): Promise<UserWithRelations | null>{
         try{
             const entity = await prisma.user.findUnique({
                 where: { id, status: UserStatus.REGISTERED }, 
@@ -22,6 +25,19 @@ export class UserService{
                 }
             })
             return entity
+        } catch (error) {
+            console.error(error)
+            return null
+        }
+    }
+
+    async update(id: number, data: Prisma.UserUpdateInput): Promise<User | null> {
+        try {
+            const user = await prisma.user.update({
+                where: { id, status: UserStatus.REGISTERED },
+                data,
+            })
+            return user
         } catch (error) {
             console.error(error)
             return null
@@ -93,10 +109,35 @@ export class UserService{
                 posts: true
             }
         })
-        if(!user) throw new Error('No user found')
+        if(!user) throw new Error(AUTH_ERROR_MESSAGE.NO_USER_FOUND)
         const checkPassword = await bcrypt.compare(data.password, user.password)
-        if(!checkPassword) throw new Error('Invalid password')
+        if(!checkPassword) throw new Error(AUTH_ERROR_MESSAGE.INVALID_PASSWORD)
+        await this.update(user.id, { lastSeen: new Date() })
+        user.lastSeen = new Date()
         const response = await fromUserToUserResponse(user)
         return response
+    }
+
+    async me(token: string): Promise<UserLoginResponse> {
+        const { payload } = await jwtVerify<JwtFormat>(token, encodedAccessSecret)
+        const user = await prisma.user.findUnique({
+            where: { 
+                id: payload.id,
+                status: UserStatus.REGISTERED
+            },
+            include: {     
+                interests: {
+                    include: {
+                        category: true,
+                    }
+                },
+                announcements: true,
+                posts: true
+            }
+        })
+        if(!user) throw new Error(AUTH_ERROR_MESSAGE.NO_USER_FOUND)
+        await this.update(user.id, { lastSeen: new Date() })
+        user.lastSeen = new Date()
+        return fromUserToUserResponse(user)
     }
 }
