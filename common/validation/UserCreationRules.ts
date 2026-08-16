@@ -1,21 +1,22 @@
 import { z } from 'zod'
+import { VALIDATION_ERRORS } from '../config.js'
 
 export const LoginStepSchema = z.object({
-    login: z.string().min(3, {message: 'Логин должен быть не менее 3 символов!'}), 
-    email: z.email({message: 'Неверный email!'}), 
-    password: z.string().min(8, {message: 'Пароль должен быть не менее 8 символов!'}),
-    confirmPassword: z.string(), 
-    acceptSecurity: z.boolean().refine((data) => data == true, {message: 'Вы должны согласиться с политикой обработки персональных данных!'}),
-    acceptService: z.boolean().refine((data) => data == true, {message: 'Вы должны согласиться с правилами сервиса!'}),
+    login: z.string().min(3, { message: VALIDATION_ERRORS.LOGIN_MIN_LENGTH }),
+    email: z.email({ message: VALIDATION_ERRORS.EMAIL_INVALID }),
+    password: z.string().min(8, { message: VALIDATION_ERRORS.PASSWORD_MIN_LENGTH }),
+    confirmPassword: z.string(),
+    acceptSecurity: z.boolean().refine((data) => data == true, { message: VALIDATION_ERRORS.ACCEPT_SECURITY }),
+    acceptService: z.boolean().refine((data) => data == true, { message: VALIDATION_ERRORS.ACCEPT_SERVICE }),
 }).refine((data) => data.password == data.confirmPassword, {
-    message: 'Пароли не совпадают!',
+    message: VALIDATION_ERRORS.PASSWORD_MISMATCH,
     path: ['confirmPassword'],
 })
 
 export const InfoStepSchema = z.object({
-    name: z.string().min(3, {message: 'Имя должно быть не менее 3 символов!'}),
-    surname: z.string().min(3, {message: 'Фамилия должна быть не менее 3 символов!'}),
-    age: z.number().min(18, {message: 'Возраст должен быть не менее 18 лет!'}),
-    city: z.string().min(3, {message: 'Город должен быть не менее 3 символов!'}),
-    description: z.string().max(255, {message: 'Описание должно быть не более 255 символов!'}),
+    name: z.string().min(3, { message: VALIDATION_ERRORS.NAME_MIN_LENGTH }),
+    surname: z.string().min(3, { message: VALIDATION_ERRORS.SURNAME_MIN_LENGTH }),
+    age: z.number().min(18, { message: VALIDATION_ERRORS.AGE_MIN_18 }),
+    city: z.string().min(3, { message: VALIDATION_ERRORS.CITY_MIN_LENGTH }),
+    description: z.string().max(255, { message: VALIDATION_ERRORS.DESCRIPTION_MAX_LENGTH }),
 })

@@ -1,6 +1,7 @@
 import { z } from 'zod'
+import { VALIDATION_ERRORS } from '../config.js'
 
 export const UserLoginSchema = z.object({
-    email: z.email({message: 'Неверный email!'}),
-    password: z.string().min(8, {message: 'Пароль должен быть не менее 8 символов!'}),
+    email: z.email({ message: VALIDATION_ERRORS.EMAIL_INVALID }),
+    password: z.string().min(8, { message: VALIDATION_ERRORS.PASSWORD_MIN_LENGTH }),
 })
