@@ -10,6 +10,7 @@ import { ProfilePage } from '@/components/pages/UserPage/ProfilePage'
 import { AnnouncementDetail } from '@/components/pages/AnnouncementDetail/AnnouncementDetail'
 import { PostsPage } from '@/components/pages/PostsPage/PostsPage'
 import { PostDetail } from '@/components/pages/PostDetail/PostDetail'
+import { ProfileEditPage } from '@/components/pages/ProfileEditPage/ProfileEditPage'
 export { STATIC_ROUTES_FOR_BUTTOS } from '@boltaem/common/config'
 
 export const genderLabels = {
@@ -134,6 +135,10 @@ export const ROUTES: Record<string, Route> = {
     POST_DETAIL: {
         URL: '/post/:id', 
         COMPONENT: PostDetail,
+    }, 
+    PROFILE_EDIT: {
+        URL: '/profile/edit',
+        COMPONENT: ProfileEditPage,
     }
 } as const
 

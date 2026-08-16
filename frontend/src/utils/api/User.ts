@@ -64,7 +64,7 @@ export class User{
         return response 
     }
 
-    async withRefreshing<T>(callback: () => Promise<T>){
+    async withRefreshing<T>(callback: () => Promise<T>): Promise<T>{
         try{
             return await callback()
         }catch(error){
@@ -73,7 +73,7 @@ export class User{
                 this.#abortController = new AbortController()
                 const refreshResponse = await this.refresh()
                 if(refreshResponse.status === HTTP_STATUS.UNAUTHORIZED){
-                    return
+                    throw Error()
                 }
                 return await callback()
             }

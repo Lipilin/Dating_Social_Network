@@ -17,7 +17,7 @@ export function HeaderUserAccountMenu({ user }: HeaderUserAccountMenuProps) {
             <p>{getUserDisplayName(user)}</p>
             <ul>
                 <li>
-                    <Link to={ROUTES.PROFILE.URL}>
+                    <Link to={ROUTES.PROFILE_EDIT.URL}>
                         <div className="icon">
                             <SettingsIcon />
                         </div>
