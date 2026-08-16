@@ -1,10 +1,11 @@
 import { prisma } from '@/prisma.js'
 import type { RefreshToken, User } from '@prisma/client'
 import { REFRESH_TOKEN_COOKIE_MAX_AGE } from '@/types.js'
+import type { RefreshTokenWithUser } from '@/types.js'
 
 export class RefreshTokenService{
 
-    async get(token: string): Promise<RefreshToken | null>{
+    async get(token: string): Promise<RefreshTokenWithUser | null>{
         try{
             const entity = await prisma.refreshToken.findUnique({
                 where: { token },

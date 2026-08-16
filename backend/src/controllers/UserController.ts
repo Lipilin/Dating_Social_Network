@@ -129,5 +129,9 @@ export class UserController{
         const entity = await this.#userService.getUser(numericId)
         if(!entity) return res.status(API_RESPONSE.NOT_FOUND).json({})
         res.status(API_RESPONSE.OK).json(entity)
+    }        
+
+    logout = async(req: Request, res: Response) => {
+
     }
 }
