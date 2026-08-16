@@ -31,6 +31,11 @@ enum GenderPreference{
   ANYBODY
 }
 
+enum Gender{
+  MALE
+  FEMALE
+}
+
 model User{
   id Int @id @default(autoincrement())
   email String @unique
@@ -39,7 +44,8 @@ model User{
   age Int
   name String
   city String
-  surname String?
+  surname String
+  gender Gender
   description String? @db.VarChar(255)
   status UserStatus @default(NEW)
   role UserRole @default(USER)
@@ -50,6 +56,7 @@ model User{
   announcements Announcement[]
   posts Post[]
   interests Interest[]
+  refreshTokens RefreshToken[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }
@@ -117,8 +124,17 @@ model Page{
 }
 
 model EmailMessage{
-  id Int @id @default(1)
+  id Int @id @default(autoincrement())
   from String
   subject String
   content String
+}
+
+model RefreshToken{
+  id String @id @default(cuid())
+  token String @unique
+  userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  expiredAt DateTime
 }

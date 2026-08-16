@@ -8,7 +8,7 @@ export interface AnnouncementResource{
     dateTo: string, 
     destination: string, 
     departure: string, 
-    user: UserResource, 
+    user?: UserResource, 
     icon?: string
     createdAt: string
 }
@@ -26,14 +26,17 @@ export interface InterestResource{
     id: number, 
     name: string,
     image?: string,
-    category?: CategoryWithInterestResource
+    category?: CategoryResource
 }
 
-export interface CategoryWithInterestResource{
-    id: number,
+export interface CategoryResource{
+    id: number, 
     name: string, 
     icon: string, 
     isCountry: boolean, 
+}
+
+export interface CategoryWithInterestResource extends CategoryResource{
     interests: InterestResource[],
 }
 
@@ -67,7 +70,7 @@ export interface Post{
     content: string
     image: string
     tags?: string[]
-    createdAt: string
+    createdAt: Date
     user?: UserResource
 }
 
@@ -77,17 +80,17 @@ export interface UserResource{
     name: string,
     surname: string, 
     description: string,
-    avatar?: string, 
-    banner?: string, 
-    announcements: AnnouncementResource[],
-    posts: Post[], 
-    lastSeen: string,
+    lastSeen: Date,
     age: number,
     city: string, 
     createdAt: Date,
     updatedAt: Date,
-    gender?: GENDER
-    interests?: InterestResource[]
+    gender: GENDER, 
+    interests?: InterestResource[], 
+    avatar?: string, 
+    banner?: string,
+    announcements?: AnnouncementResource[],
+    posts?: Post[],  
 }
 
 export interface UserPostRequest extends PostRequest{
@@ -119,4 +122,15 @@ export interface Page{
 
 export interface PageRequest extends Request{
     alias?: string
+}
+
+export interface UserLoginRequest extends PostRequest{
+    email: string
+    password: string
+}
+
+export interface UserLoginResponse{
+    user: UserResource
+    accessToken: string
+    refreshToken: string
 }

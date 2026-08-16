@@ -19,8 +19,10 @@ export class CategoryController{
         try{
             const entities = await this.#categoryService.getCategories(take, skip)
             response.status(API_RESPONSE.OK).json(entities)
-        }catch{
-            response.status(API_RESPONSE.ERROR).json([])
+        }catch(error){
+            response.status(API_RESPONSE.ERROR).json({
+                message: (error as Error).message,
+            })
         }
-    }
+    }   
 }

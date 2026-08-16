@@ -36,12 +36,14 @@ interface ApiSettings{
     ENDPOINTS: Record<string, Endpoint>
 }
 
-interface Endpoint{
+interface BaseEndpoint{
     LIST: string
     CREATE: string
     UPDATE: string  
     GET: string
 }
+
+type Endpoint = BaseEndpoint & Record<string, string> 
 
 export const API_SETTINGS: ApiSettings = {
     API_HOST: 'http://localhost:3000/api', 
@@ -64,6 +66,7 @@ export const API_SETTINGS: ApiSettings = {
             CREATE: '/user/create', 
             UPDATE: '', 
             GET: '/user/get',
+            LOGIN: '/user/login',
         }, 
         POST: {
             LIST: '/post/list', 

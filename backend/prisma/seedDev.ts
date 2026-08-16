@@ -1,4 +1,5 @@
 import {
+  Gender,
   GenderPreference,
   UserContentStatus,
   UserStatus,
@@ -198,6 +199,7 @@ const RUSSIAN_CITIES = [
 ]
 
 const GENDERS = [GenderPreference.MALE, GenderPreference.FEMALE, GenderPreference.ANYBODY]
+const USER_GENDERS = [Gender.MALE, Gender.FEMALE]
 
 const ADMIN_EMAIL = 'admin@boltaem.ru'
 const ADMIN_PASSWORD = 'admin123'
@@ -260,6 +262,7 @@ export async function seedDev(prisma: PrismaClient): Promise<void> {
       age: 30,
       name: 'Админ',
       surname: 'Системный',
+      gender: Gender.MALE,
       city: 'Москва',
       description: 'Администратор системы Boltaem',
       status: UserStatus.REGISTERED,
@@ -295,6 +298,7 @@ export async function seedDev(prisma: PrismaClient): Promise<void> {
         age: faker.number.int({ min: 18, max: 99 }),
         name: firstName,
         surname: lastName,
+        gender: faker.helpers.arrayElement(USER_GENDERS),
         city: faker.helpers.arrayElement(RUSSIAN_CITIES),
         description: faker.lorem.sentence({ min: 5, max: 15 }),
         status: resolveUserStatus(i),

@@ -1,15 +1,29 @@
 import axios from 'axios'
 import type { UserResource } from './types'
-import type { UserPostRequest } from './types'
+import type { UserPostRequest, UserLoginRequest, UserLoginResponse } from './types'
 import { API_SETTINGS } from '@/config/General'
 
 export class User{
+
     async getInfo(){
 
     }
 
     async auth(){
 
+    }
+
+    async login(request: UserLoginRequest): Promise<UserLoginResponse>{
+        try{
+            const response = await axios.post<UserLoginResponse>(
+                `${ API_SETTINGS.API_HOST }${ API_SETTINGS.ENDPOINTS.USER.LOGIN }`,
+                request
+            )
+            return response.data
+        }catch(error){
+            console.error(error)
+            throw error
+        }
     }
 
     async updateRefreshToken(){

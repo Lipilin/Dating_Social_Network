@@ -14,14 +14,16 @@ export class PostController {
         const skip = Number(request?.query?.skip) || 0
 
         if (!take) {
-            return response.status(API_RESPONSE.BAD_REQUEST).json([])
+            return response.status(API_RESPONSE.BAD_REQUEST).json({})
         }
 
         try {
             const entities = await this.#postProvider.listPosts(take, skip)
             response.status(API_RESPONSE.OK).json(entities)
         } catch (error) {
-            response.status(API_RESPONSE.ERROR).json([])
+            response.status(API_RESPONSE.ERROR).json({
+                message: (error as Error).message,
+            })
         }
     }
 
@@ -36,7 +38,9 @@ export class PostController {
             const entity = await this.#postProvider.getPostById(numericId)
             response.status(API_RESPONSE.OK).json(entity)
         } catch (error) {
-            response.status(API_RESPONSE.ERROR).json(null)
+            response.status(API_RESPONSE.ERROR).json({
+                message: (error as Error).message,
+            })
         }
     }
 }

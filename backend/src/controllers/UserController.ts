@@ -2,12 +2,8 @@ import type { UserService } from '@/services/UserService.js'
 import type { Request } from 'express'
 import type { Response } from 'express'
 import { API_RESPONSE } from '@/types.js'
-import { LoginStepSchema, InfoStepSchema } from '@/utils/validation/rules.js'
-import { 
-    SignJWT, 
-    jwtVerify, 
-    generateSecret 
-} from 'jose'
+import { LoginStepSchema, InfoStepSchema, UserLoginSchema } from '@/utils/validation/rules.js'
+import type { UserLoginRequest, UserPostRequest, UserLoginResponse, UserResource } from '@boltaem/common/type.js'    
 
 export class UserController{
     #userService: UserService | null  = null
@@ -17,7 +13,7 @@ export class UserController{
     }
 
     register = async(req: Request, res: Response) => {
-        const userRequest = req.body
+        const userRequest: UserPostRequest = req.body
         if(LoginStepSchema.safeParse(userRequest).error){
             return res.status(API_RESPONSE.BAD_REQUEST).json(null)
         }
@@ -29,12 +25,28 @@ export class UserController{
             return res.status(API_RESPONSE.OK).json(user)
         }catch(error){
             console.error(error)
-            return res.status(API_RESPONSE.ERROR).json({})
+            return res.status(API_RESPONSE.ERROR).json({
+                message: (error as Error).message,
+            })
         }
     }
 
     login = async(req: Request, res: Response) => {
-
+        const userRequest: UserLoginRequest = req.body
+        const validation = UserLoginSchema.safeParse(userRequest)
+        if(validation.error){
+            return res.status(API_RESPONSE.BAD_REQUEST).json({
+                message: validation.error.message,
+            })
+        }
+        try{
+            const user = await this.#userService?.login(userRequest)
+            return res.status(API_RESPONSE.OK).json(user)
+        }catch(error){
+            return res.status(API_RESPONSE.ERROR).json({
+                message: (error as Error).message,
+            })
+        }
     }
 
     access = async(req: Request, res: Response) => {

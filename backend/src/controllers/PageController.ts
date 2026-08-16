@@ -14,25 +14,29 @@ export class PageController {
         const skip = Number(request?.query?.skip) || 0
 
         if (!take) {
-            return response.status(API_RESPONSE.BAD_REQUEST).json([])
+            return response.status(API_RESPONSE.BAD_REQUEST).json({})
         }
 
         try {
             const entities = await this.#pageProvider.listPages(take, skip)
             response.status(API_RESPONSE.OK).json(entities)
         } catch (error) {
-            response.status(API_RESPONSE.ERROR).json([])
+            response.status(API_RESPONSE.ERROR).json({
+                message: (error as Error).message,
+            })
         }
     }
 
     async getPageByAlias(request: Request, response: Response) {
         const alias = request?.query?.alias
-        if (!alias) return response.status(API_RESPONSE.BAD_REQUEST).json(null)
+        if (!alias) return response.status(API_RESPONSE.BAD_REQUEST).json({})
         try {
             const entity = await this.#pageProvider.getPageByAlias(String(alias))
             response.status(API_RESPONSE.OK).json(entity)
         } catch (error) {
-            response.status(API_RESPONSE.ERROR).json(null)
+            response.status(API_RESPONSE.ERROR).json({
+                message: (error as Error).message,
+            })
         }
     }
 }

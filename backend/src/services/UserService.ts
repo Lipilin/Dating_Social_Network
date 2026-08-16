@@ -1,8 +1,10 @@
 import { prisma } from '@/prisma.js'
-import type { GenderPreference, User } from '@prisma/client'
+import type { User } from '@prisma/client'
 import { UserStatus, UserRole } from '@prisma/client'
-import type { UserPostRequest } from '@boltaem/common/type.js'
+import type { UserPostRequest, UserLoginRequest, UserLoginResponse } from '@boltaem/common/type.js'
 import bcrypt from 'bcryptjs'
+import { fromUserToUserResponse } from '@/utils/mapping/user.mapper.js'
+import { GENDER } from '@boltaem/common/type.js'
 
 export class UserService{
     async getUser(id: number): Promise<User | null>{
@@ -59,7 +61,7 @@ export class UserService{
                     surname: data.surname,
                     description: data.description,
                     city: data.city,
-                    //gender: data.gender as GenderPreference,
+                    gender: data.gender as GENDER,  
                     interests: {
                         connect: data.interests?.map((interest) => ({ id: interest.id })) || [],
                     },
@@ -73,5 +75,28 @@ export class UserService{
             console.error(error)
             return null
         }
+    }
+
+    async login(data: UserLoginRequest): Promise<UserLoginResponse> {
+        const user = await prisma.user.findFirst({
+            where: {
+                email: data.email,
+                status: UserStatus.REGISTERED,
+            },
+            include: {
+                interests: {
+                    include: {
+                        category: true,
+                    }
+                },
+                announcements: true,
+                posts: true
+            }
+        })
+        if(!user) throw new Error('No user found')
+        const checkPassword = await bcrypt.compare(data.password, user.password)
+        if(!checkPassword) throw new Error('Invalid password')
+        const response = await fromUserToUserResponse(user)
+        return response
     }
 }

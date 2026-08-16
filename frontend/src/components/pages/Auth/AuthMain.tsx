@@ -1,11 +1,15 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useContext } from 'react'
 import { ModalCloseButton } from '@/components/ui/buttons/ModalCloseButton'
 import { DefaultInput } from '@/components/ui/inputs/DefaultInput'
 import { UserLoginSchema } from '@/utils/validation/UserLoginRules'
 import { errorListClasses, inputErrorClasses } from '@/styles/formErrors'
 import { Link } from 'react-router'
+import { User } from '@/utils/api/User'
+import type { UserLoginResponse } from '@boltaem/common/type.js'
+import { ProfileContext } from '@/utils/context/ProfileContext'
 
 const authFields = ['email', 'password'] as const
+const userProvider = new User() 
 
 interface AuthMainProps {
     isOpen?: boolean
@@ -17,6 +21,7 @@ export function AuthMain({ isOpen = false, onClose, onSwitchToRegistration }: Au
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errors, setErrors] = useState<Record<string, string>>({})
+    const {user, setUser} = useContext(ProfileContext)
 
     const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
         if (e.target === e.currentTarget) {
@@ -35,8 +40,23 @@ export function AuthMain({ isOpen = false, onClose, onSwitchToRegistration }: Au
             })
             setErrors(messages)
         } else {
-            setErrors({})
-            onClose?.()
+            async function sendData(){
+                await userProvider.login({
+                    email: email,
+                    password: password,
+                    take: 0,
+                    skip: 0,
+                }).then((data: UserLoginResponse) => {
+                    setUser?.(data.user)
+                    setErrors({})
+                    onClose?.()
+                }).catch((error: Error) => {
+                    setErrors({
+                        serverError: error.message,
+                    })
+                })
+            }
+            sendData()
         }
     }, [email, password, onClose])
 

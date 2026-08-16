@@ -40,7 +40,9 @@ export class AnnouncementController{
             console.error(123)
             response.status(API_RESPONSE.OK).json(entites)
         }catch(error){
-            response.status(API_RESPONSE.ERROR).json({})
+            response.status(API_RESPONSE.ERROR).json({
+                message: (error as Error).message,
+            })
         }
     }
 
@@ -55,7 +57,9 @@ export class AnnouncementController{
             const entity = await this.#annoucementProvider.getAnnouncementById(numericId)
             response.status(API_RESPONSE.OK).json(entity)
         }catch(error){
-            response.status(API_RESPONSE.ERROR).json(null)
+            response.status(API_RESPONSE.ERROR).json({
+                message: (error as Error).message,
+            })
         }
     }
 }
