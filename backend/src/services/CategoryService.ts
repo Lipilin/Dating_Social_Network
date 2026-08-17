@@ -1,15 +1,17 @@
 import { prisma } from '@/prisma.js'
+import type { Request } from '@boltaem/common/type.js'
 
 export class CategoryService{
 
-    async getCategories(take: number, skip: number){
+    async getCategories(request: Request){
+        if(request.take)request.take = Number(request.take)
+        if(request.skip)request.skip = Number(request.skip)
         const categories = await prisma.category.findMany(
             { 
                 include:{
                     interests: true
                 }, 
-                take: take, 
-                skip: skip
+                ...request
             }
         )
         return categories

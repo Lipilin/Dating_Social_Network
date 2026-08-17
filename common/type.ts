@@ -14,8 +14,8 @@ export interface AnnouncementResource{
 }
 
 export interface Request{
-    take: number, 
-    skip: number, 
+    take?: number, 
+    skip?: number, 
 }
 
 export interface PostRequest{
@@ -133,4 +133,8 @@ export interface UserLoginResponse{
     user: UserResource
     accessToken: string
     refreshToken: string
+}
+
+export interface UserLogoutResponse{
+    message: string
 }

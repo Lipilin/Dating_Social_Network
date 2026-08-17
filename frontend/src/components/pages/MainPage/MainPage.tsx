@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useContext } from 'react'
 import {
     SearchForm,
     InterestBlock,
@@ -6,20 +6,17 @@ import {
     Banner
 } from './index'
 import { Announcement } from '@/utils/api/Announcement'
-import { Category } from '@/utils/api/Category'
 import type { AnnouncementResource } from '@/utils/api/types'
 import { LoadStatus } from './types'
 import { API_SETTINGS } from '@/config/General'
-import type { CategoryWithInterestResource } from '@/utils/api/types'
 import type { AnnouncementRequest } from '@/utils/api/types'
+import { CategoryContext } from '@/utils/context/CategoryContext'
 
 const announcement = new Announcement()
-const category = new Category()
-const CATEGORY_DEFAULT_PAGINATION = 5
 
 export function MainPage() {
+    const { categories } = useContext(CategoryContext)
     const [announcements, setAnnouncements] = useState<AnnouncementResource[]>([])
-    const [categories, setCategories] = useState<CategoryWithInterestResource[]>([])
     const [loadStatus, setLoadStatus] = useState<LoadStatus>(LoadStatus.LOADING)
 
     useEffect(() => {
@@ -32,17 +29,6 @@ export function MainPage() {
             setLoadStatus(LoadStatus.READY)
         }
         getAnnouncements()
-    }, [])
-
-    useEffect(() => {
-        async function getCategories() {
-            const data: CategoryWithInterestResource[] = await category.getCategories({
-                take: CATEGORY_DEFAULT_PAGINATION, 
-                skip: 0
-            })  
-            setCategories(data)
-        }
-        getCategories()
     }, [])
 
     const setData = useCallback(async (request: AnnouncementRequest) => {
@@ -60,7 +46,7 @@ export function MainPage() {
             <section className="friends">
                 <div className="container">
                     <div className="row">
-                        <InterestBlock categories={categories} />
+                        <InterestBlock />
                     </div>
                 </div>
             </section>

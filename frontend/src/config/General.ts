@@ -46,6 +46,8 @@ interface BaseEndpoint{
 
 type Endpoint = BaseEndpoint & Record<string, string> 
 
+export const CATEGORY_DEFAULT_PAGINATION = 5
+
 export const API_SETTINGS: ApiSettings = {
     API_HOST: '/api', 
     DEFAULT_PAGINATION: 7, 
@@ -72,7 +74,7 @@ export const API_SETTINGS: ApiSettings = {
             CREATE_ANNOUNCEMENT: '/user/create-announcement',
             CREATE_POST: '/user/create-post',
             REFRESH: '/user/refresh',
-
+            LOGOUT: '/user/logout',
         }, 
         POST: {
             LIST: '/post/list', 

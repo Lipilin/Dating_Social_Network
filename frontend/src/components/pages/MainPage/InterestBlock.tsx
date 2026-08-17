@@ -1,12 +1,9 @@
-import type { CategoryWithInterestResource } from '@/utils/api/types'
+import { useContext } from 'react'
 import { DestinationBlock } from './DestinationBlock'
 import { CategoryBLock } from './partials/interests/CategoryBlock'
-import { ROUTES } from '@/config/General'
+import { ROUTES, CATEGORY_DEFAULT_PAGINATION } from '@/config/General'
 import { Link } from 'react-router'
-
-interface InterestBlockProps {
-    categories: CategoryWithInterestResource[]
-}
+import { CategoryContext } from '@/utils/context/CategoryContext'
 
 function chunkItems<T>(items: T[], size: number): T[][] {
     const rows: T[][] = []
@@ -18,7 +15,9 @@ function chunkItems<T>(items: T[], size: number): T[][] {
     return rows
 }
 
-export function InterestBlock({ categories }: InterestBlockProps) {
+export function InterestBlock() {
+    const { categories: allCategories } = useContext(CategoryContext)
+    const categories = allCategories.slice(0, CATEGORY_DEFAULT_PAGINATION)
     const interestCategories = categories.filter((category) => !category.isCountry)
 
     if (interestCategories.length === 0) {

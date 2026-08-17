@@ -1,15 +1,18 @@
-import type { CategoryWithInterestResource, UserPostRequest } from '@/utils/api/types'
+import type { CategoryWithInterestResource, InterestResource } from '@/utils/api/types'
 import { useState } from 'react'
 
 
 interface InterestCategoryItemProps {
     category: CategoryWithInterestResource
-    user: UserPostRequest
-    setUserData: (user: UserPostRequest) => void
+    selectedInterests: InterestResource[]
+    onInterestsChange: (interests: InterestResource[]) => void
 }
 
-export function InterestCategoryItem({ category, user, setUserData }: InterestCategoryItemProps) {
+export function InterestCategoryItem({ category, selectedInterests, onInterestsChange }: InterestCategoryItemProps) {
     const [open, setOpen] = useState(false)
+
+    const isSelected = (interest: InterestResource) =>
+        selectedInterests.some((item) => item.id === interest.id)
 
     return (
         <div className="interest__item">
@@ -31,16 +34,15 @@ export function InterestCategoryItem({ category, user, setUserData }: InterestCa
                     <label key={interest.id}>
                         <input
                             type="checkbox"
-                            checked = { user.interests.includes(interest) }
-                            onChange={ 
-                                (e) => {
-                                    if(user.interests.includes(interest)){
-                                        setUserData({ ...user, interests: user.interests.filter((item) => item.id !== interest.id) })
-                                    }else{
-                                        setUserData({ ...user, interests: [...user.interests, interest] })
-                                    }
-                                } 
-                            }/>
+                            checked={isSelected(interest)}
+                            onChange={() => {
+                                if (isSelected(interest)) {
+                                    onInterestsChange(selectedInterests.filter((item) => item.id !== interest.id))
+                                } else {
+                                    onInterestsChange([...selectedInterests, interest])
+                                }
+                            }}
+                        />
                         <span>{interest.name}</span>
                     </label>
                 ))}

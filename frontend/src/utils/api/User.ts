@@ -1,16 +1,18 @@
 import axios, { type AxiosResponse } from 'axios'
 import type { UserResource } from './types'
-import type { UserPostRequest, UserLoginRequest, UserLoginResponse } from './types'
+import type 
+{ 
+    UserPostRequest, 
+    UserLoginRequest, 
+    UserLoginResponse, 
+    UserLogoutResponse 
+} from './types'
 import { API_SETTINGS } from '@/config/General'
 import { HTTP_STATUS } from '@boltaem/common/config'
 
 export class User{
 
     #abortController = new AbortController()
-
-    async getInfo(){
-
-    }
 
     async login(request: UserLoginRequest): Promise<UserLoginResponse>{
         try{
@@ -23,10 +25,6 @@ export class User{
             console.error(error)
             throw error
         }
-    }
-
-    async updateRefreshToken(){
-
     }
 
     async getProfile(id: number): Promise<UserResource | null>{
@@ -91,4 +89,18 @@ export class User{
         )
         return response.data as UserLoginResponse
     }   
+
+    async logout(): Promise<UserLogoutResponse>{
+        const response = await axios.post<UserLogoutResponse>(
+            `${ API_SETTINGS.API_HOST }${ API_SETTINGS.ENDPOINTS.USER.LOGOUT }`,
+            {
+                withCredentials: true,
+            }
+        )
+        return response.data
+    }
+
+    async updateProfile(){
+
+    }
 }

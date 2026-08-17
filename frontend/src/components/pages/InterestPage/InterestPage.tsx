@@ -1,11 +1,7 @@
-import { useEffect, useState } from 'react'
-import { Category } from '@/utils/api/Category'
-import type { CategoryWithInterestResource } from '@/utils/api/types'
+import { useContext, useEffect, useState } from 'react'
 import { CategoryBLock } from '@/components/pages/MainPage/partials/interests/CategoryBlock'
 import { Loader } from '@/components/pages/Loader/Loader'
-
-const categoryService = new Category()
-const ALL_CATEGORIES_TAKE = 100
+import { CategoryContext } from '@/utils/context/CategoryContext'
 
 function chunkItems<T>(items: T[], size: number): T[][] {
     const rows: T[][] = []
@@ -18,17 +14,14 @@ function chunkItems<T>(items: T[], size: number): T[][] {
 }
 
 export function InterestPage() {
-    const [categories, setCategories] = useState<CategoryWithInterestResource[]>([])
+    const { categories, isLoaded } = useContext(CategoryContext)
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        categoryService.getCategories({
-            take: ALL_CATEGORIES_TAKE,
-            skip: 0,
-        }).then(setCategories).finally(() => {
+        if (isLoaded) {
             setIsLoading(false)
-        })
-    }, [])
+        }
+    }, [isLoaded])
 
     if(isLoading){
         return <Loader isLoading = { isLoading } />

@@ -19,12 +19,12 @@ export function InterestsStep({ onNext, onBack, categories, user, setUserData }:
             </div>
             <div className="modal__body-form">
                 <div className="interest">
-                    {categories.map((category, index) => (
+                    {categories.map((category) => (
                         <InterestCategoryItem
                             key={category.id}
                             category={category}
-                            setUserData = { setUserData }
-                            user = { user }
+                            selectedInterests={user.interests}
+                            onInterestsChange={(interests) => setUserData({ ...user, interests })}
                         />
                     ))}
                 </div>

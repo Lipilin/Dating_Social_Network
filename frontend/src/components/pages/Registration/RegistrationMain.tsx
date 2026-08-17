@@ -2,22 +2,21 @@ import arrowRightSvg from '@/assets/images/arrow_right.svg'
 import { ModalCloseButton } from '@/components/ui/buttons/ModalCloseButton'
 import type { 
     UserPostRequest, 
-    CategoryWithInterestResource, 
     UserResource } 
 from '@/utils/api/types'
 import { 
     useState, 
     useMemo, 
     useCallback, 
-    useEffect 
+    useContext,
 } from 'react'
 import { 
     LoginStep, 
     InterestsStep, 
     InfoStep } 
 from './partials'
-import { Category } from '@/utils/api/Category'
 import { API_SETTINGS } from '@/config/General'
+import { CategoryContext } from '@/utils/context/CategoryContext'
 import { User } from '@/utils/api/User'
 import { LoginStepSchema, InfoStepSchema } from '@/utils/validation/UserCreationRules'
 import { GENDER } from '@/utils/api/types'
@@ -36,7 +35,6 @@ interface RegistrationMainProps {
     onError?: () => void
 }
 
-const categoryProvider = new Category()
 const userProvider = new User()
 
 const UserPostRequestDefault: UserPostRequest = {
@@ -64,9 +62,9 @@ export function RegistrationMain({
     onSuccess,
     onError,
 }: RegistrationMainProps) {
+    const { categories } = useContext(CategoryContext)
     const [userPostRequest, setUserPostRequest] = useState<UserPostRequest>(UserPostRequestDefault)
     const [step, setStep] = useState<RegistrationStep>(RegistrationStep.LOGIN)
-    const [categories, setCategories] = useState<CategoryWithInterestResource[]>([])
     const [errors, setErrors] = useState<Record<string, string>>({})
 
     const onSubmit = useCallback(async () => {
@@ -76,21 +74,6 @@ export function RegistrationMain({
             else onError?.()
         })
     }, [userPostRequest])
-
-    useEffect(() => {
-        if(isOpen && categories.length === 0) {
-            async function getCategories(){
-                await categoryProvider.getCategories({
-                    take: API_SETTINGS.DEFAULT_PAGINATION,
-                    skip: 0
-                }).then((data) => {
-                    setCategories(data)
-                })
-                
-            }
-            getCategories()
-        }
-    }, [isOpen])
 
     const handleBackdropClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
         if (e.target === e.currentTarget) {

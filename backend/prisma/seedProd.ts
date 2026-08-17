@@ -47,6 +47,26 @@ const DEFAULT_EMAIL_MESSAGE = {
   `.trim(),
 } as const
 
+const PASSWORD_RESET_EMAIL_MESSAGE = {
+  id: 2,
+  from: 'support@boltaem.ru',
+  subject: 'Boltaem — сброс пароля',
+  content: `
+    <p>Здравствуйте!</p>
+    <p>Вы запросили сброс пароля для вашей учётной записи Boltaem.</p>
+    <p>Чтобы задать новый пароль, перейдите по ссылке:</p>
+    <p><a href="{{resetLink}}">Сбросить пароль</a></p>
+    <p>Если вы не запрашивали сброс пароля, просто проигнорируйте это письмо.</p>
+    <p>Ссылка действительна в течение 24 часов.</p>
+    <p>С уважением,<br/>Команда Boltaem</p>
+  `.trim(),
+} as const
+
+const EMAIL_MESSAGES = [
+  DEFAULT_EMAIL_MESSAGE,
+  PASSWORD_RESET_EMAIL_MESSAGE,
+] as const
+
 export async function seedProd(prisma: PrismaClient): Promise<void> {
   console.log('📄 Создание статичных страниц...')
 
@@ -76,17 +96,19 @@ export async function seedProd(prisma: PrismaClient): Promise<void> {
 
   console.log(`✅ Статичных страниц: ${STATIC_PAGES.length}`)
 
-  console.log('✉️ Создание шаблона письма...')
+  console.log('✉️ Создание шаблонов писем...')
 
-  await prisma.emailMessage.upsert({
-    where: { id: DEFAULT_EMAIL_MESSAGE.id },
-    update: {
-      from: DEFAULT_EMAIL_MESSAGE.from,
-      subject: DEFAULT_EMAIL_MESSAGE.subject,
-      content: DEFAULT_EMAIL_MESSAGE.content,
-    },
-    create: DEFAULT_EMAIL_MESSAGE,
-  })
+  for (const message of EMAIL_MESSAGES) {
+    await prisma.emailMessage.upsert({
+      where: { id: message.id },
+      update: {
+        from: message.from,
+        subject: message.subject,
+        content: message.content,
+      },
+      create: message,
+    })
+  }
 
-  console.log('✅ Шаблон письма создан')
+  console.log(`✅ Шаблонов писем: ${EMAIL_MESSAGES.length}`)
 }
