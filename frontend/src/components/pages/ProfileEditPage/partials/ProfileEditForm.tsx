@@ -3,7 +3,6 @@ import type { UserResource } from '@/utils/api/types'
 import { DefaultInput } from '@/components/ui/inputs/DefaultInput'
 import { DefaultButton } from '@/components/ui/buttons/DefaultButton'
 import { ProfileEditInterests } from './ProfileEditInterests'
-import { ProfileEditCountries } from './ProfileEditCountries'
 import { useContext } from 'react'
 import { CategoryContext } from '@/utils/context/CategoryContext'
 
@@ -69,13 +68,17 @@ export function ProfileEditForm({ profile, setUpdatedUser }: ProfileEditFormProp
                     profile={profile}
                     setUpdatedUser={setUpdatedUser}
                     categories={categories}
+                    isCountry={false}
                 />
                 <div>
-                    <ProfileEditCountries
-                        profile={profile}
-                        setUpdatedUser={setUpdatedUser}
-                    />
+                    <h3 className="section__title">Мои Страны</h3>
                 </div>
+                <ProfileEditInterests
+                    profile={profile}
+                    setUpdatedUser={setUpdatedUser}
+                    categories={categories}
+                    isCountry={true}
+                />
                 <div className={styles.profileEditFormFooter}>
                     <DefaultButton
                         content="Сохранить"

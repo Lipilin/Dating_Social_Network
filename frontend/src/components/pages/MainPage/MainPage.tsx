@@ -11,6 +11,7 @@ import { LoadStatus } from './types'
 import { API_SETTINGS } from '@/config/General'
 import type { AnnouncementRequest } from '@/utils/api/types'
 import { CategoryContext } from '@/utils/context/CategoryContext'
+import { Loader } from '@/components/pages/Loader/Loader'
 
 const announcement = new Announcement()
 
@@ -42,7 +43,11 @@ export function MainPage() {
         <>
             <Banner />
             <SearchForm loadStatus={loadStatus} setData={setData} categories={categories} />
-            <AnnouncementSlider announcements={announcements} loadStatus={loadStatus} />
+            {loadStatus === LoadStatus.LOADING ? (
+                <Loader isLoading={true} />
+            ) : (
+                <AnnouncementSlider announcements={announcements} loadStatus={loadStatus} />
+            )}
             <section className="friends">
                 <div className="container">
                     <div className="row">

@@ -6,10 +6,11 @@ interface ProfileEditInterestsProps {
     profile: UserResource
     setUpdatedUser: (user: UserResource) => void
     categories: CategoryWithInterestResource[]
+    isCountry: boolean
 }
 
-export function ProfileEditInterests({ profile, setUpdatedUser, categories }: ProfileEditInterestsProps) {
-    const interestCategories = categories.filter((category) => !category.isCountry)
+export function ProfileEditInterests({ profile, setUpdatedUser, categories, isCountry }: ProfileEditInterestsProps) {
+    const interestCategories = categories.filter((category) => category.isCountry === isCountry)
     const selectedInterests = profile.interests ?? []
 
     const handleInterestsChange = (interests: InterestResource[]) => {
