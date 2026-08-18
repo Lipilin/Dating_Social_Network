@@ -79,12 +79,13 @@ export class UserController{
     }
 
     me = async(req: Request, res: Response) => {
-        const token = req.cookies?.[ACCESS_TOKEN_COOKIE_NAME]
-        if(!token) return res.status(API_RESPONSE.UNAUTHORIZED).json({
-            message: AUTH_ERROR_MESSAGE.NO_TOKEN_PROVIDED,
-        })
+        if(!req.authorizedUserId){
+            return res.status(API_RESPONSE.UNAUTHORIZED).json({
+                message: AUTH_ERROR_MESSAGE.NO_TOKEN_PROVIDED,
+            })
+        }
         try{
-            const user = await this.#userService.me(token)
+            const user = await this.#userService.me(req.authorizedUserId)
             return res.status(API_RESPONSE.OK).json(user)
         }catch(error){
             return res.status(API_RESPONSE.ERROR).json({
@@ -132,6 +133,10 @@ export class UserController{
     }        
 
     logout = async(req: Request, res: Response) => {
+
+    }
+
+    update = async(req: Request, res: Response) => {
 
     }
 }

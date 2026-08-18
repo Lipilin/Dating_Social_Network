@@ -5,8 +5,6 @@ import type { UserPostRequest, UserLoginRequest, UserLoginResponse } from '@bolt
 import bcrypt from 'bcryptjs'
 import { fromUserToUserResponse, type UserWithRelations } from '@/utils/mapping/user.mapper.js'
 import { GENDER } from '@boltaem/common/type.js'
-import { jwtVerify } from 'jose'
-import { encodedAccessSecret } from '@/utils/other/authSecret.js'
 import { AUTH_ERROR_MESSAGE, type JwtFormat } from '@/types.js'
 
 export class UserService{
@@ -118,11 +116,10 @@ export class UserService{
         return response
     }
 
-    async me(token: string): Promise<UserLoginResponse> {
-        const { payload } = await jwtVerify<JwtFormat>(token, encodedAccessSecret)
+    async me(userId: number ): Promise<UserLoginResponse> {
         const user = await prisma.user.findUnique({
             where: { 
-                id: payload.id,
+                id: userId,
                 status: UserStatus.REGISTERED
             },
             include: {     
