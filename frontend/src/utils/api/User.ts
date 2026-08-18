@@ -1,11 +1,12 @@
 import axios, { type AxiosResponse } from 'axios'
-import type { UserResource } from './types'
+import type { UserResource, UserUpdatedRequest } from './types'
 import type 
 { 
     UserPostRequest, 
     UserLoginRequest, 
     UserLoginResponse, 
-    UserLogoutResponse 
+    UserLogoutResponse, 
+    UserUpdatedResponse
 } from './types'
 import { API_SETTINGS } from '@/config/General'
 import { HTTP_STATUS } from '@boltaem/common/config'
@@ -100,7 +101,11 @@ export class User{
         return response.data
     }
 
-    async updateProfile(){
-
+    async updateProfile(updatedUser: UserUpdatedRequest): Promise<UserUpdatedResponse>{
+        const response = await axios.patch<UserUpdatedResponse>(
+            `${ API_SETTINGS.API_HOST }${ API_SETTINGS.ENDPOINTS.USER.UPDATE }`,
+            updatedUser
+        )
+        return response.data
     }
 }

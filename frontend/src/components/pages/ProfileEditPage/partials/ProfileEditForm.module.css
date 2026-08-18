@@ -129,7 +129,7 @@
 }
 
 .profileEditInterests{
-    width: 50%;
+    width: 100%;
     padding: 0;
 }
 
@@ -197,16 +197,19 @@
     max-height: 1000px;
 }
 
-.profileEditInterests :global(.interest__item-body label){
+.profileEditInterests :global(.interest__item-body label),
+.profileEditCountries label{
     position: relative;
 }
 
-.profileEditInterests :global(.interest__item-body label input){
+.profileEditInterests :global(.interest__item-body label input),
+.profileEditCountries label input{
     position: absolute;
     opacity: 0;
 }
 
-.profileEditInterests :global(.interest__item-body label span){
+.profileEditInterests :global(.interest__item-body label span),
+.profileEditCountries label span{
     border-radius: 7px;
     background: #F0F0F2;
     display: flex;
@@ -223,13 +226,15 @@
     position: relative;
 }
 
-.profileEditInterests :global(.interest__item-body label input:checked ~ span){
+.profileEditInterests :global(.interest__item-body label input:checked ~ span),
+.profileEditCountries label input:checked ~ span{
     background: #0041F2;
     color: #fff;
     padding-right: 36px;
 }
 
-.profileEditInterests :global(.interest__item-body label input:checked ~ span:after){
+.profileEditInterests :global(.interest__item-body label input:checked ~ span:after),
+.profileEditCountries label input:checked ~ span:after{
     content: "";
     width: 6px;
     height: 6px;
@@ -243,8 +248,55 @@
     margin: auto;
 }
 
-@media (max-width: 768px) {
-    .profileEditInterests{
+@media (max-width: 480px){
+    .profileEditFormContent{
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        gap: 20px;
+    }
+    .textareaWrapper{
         width: 100%;
     }
+}
+
+.chooseSection{
+    margin-top: 20px;
+    display: flex;
+    gap: 8px;
+}
+
+.chooseSection span{
+    position: relative;
+    color: #00195B;
+    font-family: "TT Commons";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+}
+
+.chooseSection span::after{
+    content: "";
+    border-bottom: 2px solid #0041F2;
+    width: 0;
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    height: 3px;
+    bottom: -5px;
+}
+
+.chooseSection span.activeSection::after{
+    width: 100%;
+    transition: ease all 0.3s;
+}
+
+.profileEditCountries{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
 }

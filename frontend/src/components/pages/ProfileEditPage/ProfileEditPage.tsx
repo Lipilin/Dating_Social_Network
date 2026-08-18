@@ -5,10 +5,23 @@ import { Loader } from '@/components/pages/Loader/Loader'
 import { useEffect } from 'react'
 import { ProfileEditForm } from './partials/ProfileEditForm'
 import type { UserResource } from '@/utils/api/types'
+import { useCallback } from 'react'
+import { User } from '@/utils/api/User'
+
+const userProvider = new User()
 
 export function ProfileEditPage() {
     const { user, isLoading } = useContext(ProfileContext)
     const [updatedUser, setUpdatedUser] = useState<UserResource | null>(null)
+    const onSend = useCallback(() => {
+        if(updatedUser) {
+           userProvider.withRefreshing(async () => {
+                userProvider.updateProfile({
+                    updatedUser: updatedUser
+                })
+           }) 
+        }
+    }, [updatedUser])   
     useEffect(() => {
         if(user) setUpdatedUser(user)
     }, [user])
