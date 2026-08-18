@@ -113,6 +113,14 @@ export interface PostRequest extends Request{
     
 }
 
+export interface PatchRequest{
+
+}
+
+export interface PatchResponse extends Request{
+
+}
+
 export interface Page{
     id: number
     name: string
@@ -137,4 +145,13 @@ export interface UserLoginResponse{
 
 export interface UserLogoutResponse{
     message: string
+    user: UserResource | null
+}
+
+export interface UserUpdatedRequest extends PatchRequest{
+    updatedUser: UserResource
+}
+
+export interface UserUpdatedResponse extends PatchResponse{
+
 }

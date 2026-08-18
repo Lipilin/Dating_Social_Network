@@ -25,7 +25,8 @@ export function ProfileProvider({children, onAuthModalOpen}: ProfileProviderProp
         user,
         setUser,
         openAuthModal: onAuthModalOpen, 
-        isLoading: isLoading
+        isLoading: isLoading,
+        userProvider: userProvider
     }), [user, setUser, onAuthModalOpen, isLoading])
 
     return (

@@ -2,6 +2,9 @@ import { Link } from 'react-router'
 import { ROUTES, STATIC_ROUTES_FOR_BUTTOS } from '@/config/General'
 import type { UserResource } from '@/utils/api/types'
 import { HelpIcon, LogoutIcon, SettingsIcon } from './HeaderUserMenuIcons'
+import { useContext } from 'react'
+import { ProfileContext } from '@/utils/context/ProfileContext'
+
 
 interface HeaderUserAccountMenuProps {
     user: UserResource
@@ -12,6 +15,13 @@ function getUserDisplayName(user: UserResource) {
 }
 
 export function HeaderUserAccountMenu({ user }: HeaderUserAccountMenuProps) {
+    const { setUser, userProvider } = useContext(ProfileContext)
+    const handleLogout = async () => {
+        await userProvider?.withRefreshing(async () => {
+            const response = await userProvider?.logout()
+            setUser?.(null)
+        })
+    }
     return (
         <>
             <p>{getUserDisplayName(user)}</p>
@@ -33,7 +43,7 @@ export function HeaderUserAccountMenu({ user }: HeaderUserAccountMenuProps) {
                     </Link>
                 </li>
                 <li>
-                    <Link to="#">
+                    <Link to="#" onClick={handleLogout}>
                         <div className="icon">
                             <LogoutIcon />
                         </div>

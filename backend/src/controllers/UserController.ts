@@ -7,6 +7,7 @@ import {
     ACCESS_TOKEN_EXPIRATION_TIME,
     API_RESPONSE,
     AUTH_ERROR_MESSAGE,
+    AUTH_SUCCESS_MESSAGE,
     REFRESH_TOKEN_COOKIE_NAME,
     REFRESH_TOKEN_COOKIE_MAX_AGE,
     REFRESH_TOKEN_EXPIRATION_TIME,
@@ -79,13 +80,8 @@ export class UserController{
     }
 
     me = async(req: Request, res: Response) => {
-        if(!req.authorizedUserId){
-            return res.status(API_RESPONSE.UNAUTHORIZED).json({
-                message: AUTH_ERROR_MESSAGE.NO_TOKEN_PROVIDED,
-            })
-        }
         try{
-            const user = await this.#userService.me(req.authorizedUserId)
+            const user = await this.#userService.me(req.authorizedUserId as number)
             return res.status(API_RESPONSE.OK).json(user)
         }catch(error){
             return res.status(API_RESPONSE.ERROR).json({
@@ -133,10 +129,15 @@ export class UserController{
     }        
 
     logout = async(req: Request, res: Response) => {
-
+        res.clearCookie(ACCESS_TOKEN_COOKIE_NAME)
+        res.clearCookie(REFRESH_TOKEN_COOKIE_NAME)
+        return res.status(API_RESPONSE.OK).json({
+            message: AUTH_SUCCESS_MESSAGE.LOGOUT,
+            user: null, 
+        })
     }
 
     update = async(req: Request, res: Response) => {
-
+        
     }
 }

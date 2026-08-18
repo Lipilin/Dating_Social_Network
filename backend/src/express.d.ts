@@ -1,4 +1,4 @@
-declare namespace Express {
+namespace Express {
     interface Request {
         authorizedUserId?: number
     }

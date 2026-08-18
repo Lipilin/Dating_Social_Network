@@ -35,6 +35,10 @@ export const AUTH_ERROR_MESSAGE = {
     NO_TOKEN_PROVIDED: 'Unauthorized. No token provided',
 } as const
 
+export const AUTH_SUCCESS_MESSAGE = {
+    LOGOUT: 'Successfully logged out',
+} as const
+
 export type RefreshTokenWithUser = Prisma.RefreshTokenGetPayload<{
     include: {
         user: true,
