@@ -30,7 +30,7 @@ export function AnnouncementBottom() {
                         </defs>
                     </svg>
                 </Link>
-                <Link to={user ? ROUTES.ANNOUNCEMENT.URL : '#'} className="link" onClick = { (e) => user ? null : openAuthModal?.() }>
+                <Link to={user ? ROUTES.ANNOUNCEMENT_CREATION.URL : '#'} className="link" onClick = { (e) => user ? null : openAuthModal?.() }>
                     <span>Добавить свое объявление</span>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path

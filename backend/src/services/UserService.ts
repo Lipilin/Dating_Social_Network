@@ -3,7 +3,7 @@ import type { Prisma, User } from '@prisma/client'
 import { UserStatus, UserRole } from '@prisma/client'
 import type { UserPostRequest, UserLoginRequest, UserLoginResponse } from '@boltaem/common/type.js'
 import bcrypt from 'bcryptjs'
-import { fromUserToUserResponse, type UserWithRelations } from '@/utils/mapping/user.mapper.js'
+import { type UserWithRelations } from '@/utils/mapping/user.mapper.js'
 import { GENDER } from '@boltaem/common/type.js'
 import { AUTH_ERROR_MESSAGE, type JwtFormat } from '@/types.js'
 import { SERVER_ERRORS } from '@boltaem/common/config.js'
@@ -23,7 +23,7 @@ export class UserService{
                     },
                 }
             })
-            return entity
+            return entity as UserWithRelations
         } catch (error) {
             console.error(error)
             return null
@@ -96,7 +96,7 @@ export class UserService{
         }
     }
 
-    async login(data: UserLoginRequest): Promise<UserLoginResponse> {
+    async login(data: UserLoginRequest): Promise<User> {
         const user = await prisma.user.findFirst({
             where: {
                 email: data.email,
@@ -117,11 +117,10 @@ export class UserService{
         if(!checkPassword) throw new Error(AUTH_ERROR_MESSAGE.INVALID_PASSWORD)
         await this.update(user.id, { lastSeen: new Date() })
         user.lastSeen = new Date()
-        const response = await fromUserToUserResponse(user)
-        return response
+        return user
     }
 
-    async me(userId: number ): Promise<UserLoginResponse> {
+    async me(userId: number ): Promise<User> {
         const user = await prisma.user.findUnique({
             where: { 
                 id: userId,
@@ -140,6 +139,6 @@ export class UserService{
         if(!user) throw new Error(AUTH_ERROR_MESSAGE.NO_USER_FOUND)
         await this.update(user.id, { lastSeen: new Date() })
         user.lastSeen = new Date()
-        return fromUserToUserResponse(user)
+        return user
     }
 }

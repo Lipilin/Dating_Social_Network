@@ -144,6 +144,7 @@ export interface PageRequest extends Request{
 export interface UserLoginRequest extends PostRequest{
     email: string
     password: string
+    rememberMe: boolean
 }
 
 export interface UserLoginResponse{

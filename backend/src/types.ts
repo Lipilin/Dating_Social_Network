@@ -10,6 +10,7 @@ export enum API_RESPONSE{
 export interface JwtFormat{
     id: number, 
     login: string, 
+    rememberMe: boolean,
     [key: string]: unknown,
 }
 
@@ -21,7 +22,8 @@ export const JWT_ALGORITHM = 'HS256'
 export const ACCESS_TOKEN_COOKIE_NAME = 'accessToken'
 export const REFRESH_TOKEN_COOKIE_NAME = 'refreshToken'
 export const ACCESS_TOKEN_COOKIE_MAX_AGE = 1000 * 60 * ACCESS_TOKEN_EXPIRATION_MINUTES
-export const REFRESH_TOKEN_COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 7
+export const REFRESH_TOKEN_COOKIE_MAX_AGE = 1000 * 60 * 60 * 24
+export const REFRESH_TOKEN_COOKIE_REMEMBER_ME_MAX_AGE = 1000 * 60 * 60 * 24 * 30;
 
 export const AUTH_ENV = {
     ACCESS_TOKEN_SECRET: 'ACCESS_TOKEN_GENERATION_SECRET',
@@ -41,7 +43,8 @@ export const AUTH_ERROR_MESSAGE = {
 } as const
 
 export const AUTH_SUCCESS_MESSAGE = {
-    LOGOUT: 'Успешный выход из аккаунта',
+    LOGOUT: 'Успешный выход из аккаунта',   
+    LOGIN: 'Успешный вход в аккаунт',
     UPDATE_USER: 'Пользователь успешно обновлен',
 } as const
 

@@ -1,0 +1,19 @@
+.noDataWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 32px 0 8px;
+}
+
+@media (min-width: 769px) {
+    .noDataWrapper {
+        padding: 48px 40px 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .noDataWrapper {
+        padding: 24px 0 8px;
+    }
+}

@@ -4,13 +4,11 @@ import { DefaultInput } from '@/components/ui/inputs/DefaultInput'
 import { UserLoginSchema } from '@/utils/validation/UserLoginRules'
 import { errorListClasses, inputErrorClasses } from '@/styles/formErrors'
 import { Link } from 'react-router'
-import { User } from '@/utils/api/User'
 import type { UserLoginResponse } from '@boltaem/common/type.js'
 import { ProfileContext } from '@/utils/context/ProfileContext'
 import { getApiErrorMessage } from '@/utils/api/getApiErrorMessage'
 
 const authFields = ['email', 'password'] as const
-const userProvider = new User() 
 
 interface AuthMainProps {
     isOpen?: boolean
@@ -21,8 +19,9 @@ interface AuthMainProps {
 export function AuthMain({ isOpen = false, onClose, onSwitchToRegistration }: AuthMainProps) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [rememberMe, setRememberMe] = useState(false)
     const [errors, setErrors] = useState<Record<string, string>>({})
-    const {user, setUser} = useContext(ProfileContext)
+    const {userProvider, setUser} = useContext(ProfileContext)
 
     const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
         if (e.target === e.currentTarget) {
@@ -42,9 +41,10 @@ export function AuthMain({ isOpen = false, onClose, onSwitchToRegistration }: Au
             setErrors(messages)
         } else {
             async function sendData(){
-                await userProvider.login({
+                await userProvider?.login({
                     email: email,
                     password: password,
+                    rememberMe: rememberMe,
                     take: 0,
                     skip: 0,
                 }).then((data: UserLoginResponse) => {
@@ -59,7 +59,7 @@ export function AuthMain({ isOpen = false, onClose, onSwitchToRegistration }: Au
             }
             sendData()
         }
-    }, [email, password, onClose])
+    }, [email, password, onClose, rememberMe])
 
     const errorMessages = authFields.filter((field) => errors[field])
     const hasErrors = errorMessages.length > 0 || Boolean(errors.serverError)
@@ -122,7 +122,7 @@ export function AuthMain({ isOpen = false, onClose, onSwitchToRegistration }: Au
                                     onSubmit()
                                 }}>Войти</button>
                                 <label>
-                                    <input type="checkbox" />
+                                    <input type="checkbox" checked = { rememberMe } onChange = {() => setRememberMe(!rememberMe)}/>
                                     <span>Запомнить меня</span>
                                 </label>
                             </div>

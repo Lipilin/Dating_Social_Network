@@ -1,9 +1,14 @@
 import type { InterestResource } from '@/utils/api/types'
-import { useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import { Link } from 'react-router'
+import { useNavigate } from 'react-router'
+import { ROUTES } from '@/config/General'
+import { ProfileContext } from '@/utils/context/ProfileContext'
+import { ProfileSectionEmpty } from '../ProfileSectionEmpty'
 
 interface InterestsBlockProps {
     interests: InterestResource[]
+    userId: number
 }
 
 interface GroupedCategory {
@@ -42,7 +47,10 @@ function chunkItems<T>(items: T[], size: number): T[][] {
     return rows
 }
 
-export function InterestsBlock({ interests }: InterestsBlockProps) {
+export function InterestsBlock({ interests, userId }: InterestsBlockProps) {
+    const { user: currentUser } = useContext(ProfileContext)
+    const navigate = useNavigate()
+    const isOwnProfile = currentUser?.id === userId
     const categories = useMemo(() => groupInterestsByCategory(interests), [interests])
     const rows = useMemo(() => chunkItems(categories, 2), [categories])
 
@@ -51,7 +59,12 @@ export function InterestsBlock({ interests }: InterestsBlockProps) {
             <h3>Интересы</h3>
             <div className="friends__interests">
                 {categories.length === 0 ? (
-                    <p>Интересы пока не выбраны</p>
+                    <ProfileSectionEmpty
+                        compact
+                        title="Интересы пока не выбраны"
+                        buttonText={isOwnProfile ? 'Добавить интересы' : undefined}
+                        onAction={isOwnProfile ? () => navigate(ROUTES.PROFILE_EDIT.URL) : undefined}
+                    />
                 ) : (
                     rows.map((row, rowIndex) => (
                         <div className="friends__interests-row" key={rowIndex}>

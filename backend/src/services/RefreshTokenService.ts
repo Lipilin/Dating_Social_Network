@@ -1,6 +1,6 @@
 import { prisma } from '@/prisma.js'
 import type { RefreshToken, User } from '@prisma/client'
-import { REFRESH_TOKEN_COOKIE_MAX_AGE } from '@/types.js'
+import { REFRESH_TOKEN_COOKIE_MAX_AGE, REFRESH_TOKEN_REMEMBER_ME_EXPIRATION_TIME } from '@/types.js'
 import type { RefreshTokenWithUser } from '@/types.js'
 
 export class RefreshTokenService{
@@ -22,7 +22,10 @@ export class RefreshTokenService{
         }
     }
 
-    async create(user: {id: number}, token: string): Promise<RefreshToken | null>{
+    async create(user: {id: number}, token: string, rememberMe: boolean): Promise<RefreshToken | null>{
+        const expiredAt = rememberMe 
+            ? new Date(Date.now() + REFRESH_TOKEN_REMEMBER_ME_EXPIRATION_TIME) 
+            : new Date(Date.now() + REFRESH_TOKEN_COOKIE_MAX_AGE)   
         try{
             const entity = await prisma.refreshToken.create({
                 data: {

@@ -11,12 +11,14 @@ import {
     REFRESH_TOKEN_COOKIE_NAME,
     REFRESH_TOKEN_COOKIE_MAX_AGE,
     REFRESH_TOKEN_EXPIRATION_TIME,
+    REFRESH_TOKEN_COOKIE_REMEMBER_ME_MAX_AGE 
 } from '@/types.js'
 import { LoginStepSchema, InfoStepSchema, UserLoginSchema, UserUpdateSchema, getValidationErrorMessage } from '@/utils/validation/rules.js'
 import type { UserLoginRequest, UserLoginResponse, UserPostRequest, UserUpdatedRequest } from '@boltaem/common/type.js'
 import type { RefreshTokenService } from '@/services/RefreshTokenService.js'
-import { generateJwtToken, fromUserResourceToUserUpdateInput } from '@/utils/mapping/user.mapper.js'
+import { generateJwtToken, fromUserResourceToUserUpdateInput, type UserWithRelations } from '@/utils/mapping/user.mapper.js'
 import { encodedAccessSecret, encodedRefreshSecret } from '@/utils/other/authSecret.js'
+import { fromUserToUserResponse } from '@/utils/mapping/user.mapper.js'
 
 
 export class UserController{
@@ -28,16 +30,16 @@ export class UserController{
         this.#refreshTokenService = refreshTokenService
     }
 
-    #sendAuthResponse(res: Response, user: Pick<UserLoginResponse, 'accessToken' | 'refreshToken'>){
+    #sendAuthResponse(res: Response, user: UserLoginResponse, rememberMe: boolean ){
         res.cookie(ACCESS_TOKEN_COOKIE_NAME, user.accessToken, {
             httpOnly: true,
             maxAge: ACCESS_TOKEN_COOKIE_MAX_AGE,
         })
         res.cookie(REFRESH_TOKEN_COOKIE_NAME, user.refreshToken, {
             httpOnly: true,
-            maxAge: REFRESH_TOKEN_COOKIE_MAX_AGE,
+            maxAge: rememberMe ? REFRESH_TOKEN_COOKIE_REMEMBER_ME_MAX_AGE : REFRESH_TOKEN_COOKIE_MAX_AGE,
         })
-        return res.status(API_RESPONSE.OK).json(user)
+        return res.status(API_RESPONSE.OK).json({user: user.user, message: AUTH_SUCCESS_MESSAGE.LOGIN})
     }
 
     register = async(req: Request, res: Response) => {
@@ -57,7 +59,7 @@ export class UserController{
         try{
             const user = await this.#userService.createUser(userRequest)
             return res.status(API_RESPONSE.OK).json(user)
-        }catch(error){
+        }catch(error){  
             console.error(error)
             return res.status(API_RESPONSE.ERROR).json({
                 message: (error as Error).message,
@@ -75,8 +77,12 @@ export class UserController{
         }
         try{
             const user = await this.#userService.login(userRequest)
-            await this.#refreshTokenService.create({ id: user.user.id }, user.refreshToken)
-            return this.#sendAuthResponse(res, user)
+            const userResponse = await fromUserToUserResponse({
+                ...user,
+                rememberMe: userRequest.rememberMe || false,
+            } as UserWithRelations)
+            await this.#refreshTokenService.create({ id: userResponse.user.id }, userResponse.refreshToken, userRequest.rememberMe || false)
+            return this.#sendAuthResponse(res, userResponse, userRequest.rememberMe || false)
         }catch(error){
             return res.status(API_RESPONSE.ERROR).json({
                 message: (error as Error).message,
@@ -87,7 +93,11 @@ export class UserController{
     me = async(req: Request, res: Response) => {
         try{
             const user = await this.#userService.me(req.authorizedUserId as number)
-            return res.status(API_RESPONSE.OK).json(user)
+            const userResponse = await fromUserToUserResponse({
+                ...user,
+                rememberMe: false,
+            } as UserWithRelations)
+            return res.status(API_RESPONSE.OK).json(userResponse)
         }catch(error){
             return res.status(API_RESPONSE.ERROR).json({
                 message: (error as Error).message,
@@ -107,13 +117,13 @@ export class UserController{
                     message: AUTH_ERROR_MESSAGE.NO_TOKEN_PROVIDED,
                 })
             }
-            const accessToken = await generateJwtToken(token.user, encodedAccessSecret, ACCESS_TOKEN_EXPIRATION_TIME)
-            const newRefreshToken = await generateJwtToken(token.user, encodedRefreshSecret, REFRESH_TOKEN_EXPIRATION_TIME)
-            await this.#refreshTokenService.create({ id: token.user.id }, newRefreshToken)
+            const accessToken = await generateJwtToken({...token.user, rememberMe: req.rememberMe || false}, encodedAccessSecret, ACCESS_TOKEN_EXPIRATION_TIME)
+            const newRefreshToken = await generateJwtToken({...token.user, rememberMe: req.rememberMe || false}, encodedRefreshSecret, REFRESH_TOKEN_EXPIRATION_TIME)
+            await this.#refreshTokenService.create({ id: token.user.id }, newRefreshToken, false)
             return this.#sendAuthResponse(res, {
                 accessToken,
                 refreshToken: newRefreshToken,
-            })
+            } as UserLoginResponse, req.rememberMe || false)
         }catch(error){
             return res.status(API_RESPONSE.ERROR).json({
                 message: (error as Error).message,

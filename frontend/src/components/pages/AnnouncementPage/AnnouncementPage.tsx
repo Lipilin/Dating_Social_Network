@@ -1,8 +1,11 @@
 import type { AnnouncementResource } from '@/utils/api/types'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { NoDataFound } from '../Errors/NoDataFound'
 import { Announcement } from '@/utils/api/Announcement'
 import { DefaultButton } from '@/components/ui/buttons/DefaultButton'
+import { ROUTES } from '@/config/General'
+import { ProfileContext } from '@/utils/context/ProfileContext'
+import { useNavigate } from 'react-router'
 import styles from './AnnouncementPage.module.css'
 import { Announcement as AnnouncementCard } 
 from '@/components/pages/MainPage/partials/announcement/Announcement'
@@ -13,9 +16,19 @@ const announcementService = new Announcement()
 const TAKE = 12
 
 export function AnnouncementPage() {
+    const { user, openAuthModal } = useContext(ProfileContext)
+    const navigate = useNavigate()
     const [announcements, setAnnouncements] = useState<AnnouncementResource[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const [pagination, setPagination] = useState(0)
+
+    const handleCreateAnnouncement = () => {
+        if (user == null) {
+            openAuthModal?.()
+        } else {
+            navigate(ROUTES.ANNOUNCEMENT_CREATION.URL)
+        }
+    }
 
     useEffect(() => {
         announcementService.getDataWithClauses({
@@ -32,12 +45,16 @@ export function AnnouncementPage() {
     }
 
     if(announcements.length == 0){
-        return (
-            <NoDataFound 
-                Button = { () => <DefaultButton onSend = { async () => { await console.log('send') } } 
-                content = { 'Создать объявление' } 
-                classNames = { 'need-registration__button' } /> } 
+        const CreateAnnouncementButton = () => (
+            <DefaultButton
+                onSend={async () => { handleCreateAnnouncement() }}
+                content="Создать объявление"
+                classNames="need-registration__button"
             />
+        )
+
+        return (
+            <NoDataFound Button={CreateAnnouncementButton} />
         )
     }
 

@@ -11,10 +11,10 @@ export function DescriptionBlock({ user }: { user: UserResource }) {
         <div className="about__block">
             <div className="about__block-left">
                 <AboutMeBlock user={user} />
-                <InterestsBlock interests={personalInterests} />
+                <InterestsBlock interests={personalInterests} userId={user.id} />
             </div>
             <div className="about__block-right">
-                <VisitedCountriesBlock interests={visitedCountries} />
+                <VisitedCountriesBlock interests={visitedCountries} userId={user.id} />
             </div>
         </div>
     )

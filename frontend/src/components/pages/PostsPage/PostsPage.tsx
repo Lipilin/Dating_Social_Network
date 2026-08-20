@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Post } from "@/utils/api/Post"
 import type { Post as PostResource } from '@boltaem/common/type'
 import { DefaultPagination } from '@/components/ui/pagination/DefaultPagination'
 import { Loader } from '@/components/pages/Loader/Loader'
 import { NoDataFound } from '../Errors/NoDataFound'
 import { DefaultButton } from '@/components/ui/buttons/DefaultButton'
+import { ROUTES } from '@/config/General'
+import { ProfileContext } from '@/utils/context/ProfileContext'
+import { useNavigate } from 'react-router'
 import styles from './PostPage.module.css'
 import { Post as PostCard} from '@/components/pages/UserPage/partials/Post'
 
@@ -12,9 +15,19 @@ const TAKE: number = 5
 const postService = new Post()
 
 export function PostsPage() {
+    const { user, openAuthModal } = useContext(ProfileContext)
+    const navigate = useNavigate()
     const [posts, setPosts] = useState<PostResource[]>([])
     const [pagination, setPagination] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
+
+    const handleCreatePost = () => {
+        if (user == null) {
+            openAuthModal?.()
+        } else {
+            navigate(ROUTES.POST_CREATION.URL)
+        }
+    }
     useEffect(() => {
         postService.listPost({
             take: TAKE,
@@ -31,13 +44,16 @@ export function PostsPage() {
     }
 
     if(posts.length == 0){
-        const button = () => {
-            return <DefaultButton onSend={async () => { await console.log('send') }} 
-                content="Создать пост" 
-                classNames="need-registration__button" />
-        }
+        const CreatePostButton = () => (
+            <DefaultButton
+                onSend={async () => { handleCreatePost() }}
+                content="Создать пост"
+                classNames="need-registration__button"
+            />
+        )
+
         return (
-            <NoDataFound Button={button} />
+            <NoDataFound Button={CreatePostButton} />
         )
     }
 

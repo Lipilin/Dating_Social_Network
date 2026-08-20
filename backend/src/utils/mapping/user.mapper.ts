@@ -22,7 +22,7 @@ export const userWithRelationsArgs = Prisma.validator<Prisma.UserDefaultArgs>()(
     }
 })
 
-export type UserWithRelations = Prisma.UserGetPayload<typeof userWithRelationsArgs>
+export type UserWithRelations = Prisma.UserGetPayload<typeof userWithRelationsArgs> & { rememberMe: boolean }
 
 type UserScalars = Pick<UserResource, 'gender' | 'city'>
 
@@ -30,6 +30,7 @@ export async function generateJwtToken(user: JwtFormat, secret: Uint8Array, expi
     const payload: JwtFormat = {
         id: user.id,
         login: user.login,
+        rememberMe: user.rememberMe,
     }
     return await new SignJWT(payload)
         .setProtectedHeader({ alg: JWT_ALGORITHM }).setExpirationTime(expirationTime).sign(secret)

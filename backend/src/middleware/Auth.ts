@@ -11,6 +11,7 @@ export async function authMiddleware(req: Request, res: Response, next: NextFunc
     try{
         const { payload } = await jwtVerify<JwtFormat>(token, encodedAccessSecret)
         req.authorizedUserId = payload.id
+        req.rememberMe = payload.rememberMe
     } catch (error) {
         return res.status(API_RESPONSE.UNAUTHORIZED).json({ message: (error as Error).message })
     }
