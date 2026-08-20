@@ -2,8 +2,7 @@ import arrowRightSvg from '@/assets/images/arrow_right.svg'
 import { ModalCloseButton } from '@/components/ui/buttons/ModalCloseButton'
 import type { 
     UserPostRequest, 
-    UserResource } 
-from '@/utils/api/types'
+} from '@/utils/api/types'
 import { 
     useState, 
     useMemo, 
@@ -32,7 +31,7 @@ interface RegistrationMainProps {
     onClose?: () => void
     onSwitchToAuth?: () => void
     onSuccess?: () => void
-    onError?: () => void
+    onError?: (message: string) => void
 }
 
 const userProvider = new User()
@@ -68,12 +67,13 @@ export function RegistrationMain({
     const [errors, setErrors] = useState<Record<string, string>>({})
 
     const onSubmit = useCallback(async () => {
-        console.log(userPostRequest)
-        await userProvider.createUser(userPostRequest).then((data: UserResource | null) => {
-            if(data != null) onSuccess?.()
-            else onError?.()
-        })
-    }, [userPostRequest])
+        try {
+            await userProvider.createUser(userPostRequest)
+            onSuccess?.()
+        } catch (error) {
+            onError?.(error instanceof Error ? error.message : 'Произошла ошибка при регистрации')
+        }
+    }, [userPostRequest, onSuccess, onError])
 
     const handleBackdropClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
         if (e.target === e.currentTarget) {

@@ -6,7 +6,7 @@ import styles from './AnnouncementInfoBlock.module.css'
 import { Link } from 'react-router'
 
 interface AnnouncementInfoBlockProps {
-    announcement: AnnouncementResource & { interests?: InterestResource[] }
+    announcement: AnnouncementResource 
 }
 
 export function AnnouncementInfoBlock({ announcement }: AnnouncementInfoBlockProps) {

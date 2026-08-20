@@ -11,6 +11,7 @@ export interface AnnouncementResource{
     user?: UserResource, 
     icon?: string
     createdAt: string
+    interests?: InterestResource[]
 }
 
 export interface Request{
@@ -117,8 +118,16 @@ export interface PatchRequest{
 
 }
 
-export interface PatchResponse extends Request{
+export interface ApiErrorResponse {
+    message: string
+}
 
+export interface ApiSuccessResponse {
+    message: string
+}
+
+export interface PatchResponse {
+    message: string
 }
 
 export interface Page{
@@ -152,6 +161,28 @@ export interface UserUpdatedRequest extends PatchRequest{
     updatedUser: UserResource
 }
 
-export interface UserUpdatedResponse extends PatchResponse{
+export interface UserUpdatedResponse extends PatchResponse {
+    user: UserResource
+}
 
+export type CreatePostRequest = Pick<Post, 'title' | 'content' | 'tags' | 'image'> & PostRequest
+
+export interface CreatePostResponse{
+    message: string
+}
+
+export interface AnnouncementCreateRequest extends PostRequest{
+    title: string
+    departure: string
+    destination: string
+    dateFrom: string
+    dateTo: string
+    genderPreference: GENDER_PREFERENCE
+    userAge: number
+    description: string
+    interests: InterestResource[]
+}
+
+export interface AnnouncementCreateResponse{
+    message: string
 }

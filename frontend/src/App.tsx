@@ -19,6 +19,7 @@ function App() {
     const [registrationOpen, setRegistrationOpen] = useState(false)
     const [registrationSuccessOpen, setRegistrationSuccessOpen] = useState(false)
     const [registrationErrorOpen, setRegistrationErrorOpen] = useState(false)
+    const [registrationErrorMessage, setRegistrationErrorMessage] = useState('')
     const [sidebarActive, setSidebarActive] = useState(false)
 
     return (
@@ -58,7 +59,10 @@ function App() {
                             setAuthOpen(true)
                         }}
                         onSuccess={() => setRegistrationSuccessOpen(true)}
-                        onError={() => setRegistrationErrorOpen(true)}
+                        onError={(message) => {
+                            setRegistrationErrorMessage(message)
+                            setRegistrationErrorOpen(true)
+                        }}
                     />
                     <RegistrationMessage
                         head='Регистрация успешна!'
@@ -68,10 +72,14 @@ function App() {
                     />
 
                     <RegistrationMessage
-                        head='Возникла Ошибка на стороне сервера!'
-                        body='К сожалению, возникла ошибка на стороне сервера. Попробуйте зарегистрироваться позже'
+                        head='Возникла ошибка при регистрации'
+                        body='К сожалению, не удалось завершить регистрацию. Попробуйте позже или исправьте указанные данные.'
+                        detailMessage={registrationErrorMessage}
                         isOpen={ registrationErrorOpen }
-                        onClose={ () => setRegistrationErrorOpen(false) }
+                        onClose={ () => {
+                            setRegistrationErrorOpen(false)
+                            setRegistrationErrorMessage('')
+                        }}
                     />
                 </CategoryProvider>
             </ProfileProvider>

@@ -5,9 +5,10 @@ interface RegistrationMessageProps{
     onClose?: () => void
     body: string
     head: string
+    detailMessage?: string
 }
 
-export function RegistrationMessage({isOpen = false, onClose, head, body}: RegistrationMessageProps) {
+export function RegistrationMessage({isOpen = false, onClose, head, body, detailMessage}: RegistrationMessageProps) {
     const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
         if (e.target === e.currentTarget) {
             onClose?.()
@@ -23,7 +24,10 @@ export function RegistrationMessage({isOpen = false, onClose, head, body}: Regis
                 </div>
                 <div className="modal__body">
                     <div className="modal__body-form">
-                        <p> { body } </p>
+                        <p>{ body }</p>
+                        {detailMessage && (
+                            <p className="text-red-500/90 mt-3" role="alert">{ detailMessage }</p>
+                        )}
                         <div className="row">
                             <button
                                 type="button"

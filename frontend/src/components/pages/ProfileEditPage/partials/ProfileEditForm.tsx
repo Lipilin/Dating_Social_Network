@@ -7,15 +7,20 @@ import { CategoryContext } from '@/utils/context/CategoryContext'
 import { ProfileEditMain } from './ProfileEditMain'
 import { ProfileToggler } from './ProfileToggler'
 import { ProfileEditCountries } from './ProfileEditCountries'
+import { Message } from '@/components/ui/messages/Message'
 
 export interface ProfileEditFormProps{
     profile: UserResource
     setUpdatedUser: (user: UserResource) => void
+    error?: string | null
+    successMessage?: string | null
 }
 
 export type ActiveSection = 'main' | 'interests' | 'countries'
 
-export function ProfileEditForm({ profile, setUpdatedUser }: ProfileEditFormProps) {
+export function ProfileEditForm({ profile, setUpdatedUser, onSend, error, successMessage }: ProfileEditFormProps & { 
+    onSend: () => Promise<void>
+}) {
     const { categories } = useContext(CategoryContext)
     const [activeSection, setActiveSection] = useState<ActiveSection>('main')
     return (
@@ -47,9 +52,15 @@ export function ProfileEditForm({ profile, setUpdatedUser }: ProfileEditFormProp
                 }
 
                 <div className={styles.profileEditFormFooter}>
+                    {(error || successMessage) && (
+                        <Message
+                            message={error ?? successMessage!}
+                            type={error ? 'error' : 'success'}
+                        />
+                    )}
                     <DefaultButton
                         content="Сохранить"
-                        onSend={async () => {}}
+                        onSend={async () => onSend()}
                         classNames="need-registration__button"
                     />
                 </div>

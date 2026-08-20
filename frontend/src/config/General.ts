@@ -1,4 +1,3 @@
-import { GENDER_PREFERENCE } from '@/utils/api/types'
 import { MainPage } from '@/components/pages/MainPage'
 import { InstructionPage } from '@/components/pages/InstructionPage'
 import { AnnouncementPage } from '@/components/pages/AnnouncementPage'
@@ -11,85 +10,11 @@ import { AnnouncementDetail } from '@/components/pages/AnnouncementDetail/Announ
 import { PostsPage } from '@/components/pages/PostsPage/PostsPage'
 import { PostDetail } from '@/components/pages/PostDetail/PostDetail'
 import { ProfileEditPage } from '@/components/pages/ProfileEditPage/ProfileEditPage'
+import { PostCreation } from '@/components/pages/PostCreation/PostCreation'
+import { AnnouncementCreation } from '@/components/pages/AnnouncementCreation'
 export { STATIC_ROUTES_FOR_BUTTOS } from '@boltaem/common/config'
-
-export const genderLabels = {
-    [GENDER_PREFERENCE.MALE]: {
-        id: 3,
-        value: GENDER_PREFERENCE.MALE, 
-        label: 'Ищу Парня'
-    }, 
-    [GENDER_PREFERENCE.FEMALE]: {
-        id: 2,
-        value: GENDER_PREFERENCE.FEMALE, 
-        label: 'Ищу Девушку'
-    },
-    [GENDER_PREFERENCE.ANYBODY]: {
-        id: 1,
-        value: GENDER_PREFERENCE.ANYBODY, 
-        label: 'Ищу кого-нибудь'
-    }
-} as const
-
-interface ApiSettings{
-    API_HOST: string, 
-    DEFAULT_PAGINATION: number, 
-    ENDPOINTS: Record<string, Endpoint>
-}
-
-interface BaseEndpoint{
-    LIST: string
-    CREATE: string
-    UPDATE: string  
-    GET: string
-}
-
-type Endpoint = BaseEndpoint & Record<string, string> 
-
-export const CATEGORY_DEFAULT_PAGINATION = 5
-
-export const API_SETTINGS: ApiSettings = {
-    API_HOST: '/api', 
-    DEFAULT_PAGINATION: 7, 
-    ENDPOINTS: {
-        ANNOUNCEMENT: {
-            LIST: '/announcement/list', 
-            CREATE: '', 
-            UPDATE: '', 
-            GET: '/announcement/get',
-        }, 
-        CATEGORIES: {
-            LIST: '/category/list', 
-            CREATE: '', 
-            UPDATE: '', 
-            GET: '/category/get',
-        }, 
-        USER: {
-            LIST: '/user/list', 
-            CREATE: '/user/create', 
-            UPDATE: '/user/update', 
-            GET: '/user/get',
-            LOGIN: '/user/login',
-            ME: '/user/me',
-            CREATE_ANNOUNCEMENT: '/user/create-announcement',
-            CREATE_POST: '/user/create-post',
-            REFRESH: '/user/refresh',
-            LOGOUT: '/user/logout',
-        }, 
-        POST: {
-            LIST: '/post/list', 
-            CREATE: '', 
-            UPDATE: '', 
-            GET: '/post/get',
-        },
-        PAGE: {
-            LIST: '/page/list',
-            CREATE: '',
-            UPDATE: '',
-            GET: '/page/get',
-        }
-    },
-} as const
+export { userGenderLabels, genderLabels } from '@/config/genderLabels'
+export { API_SETTINGS, CATEGORY_DEFAULT_PAGINATION } from '@/config/apiSettings'
 
 interface Route{
     URL: string, 
@@ -141,6 +66,14 @@ export const ROUTES: Record<string, Route> = {
     PROFILE_EDIT: {
         URL: '/profile/edit',
         COMPONENT: ProfileEditPage,
-    }
+    }, 
+    POST_CREATION: {
+        URL: '/post/create',
+        COMPONENT: PostCreation,
+    },
+    ANNOUNCEMENT_CREATION: {
+        URL: '/announcement/create',
+        COMPONENT: AnnouncementCreation,
+    },
 } as const
 

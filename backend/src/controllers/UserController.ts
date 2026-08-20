@@ -12,10 +12,10 @@ import {
     REFRESH_TOKEN_COOKIE_MAX_AGE,
     REFRESH_TOKEN_EXPIRATION_TIME,
 } from '@/types.js'
-import { LoginStepSchema, InfoStepSchema, UserLoginSchema } from '@/utils/validation/rules.js'
-import type { UserLoginRequest, UserLoginResponse, UserPostRequest } from '@boltaem/common/type.js'
+import { LoginStepSchema, InfoStepSchema, UserLoginSchema, UserUpdateSchema, getValidationErrorMessage } from '@/utils/validation/rules.js'
+import type { UserLoginRequest, UserLoginResponse, UserPostRequest, UserUpdatedRequest } from '@boltaem/common/type.js'
 import type { RefreshTokenService } from '@/services/RefreshTokenService.js'
-import { generateJwtToken } from '@/utils/mapping/user.mapper.js'
+import { generateJwtToken, fromUserResourceToUserUpdateInput } from '@/utils/mapping/user.mapper.js'
 import { encodedAccessSecret, encodedRefreshSecret } from '@/utils/other/authSecret.js'
 
 
@@ -42,14 +42,20 @@ export class UserController{
 
     register = async(req: Request, res: Response) => {
         const userRequest: UserPostRequest = req.body
-        if(LoginStepSchema.safeParse(userRequest).error){
-            return res.status(API_RESPONSE.BAD_REQUEST).json(null)
+        const loginValidation = LoginStepSchema.safeParse(userRequest)
+        if(loginValidation.error){
+            return res.status(API_RESPONSE.BAD_REQUEST).json({
+                message: getValidationErrorMessage(loginValidation.error),
+            })
         }
-        if(InfoStepSchema.safeParse(userRequest).error){
-            return res.status(API_RESPONSE.BAD_REQUEST).json(null)
+        const infoValidation = InfoStepSchema.safeParse(userRequest)
+        if(infoValidation.error){
+            return res.status(API_RESPONSE.BAD_REQUEST).json({
+                message: getValidationErrorMessage(infoValidation.error),
+            })
         }
         try{
-            const user = await this.#userService?.createUser(userRequest)
+            const user = await this.#userService.createUser(userRequest)
             return res.status(API_RESPONSE.OK).json(user)
         }catch(error){
             console.error(error)
@@ -64,12 +70,11 @@ export class UserController{
         const validation = UserLoginSchema.safeParse(userRequest)
         if(validation.error){
             return res.status(API_RESPONSE.BAD_REQUEST).json({
-                message: validation.error.message,
+                message: getValidationErrorMessage(validation.error),
             })
         }
         try{
             const user = await this.#userService.login(userRequest)
-            if(!user) return res.status(API_RESPONSE.ERROR).json({})
             await this.#refreshTokenService.create({ id: user.user.id }, user.refreshToken)
             return this.#sendAuthResponse(res, user)
         }catch(error){
@@ -138,6 +143,23 @@ export class UserController{
     }
 
     update = async(req: Request, res: Response) => {
-        
+        const userRequest: UserUpdatedRequest = req.body
+        const validation = UserUpdateSchema.safeParse(userRequest.updatedUser)
+        if(validation.error){
+            return res.status(API_RESPONSE.BAD_REQUEST).json({
+                message: getValidationErrorMessage(validation.error),
+            })
+        }
+        try{
+            const user = await this.#userService.update(userRequest.updatedUser.id, fromUserResourceToUserUpdateInput(userRequest.updatedUser))
+            return res.status(API_RESPONSE.OK).json({
+                user: user,
+                message: AUTH_SUCCESS_MESSAGE.UPDATE_USER,
+            })
+        }catch(error){
+            return res.status(API_RESPONSE.ERROR).json({
+                message: (error as Error).message,
+            })
+        }
     }
 }

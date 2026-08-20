@@ -7,6 +7,7 @@ import { Link } from 'react-router'
 import { User } from '@/utils/api/User'
 import type { UserLoginResponse } from '@boltaem/common/type.js'
 import { ProfileContext } from '@/utils/context/ProfileContext'
+import { getApiErrorMessage } from '@/utils/api/getApiErrorMessage'
 
 const authFields = ['email', 'password'] as const
 const userProvider = new User() 
@@ -50,9 +51,9 @@ export function AuthMain({ isOpen = false, onClose, onSwitchToRegistration }: Au
                     setUser?.(data.user)
                     setErrors({})
                     onClose?.()
-                }).catch((error: Error) => {
+                }).catch((error: unknown) => {
                     setErrors({
-                        serverError: error.message,
+                        serverError: getApiErrorMessage(error, 'Произошла ошибка при входе'),
                     })
                 })
             }
@@ -61,6 +62,7 @@ export function AuthMain({ isOpen = false, onClose, onSwitchToRegistration }: Au
     }, [email, password, onClose])
 
     const errorMessages = authFields.filter((field) => errors[field])
+    const hasErrors = errorMessages.length > 0 || Boolean(errors.serverError)
 
     return (
         <div className={`modal authorization${isOpen ? ' show' : ''}`} onClick={handleBackdropClick}>
@@ -92,11 +94,14 @@ export function AuthMain({ isOpen = false, onClose, onSwitchToRegistration }: Au
                                     />   
                                 </div>
                             </div>
-                            {errorMessages.length > 0 && (
+                            {hasErrors && (
                                 <ul className={errorListClasses} role="alert">
                                     {errorMessages.map((field) => (
                                         <li key={field}>{errors[field]}</li>
                                     ))}
+                                    {errors.serverError && (
+                                        <li key="serverError">{errors.serverError}</li>
+                                    )}
                                 </ul>
                             )}
                             <div className="links">

@@ -1,5 +1,5 @@
-import type { AnnouncementRequest, AnnouncementResource } from './types'
-import { API_SETTINGS } from '@/config/General'
+import type { AnnouncementCreateRequest, AnnouncementCreateResponse, AnnouncementRequest, AnnouncementResource } from './types'
+import { API_SETTINGS } from '@/config/apiSettings'
 import axios from 'axios'
 
 export class Announcement{
@@ -32,9 +32,23 @@ export class Announcement{
         }
     }
 
-    async createAnouncement(): Promise<void>{
+    async createAnnouncement(request: AnnouncementCreateRequest): Promise<AnnouncementCreateResponse> {
         this.#abortCreateController.abort()
         this.#abortCreateController = new AbortController()
+        try {
+            const response = await axios.post<AnnouncementCreateResponse>(
+                `${API_SETTINGS.API_HOST}${API_SETTINGS.ENDPOINTS.ANNOUNCEMENT.CREATE}`,
+                request,
+                {
+                    withCredentials: true,
+                    signal: this.#abortCreateController.signal,
+                },
+            )
+            return response.data
+        } catch (error) {
+            console.error(error)
+            throw error
+        }
     }
 
     async getById(id: number): Promise<AnnouncementResource | null>{

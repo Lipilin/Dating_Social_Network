@@ -24,7 +24,7 @@ export function ProfileEditMain({ profile, setUpdatedUser }: ProfileEditFormProp
                     <DefaultInput
                         label="Возраст"
                         value={profile.age}
-                        setValue={(age: number) => setUpdatedUser({ ...profile, age })}
+                        setValue={(age: number) => setUpdatedUser({ ...profile, age: Number(age) })}
                         type="number"
                     />
                 </div>

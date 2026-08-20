@@ -1,4 +1,5 @@
 import type { UserResource } from '@/utils/api/types'
+import { userGenderLabels } from '@/config/General'
 
 export function AboutMeBlock({ user }: { user: UserResource }) {
     return (
@@ -10,6 +11,10 @@ export function AboutMeBlock({ user }: { user: UserResource }) {
                 <div className="about__details-item">
                     <div className="question">Возраст</div>
                     <span className="dark">{user.age} лет</span>
+                </div>
+                <div className="about__details-item">
+                    <div className="question">Пол</div>
+                    <span className="dark">{userGenderLabels[user.gender]}</span>
                 </div>
                 <div className="about__details-item">
                     <div className="question">Дата регистрации</div>

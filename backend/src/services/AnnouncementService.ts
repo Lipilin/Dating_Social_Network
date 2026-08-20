@@ -1,6 +1,8 @@
+import { ANNOUNCEMENT_ERROR_MESSAGE } from "@/config/announcementMessages.js"
 import { prisma } from "@/prisma.js"
+import type { AnnouncementCreateRequest } from "@boltaem/common/type.js"
 import type { Announcement, Prisma } from '@prisma/client'
-import { UserContentStatus, UserStatus } from '@prisma/client'
+import { GenderPreference, UserContentStatus, UserStatus } from '@prisma/client'
 
 export class AnnouncementService{
     async getAnnouncements(take: number, skip: number, clauses: Prisma.AnnouncementWhereInput, interestsId: number[]): Promise<Announcement[]>{
@@ -49,5 +51,43 @@ export class AnnouncementService{
             }
         })
         return response
+    }
+
+    async createAnnouncement(userId: number, data: AnnouncementCreateRequest): Promise<Announcement> {
+        const user = await prisma.user.findUnique({
+            where: {
+                id: userId,
+                status: UserStatus.REGISTERED,
+            },
+        })
+
+        if (!user) {
+            throw new Error(ANNOUNCEMENT_ERROR_MESSAGE.USER_NOT_FOUND)
+        }
+
+        return prisma.announcement.create({
+            data: {
+                title: data.title,
+                departure: data.departure,
+                destination: data.destination,
+                dateFrom: new Date(data.dateFrom),
+                dateTo: new Date(data.dateTo),
+                genderInterest: data.genderPreference as GenderPreference,
+                description: data.description,
+                userId,
+                status: UserContentStatus.PENDING_APPROVEMENT,
+                interests: {
+                    connect: data.interests.map((interest) => ({ id: interest.id })),
+                },
+            },
+            include: {
+                user: true,
+                interests: {
+                    include: {
+                        category: true,
+                    },
+                },
+            },
+        })
     }
 }

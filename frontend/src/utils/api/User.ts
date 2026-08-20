@@ -10,6 +10,7 @@ import type
 } from './types'
 import { API_SETTINGS } from '@/config/General'
 import { HTTP_STATUS } from '@boltaem/common/config'
+import { getApiErrorMessage } from './getApiErrorMessage'
 
 export class User{
 
@@ -40,16 +41,15 @@ export class User{
         }
     }
 
-    async createUser(request: UserPostRequest): Promise<UserResource | null>{
+    async createUser(request: UserPostRequest): Promise<UserResource>{
         try{
-            const response = await axios.post(
+            const response = await axios.post<UserResource>(
                 `${ API_SETTINGS.API_HOST }${ API_SETTINGS.ENDPOINTS.USER.CREATE }`, 
                 request
             )
-            return response.data as UserResource
+            return response.data
         } catch (error) {
-            console.error(error)
-            return null
+            throw new Error(getApiErrorMessage(error))
         }
     }
 
@@ -102,10 +102,15 @@ export class User{
     }
 
     async updateProfile(updatedUser: UserUpdatedRequest): Promise<UserUpdatedResponse>{
-        const response = await axios.patch<UserUpdatedResponse>(
-            `${ API_SETTINGS.API_HOST }${ API_SETTINGS.ENDPOINTS.USER.UPDATE }`,
-            updatedUser
-        )
-        return response.data
+        try {
+            const response = await axios.patch<UserUpdatedResponse>(
+                `${ API_SETTINGS.API_HOST }${ API_SETTINGS.ENDPOINTS.USER.UPDATE }`,
+                updatedUser,
+                { withCredentials: true },
+            )
+            return response.data
+        } catch (error) {
+            throw new Error(getApiErrorMessage(error))
+        }
     }
 }

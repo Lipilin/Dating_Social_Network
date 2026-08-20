@@ -28,15 +28,21 @@ export const AUTH_ENV = {
     REFRESH_TOKEN_SECRET: 'REFRESH_TOKEN_GENERATION_SECRET',
 } as const
 
+import { SERVER_ERRORS } from '@boltaem/common/config.js'
+
 export const AUTH_ERROR_MESSAGE = {
-    NO_VALID_SECRETS: 'No valid tokens',
-    NO_USER_FOUND: 'No user found',
-    INVALID_PASSWORD: 'Invalid password',
-    NO_TOKEN_PROVIDED: 'Unauthorized. No token provided',
+    NO_VALID_SECRETS: 'Не установлены валидные секреты',
+    NO_USER_FOUND: 'Пользователь не найден',
+    UPDATE_USER_ERROR: 'Ошибка при обновлении пользователя',
+    INVALID_PASSWORD: SERVER_ERRORS.LOGIN_FAILED,
+    NO_TOKEN_PROVIDED: 'Не авторизован. Нет токена',
+    USER_ALREADY_EXISTS: SERVER_ERRORS.USER_ALREADY_EXISTS,
+    REGISTRATION_ERROR: SERVER_ERRORS.REGISTRATION_ERROR,
 } as const
 
 export const AUTH_SUCCESS_MESSAGE = {
-    LOGOUT: 'Successfully logged out',
+    LOGOUT: 'Успешный выход из аккаунта',
+    UPDATE_USER: 'Пользователь успешно обновлен',
 } as const
 
 export type RefreshTokenWithUser = Prisma.RefreshTokenGetPayload<{

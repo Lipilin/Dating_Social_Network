@@ -1,0 +1,130 @@
+.postCreationWrapper{
+    width: 100%;
+    max-width: 1408px;
+    margin: auto;
+    background: #FFF;
+    border-radius: 0 0 8px 8px;
+    padding: 40px 20px;
+}
+
+.postCreationForm{
+    margin-top: 20px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.feedbackMessage{
+    margin-top: 16px;
+    width: 50%;
+}
+
+.postCreationForm input{
+    outline: none;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.inputWrapper:focus-within{
+    border: 1px solid #0041F2;
+}
+
+.inputWrapper{
+    position: relative;
+    border: 1px solid #E0E0E0;
+    padding: 0 10px;
+    height: 45px;
+    border-radius: 8px;
+}
+
+.inputWrapper input:not(:placeholder-shown) ~ label, .inputWrapper:focus-within label{
+    top: 0px;
+    left: 6px;
+    background: #FFFFFF;
+    padding: 0 4px;
+    opacity: 1;
+    z-index: 3;
+    line-height: 1;
+    box-shadow: 0 0 0 2px #FFFFFF;
+}
+
+.inputWrapper label{
+    display: inline-block;
+    position: absolute;
+    left: 10px;
+    z-index: 2;
+    pointer-events: none;
+    color: #6D727E;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    top: 50%;
+    opacity: 0.7;
+    transition: all 0.3s ease-in-out;
+    transform: translateY(-50%);
+}
+
+.textareaWrapper:focus-within{
+    border: 1px solid #0041F2;
+}
+
+.textareaWrapper{
+    position: relative;
+    border: 1px solid #E0E0E0;
+    padding: 0 10px;
+    min-height: 120px;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.textareaWrapper textarea{
+    outline: none;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 120px;
+    resize: vertical;
+    border: none;
+    padding-top: 20px;
+    font-family: inherit;
+    font-size: 17px;
+}
+
+.textareaWrapper textarea:not(:placeholder-shown) ~ label, .textareaWrapper:focus-within label{
+    top: 0px;
+    left: 6px;
+    background: #FFFFFF;
+    padding: 0 4px;
+    opacity: 1;
+    z-index: 3;
+    line-height: 1;
+    box-shadow: 0 0 0 2px #FFFFFF;
+}
+
+.textareaWrapper label{
+    display: inline-block;
+    position: absolute;
+    left: 10px;
+    z-index: 2;
+    pointer-events: none;
+    color: #6D727E;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    top: 50%;
+    opacity: 0.7;
+    transition: all 0.3s ease-in-out;
+    transform: translateY(-50%);
+}
+
+@media (max-width: 768px) {
+    .postCreationForm{
+        width: 100%;
+    }
+
+    .feedbackMessage{
+        width: 100%;
+    }
+}

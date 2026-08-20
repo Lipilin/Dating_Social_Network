@@ -1,0 +1,295 @@
+.announcementCreationFormContainer{
+    background: #FFFFFF;
+    max-width: 1408px;
+    width: 100%;
+    margin: auto;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 1px 1px 4px 0px rgba(94, 92, 154, 0.06);
+}
+
+.announcementCreationFormWrapper{
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.announcementCreationFormContent{
+    width: 50%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.announcementCreationFormContent input{
+    outline: none;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.announcementCreationFormContent input:not(:placeholder-shown) ~ label, .inputWrapper:focus-within label{
+    top: 0px;
+    left: 6px;
+    background: #FFFFFF;
+    padding: 0 4px;
+    opacity: 1;
+    z-index: 3;
+    line-height: 1;
+    box-shadow: 0 0 0 2px #FFFFFF;
+}
+
+.inputWrapper:focus-within{
+    border: 1px solid #0041F2;
+}
+
+.inputWrapper{
+    position: relative;
+    border: 1px solid #E0E0E0;
+    padding: 0 10px;
+    height: 45px;
+    border-radius: 8px;
+}
+
+.inputWrapper label{
+    display: inline-block;
+    position: absolute;
+    left: 10px;
+    z-index: 2;
+    pointer-events: none;
+    color: #6D727E;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    top: 50%;
+    opacity: 0.7;
+    transition: all 0.3s ease-in-out;
+    transform: translateY(-50%);
+}
+
+.textareaWrapper:focus-within{
+    border: 1px solid #0041F2;
+}
+
+.textareaWrapper{
+    position: relative;
+    border: 1px solid #E0E0E0;
+    padding: 0 10px;
+    min-height: 120px;
+    border-radius: 8px;
+    width: 50%;
+}
+
+.textareaWrapper textarea{
+    outline: none;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 120px;
+    resize: vertical;
+    border: none;
+    padding-top: 20px;
+    font-family: inherit;
+    font-size: 17px;
+}
+
+.textareaWrapper textarea:not(:placeholder-shown) ~ label, .textareaWrapper:focus-within label{
+    top: 0px;
+    left: 6px;
+    background: #FFFFFF;
+    padding: 0 4px;
+    opacity: 1;
+    z-index: 3;
+    line-height: 1;
+    box-shadow: 0 0 0 2px #FFFFFF;
+}
+
+.textareaWrapper label{
+    display: inline-block;
+    position: absolute;
+    left: 10px;
+    z-index: 2;
+    pointer-events: none;
+    color: #6D727E;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    top: 50%;
+    opacity: 0.7;
+    transition: all 0.3s ease-in-out;
+    transform: translateY(-50%);
+}
+
+.announcementCreationFormHeader{
+    margin-bottom: 32px;
+}
+
+.announcementCreationInterests{
+    width: 100%;
+    padding: 0;
+}
+
+.announcementCreationInterests :global(.interest){
+    display: flex;
+    flex-direction: column;
+}
+
+.announcementCreationInterests :global(.interest__item){
+    padding-top: 21px;
+    border-top: 1px solid #E6E7E9;
+    padding-bottom: 26px;
+}
+
+.announcementCreationInterests :global(.interest__item:first-child){
+    border: none;
+    padding-top: 0;
+}
+
+.announcementCreationInterests :global(.interest__item-head){
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: #001346;
+    font-family: "Gilroy";
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 100%;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 17px;
+}
+
+.announcementCreationInterests :global(.interest__item-head:after){
+    content: "";
+    position: absolute;
+    right: 14px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background-image: url(../../../../assets/images/arrow_right.svg);
+    width: 9px;
+    height: 9px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform: rotate(90deg);
+    transition: 0.3s all ease;
+}
+
+.announcementCreationInterests :global(.interest__item-head.active:after){
+    transform: rotate(270deg);
+}
+
+.announcementCreationInterests :global(.interest__item-body){
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.announcementCreationInterests :global(.interest__item-body.show){
+    max-height: 1000px;
+}
+
+.announcementCreationInterests :global(.interest__item-body label){
+    position: relative;
+}
+
+.announcementCreationInterests :global(.interest__item-body label input){
+    position: absolute;
+    opacity: 0;
+}
+
+.announcementCreationInterests :global(.interest__item-body label span){
+    border-radius: 7px;
+    background: #F0F0F2;
+    display: flex;
+    padding: 11px 14px 7px 15px;
+    justify-content: center;
+    align-items: center;
+    color: rgba(32, 33, 46, 0.8);
+    font-family: "TT Commons";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+    position: relative;
+}
+
+.announcementCreationInterests :global(.interest__item-body label input:checked ~ span){
+    background: #0041F2;
+    color: #fff;
+    padding-right: 36px;
+}
+
+.announcementCreationInterests :global(.interest__item-body label input:checked ~ span:after){
+    content: "";
+    width: 6px;
+    height: 6px;
+    background-image: url(../../../../assets/images/small-x.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    right: 17px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.chooseSection{
+    margin-top: 20px;
+    display: flex;
+    gap: 8px;
+}
+
+.chooseSection span{
+    position: relative;
+    color: #00195B;
+    font-family: "TT Commons";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+}
+
+.chooseSection span::after{
+    content: "";
+    border-bottom: 2px solid #0041F2;
+    width: 0;
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    height: 3px;
+    bottom: -5px;
+}
+
+.chooseSection span.activeSection::after{
+    width: 100%;
+    transition: ease all 0.3s;
+}
+
+.feedbackMessage{
+    max-width: 1408px;
+    width: 50%;
+    margin: 16px auto 0;
+    padding: 0 20px;
+}
+
+@media (max-width: 480px) {
+    .announcementCreationFormContent{
+        width: 100%;
+        grid-template-columns: 1fr;
+    }
+
+    .textareaWrapper{
+        width: 100%;
+    }
+
+    .feedbackMessage{
+        width: 100%;
+    }
+}

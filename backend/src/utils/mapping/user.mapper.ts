@@ -101,3 +101,18 @@ export async function fromUserToUserResponse(user: UserWithRelations): Promise<U
     }
     return response
 }
+
+export function fromUserResourceToUserUpdateInput(user: UserResource): Prisma.UserUpdateInput{
+    const userUpdateInput: Prisma.UserUpdateInput = {
+        name: user.name,
+        surname: user.surname,
+        description: user.description,
+        gender: user.gender,
+        city: user.city,
+        age: user.age,
+    }
+    userUpdateInput.interests = {
+        set: user?.interests?.map((interest) => ({id: interest.id})) ?? [],
+    }
+    return userUpdateInput
+}

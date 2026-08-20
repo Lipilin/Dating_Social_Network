@@ -1,0 +1,32 @@
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.actionButton {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.iconAction {
+    padding: 13px;
+    gap: 0;
+}
+
+.iconAction img {
+    width: 21px;
+    height: 21px;
+}
+
+@media (max-width: 480px) {
+    .iconAction {
+        padding: 11px;
+    }
+
+    .iconAction img {
+        width: 19px;
+        height: 19px;
+    }
+}

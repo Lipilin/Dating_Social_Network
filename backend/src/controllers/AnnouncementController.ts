@@ -1,6 +1,9 @@
+import { ANNOUNCEMENT_ERROR_MESSAGE, ANNOUNCEMENT_SUCCESS_MESSAGE } from "@/config/announcementMessages.js"
 import { AnnouncementService } from "@/services/AnnouncementService.js"
 import type { Request, Response } from "express"
 import { API_RESPONSE } from "@/types.js"
+import { AnnouncementCreateSchema, getValidationErrorMessage } from "@/utils/validation/rules.js"
+import type { AnnouncementCreateRequest } from "@boltaem/common/type.js"
 import { Prisma } from "@prisma/client"
 import { GenderPreference } from "@prisma/client"
 
@@ -59,6 +62,28 @@ export class AnnouncementController{
         }catch(error){
             response.status(API_RESPONSE.ERROR).json({
                 message: (error as Error).message,
+            })
+        }
+    }
+
+    async createAnnouncement(request: Request, response: Response) {
+        const announcementRequest: AnnouncementCreateRequest = request.body
+        const validation = AnnouncementCreateSchema.safeParse(announcementRequest)
+
+        if (validation.error) {
+            return response.status(API_RESPONSE.BAD_REQUEST).json({
+                message: getValidationErrorMessage(validation.error, ANNOUNCEMENT_ERROR_MESSAGE.VALIDATION),
+            })
+        }
+
+        try {
+            await this.#annoucementProvider.createAnnouncement(request.authorizedUserId as number, validation.data)
+            response.status(API_RESPONSE.OK).json({
+                message: ANNOUNCEMENT_SUCCESS_MESSAGE.CREATE,
+            })
+        } catch (error) {
+            response.status(API_RESPONSE.ERROR).json({
+                message: (error as Error).message || ANNOUNCEMENT_ERROR_MESSAGE.CREATE,
             })
         }
     }
