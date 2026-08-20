@@ -5,8 +5,9 @@ import type { UserPostRequest, UserLoginRequest, UserLoginResponse } from '@bolt
 import bcrypt from 'bcryptjs'
 import { type UserWithRelations } from '@/utils/mapping/user.mapper.js'
 import { GENDER } from '@boltaem/common/type.js'
-import { AUTH_ERROR_MESSAGE, type JwtFormat } from '@/types.js'
+import { AUTH_ERROR_MESSAGE, EMAIL_CONFIRMATION_ERROR_MESSAGE, type JwtFormat } from '@/types.js'
 import { SERVER_ERRORS } from '@boltaem/common/config.js'
+import type { EmailConfirmationPayload } from '@/utils/other/emailConfirmationToken.js'
 
 export class UserService{
     async getUser(id: number): Promise<UserWithRelations | null>{
@@ -96,11 +97,43 @@ export class UserService{
         }
     }
 
+    async confirmRegistration(payload: EmailConfirmationPayload): Promise<User> {
+        const normalizedEmail = payload.email.toLowerCase().trim()
+        const normalizedLogin = payload.login.toLowerCase().trim()
+
+        const user = await prisma.user.findFirst({
+            where: {
+                email: normalizedEmail,
+            },
+        })
+
+        if (!user) {
+            throw new Error(EMAIL_CONFIRMATION_ERROR_MESSAGE.USER_NOT_FOUND)
+        }
+
+        if (user.status === UserStatus.PENDING_APPROVEMENT || user.status === UserStatus.REGISTERED) {
+            throw new Error(EMAIL_CONFIRMATION_ERROR_MESSAGE.ALREADY_CONFIRMED)
+        }
+
+        if (user.status !== UserStatus.NEW) {
+            throw new Error(EMAIL_CONFIRMATION_ERROR_MESSAGE.USER_NOT_FOUND)
+        }
+
+        if (user.login !== normalizedLogin || user.name !== payload.name) {
+            throw new Error(EMAIL_CONFIRMATION_ERROR_MESSAGE.USER_MISMATCH)
+        }
+
+        return prisma.user.update({
+            where: { id: user.id },
+            data: { status: UserStatus.PENDING_APPROVEMENT },
+        })
+    }
+
     async login(data: UserLoginRequest): Promise<User> {
         const user = await prisma.user.findFirst({
             where: {
                 email: data.email,
-                status: UserStatus.REGISTERED,
+                status: UserStatus.REGISTERED || UserStatus.PENDING_APPROVEMENT,
             },
             include: {
                 interests: {

@@ -1,5 +1,6 @@
 import type { PrismaClient } from '@prisma/client'
 import { STATIC_ROUTES_FOR_BUTTOS } from '@boltaem/common/config.js'
+import { EMAIL_MESSAGES } from '@boltaem/common/emailMessages.js'
 
 const STATIC_PAGES = [
   {
@@ -34,37 +35,6 @@ const STATIC_PAGES = [
       <p>Мы ответим в течение 1–2 рабочих дней.</p>
     `.trim(),
   },
-] as const
-
-const DEFAULT_EMAIL_MESSAGE = {
-  id: 1,
-  from: 'support@boltaem.ru',
-  subject: 'Boltaem — сообщение от пользователя',
-  content: `
-    <p>Здравствуйте!</p>
-    <p>Вы получили новое сообщение через форму обратной связи Boltaem.</p>
-    <p>С уважением,<br/>Команда Boltaem</p>
-  `.trim(),
-} as const
-
-const PASSWORD_RESET_EMAIL_MESSAGE = {
-  id: 2,
-  from: 'support@boltaem.ru',
-  subject: 'Boltaem — сброс пароля',
-  content: `
-    <p>Здравствуйте!</p>
-    <p>Вы запросили сброс пароля для вашей учётной записи Boltaem.</p>
-    <p>Чтобы задать новый пароль, перейдите по ссылке:</p>
-    <p><a href="{{resetLink}}">Сбросить пароль</a></p>
-    <p>Если вы не запрашивали сброс пароля, просто проигнорируйте это письмо.</p>
-    <p>Ссылка действительна в течение 24 часов.</p>
-    <p>С уважением,<br/>Команда Boltaem</p>
-  `.trim(),
-} as const
-
-const EMAIL_MESSAGES = [
-  DEFAULT_EMAIL_MESSAGE,
-  PASSWORD_RESET_EMAIL_MESSAGE,
 ] as const
 
 export async function seedProd(prisma: PrismaClient): Promise<void> {

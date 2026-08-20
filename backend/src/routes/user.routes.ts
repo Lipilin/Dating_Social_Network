@@ -4,10 +4,12 @@ import { UserService } from '@/services/UserService.js'
 import { securityMiddlewareDefault } from '@/middleware/security.js'
 import { RefreshTokenService } from '@/services/RefreshTokenService.js'
 import { authMiddleware } from '@/middleware/Auth.js'
+import { EmailNotificationService } from '@/services/EmailNotificationService.js'
 
 const userSerivce = new UserService()           
 const refreshTokenService = new RefreshTokenService()
-const userController = new UserController(userSerivce, refreshTokenService)
+const emailNotificationsService = new EmailNotificationService()
+const userController = new UserController(userSerivce, refreshTokenService, emailNotificationsService)
 export const router = Router()
 router.use(securityMiddlewareDefault)
 router.post('/login', userController.login)

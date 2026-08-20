@@ -18,6 +18,7 @@ export const ACCESS_TOKEN_EXPIRATION_MINUTES = 5
 export const ACCESS_TOKEN_EXPIRATION_TIME = `${ ACCESS_TOKEN_EXPIRATION_MINUTES }m`
 export const REFRESH_TOKEN_EXPIRATION_TIME = '1d'
 export const REFRESH_TOKEN_REMEMBER_ME_EXPIRATION_TIME = '30d'
+export const EMAIL_CONFIRMATION_EXPIRATION_TIME = '1d'
 export const JWT_ALGORITHM = 'HS256'
 export const ACCESS_TOKEN_COOKIE_NAME = 'accessToken'
 export const REFRESH_TOKEN_COOKIE_NAME = 'refreshToken'
@@ -28,6 +29,19 @@ export const REFRESH_TOKEN_COOKIE_REMEMBER_ME_MAX_AGE = 1000 * 60 * 60 * 24 * 30
 export const AUTH_ENV = {
     ACCESS_TOKEN_SECRET: 'ACCESS_TOKEN_GENERATION_SECRET',
     REFRESH_TOKEN_SECRET: 'REFRESH_TOKEN_GENERATION_SECRET',
+    EMAIL_CONFIRMATION_SECRET: 'EMAIL_CONFIRMATION_TOKEN_SECRET',
+} as const
+
+export const EMAIL_CONFIRMATION_ERROR_MESSAGE = {
+    INVALID_TOKEN: 'Недействительный токен подтверждения',
+    EXPIRED_TOKEN: 'Срок действия токена подтверждения истёк',
+    USER_NOT_FOUND: 'Пользователь для подтверждения не найден',
+    USER_MISMATCH: 'Данные пользователя не совпадают с токеном',
+    ALREADY_CONFIRMED: 'Email уже подтверждён',
+} as const
+
+export const EMAIL_CONFIRMATION_SUCCESS_MESSAGE = {
+    CONFIRMED: 'Email успешно подтверждён',
 } as const
 
 import { SERVER_ERRORS } from '@boltaem/common/config.js'
