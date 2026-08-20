@@ -20,6 +20,7 @@ import { generateJwtToken, fromUserResourceToUserUpdateInput, type UserWithRelat
 import { encodedAccessSecret, encodedRefreshSecret } from '@/utils/other/authSecret.js'
 import { fromUserToUserResponse } from '@/utils/mapping/user.mapper.js'
 import { EmailNotificationService } from '@/services/EmailNotificationService.js'
+import { getRequestBaseUrl } from '@/utils/other/requestBaseUrl.js'
 
 
 export class UserController{
@@ -64,6 +65,7 @@ export class UserController{
                 user.email,
                 user.name,
                 user.login,
+                getRequestBaseUrl(req),
             )
             return res.status(API_RESPONSE.OK).json(user)
         }catch(error){  

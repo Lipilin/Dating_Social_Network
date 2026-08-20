@@ -35,7 +35,7 @@ export class UserService{
         data.lastSeen = new Date()
         try {
             const user = await prisma.user.update({
-                where: { id: id, status: UserStatus.REGISTERED },
+                where: { id: id, status: { in: [UserStatus.REGISTERED, UserStatus.PENDING_APPROVEMENT] } },
                 include: {
                     interests: {
                         include: {
@@ -133,7 +133,7 @@ export class UserService{
         const user = await prisma.user.findFirst({
             where: {
                 email: data.email,
-                status: UserStatus.REGISTERED || UserStatus.PENDING_APPROVEMENT,
+                status: { in: [UserStatus.REGISTERED, UserStatus.PENDING_APPROVEMENT] },
             },
             include: {
                 interests: {
@@ -157,7 +157,7 @@ export class UserService{
         const user = await prisma.user.findUnique({
             where: { 
                 id: userId,
-                status: UserStatus.REGISTERED
+                status: { in: [UserStatus.REGISTERED, UserStatus.PENDING_APPROVEMENT] },
             },
             include: {     
                 interests: {

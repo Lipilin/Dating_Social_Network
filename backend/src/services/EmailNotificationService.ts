@@ -24,9 +24,14 @@ export class EmailNotificationService {
         })
     }
 
-    async sendRegistrationEmail(email: string, name: string, login: string): Promise<void> {
+    async sendRegistrationEmail(
+        email: string,
+        name: string,
+        login: string,
+        baseUrl: string,
+    ): Promise<void> {
         const token = await generateEmailConfirmationToken(email, name, login)
-        const confirmLink = buildEmailConfirmationLink(token)
+        const confirmLink = buildEmailConfirmationLink(token, baseUrl)
 
         await this.#sendTemplatedEmail(
             EMAIL_MESSAGE_IDS.REGISTRATION,
@@ -54,11 +59,11 @@ export class EmailNotificationService {
             throw new Error(EMAIL_NOTIFICATION_ERROR_MESSAGE.TEMPLATE_NOT_FOUND)
         }
 
-        await sendMail({
-            from: template.from,
+        console.log(await sendMail({
+            from: process.env.SMTP_USER || template.from,
             to,
             subject: template.subject,
             html: applyTemplate(template.content, variables),
-        })
+        }))
     }
 }

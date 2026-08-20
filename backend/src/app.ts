@@ -6,6 +6,7 @@ import cors from 'cors'
 import qs from "qs"
 import cookieParser from 'cookie-parser'
 export const app = express()
+app.set('trust proxy', true)
 app.set('query parser', (str: string) => qs.parse(str));
 app.use(express.json())
 app.use(cookieParser())

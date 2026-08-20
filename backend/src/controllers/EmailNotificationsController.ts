@@ -19,6 +19,7 @@ import type {
     SendRegistrationEmailRequest,
 } from '@boltaem/common/type.js'
 import { verifyEmailConfirmationToken } from '@/utils/other/emailConfirmationToken.js'
+import { getRequestBaseUrl } from '@/utils/other/requestBaseUrl.js'
 
 export class EmailNotificationsController {
     #emailNotificationService: EmailNotificationService
@@ -50,6 +51,7 @@ export class EmailNotificationsController {
                 validation.data.email,
                 validation.data.name,
                 validation.data.login,
+                getRequestBaseUrl(request),
             )
             return response.status(API_RESPONSE.OK).json({
                 message: EMAIL_NOTIFICATION_SUCCESS_MESSAGE.REGISTRATION,

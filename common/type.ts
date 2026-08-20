@@ -187,3 +187,14 @@ export interface AnnouncementCreateRequest extends PostRequest{
 export interface AnnouncementCreateResponse{
     message: string
 }
+
+export interface SendRegistrationEmailRequest extends PostRequest {
+    email: string
+    name: string
+    login: string
+}
+
+export interface SendPasswordResetEmailRequest extends PostRequest {
+    email: string
+    resetLink: string
+}

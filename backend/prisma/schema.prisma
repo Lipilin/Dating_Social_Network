@@ -127,7 +127,7 @@ model EmailMessage{
   id Int @id @default(autoincrement())
   from String
   subject String
-  content String
+  content String @db.Text
 }
 
 model RefreshToken{
