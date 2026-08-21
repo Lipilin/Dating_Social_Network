@@ -19,18 +19,14 @@ import type { RefreshTokenService } from '@/services/RefreshTokenService.js'
 import { generateJwtToken, fromUserResourceToUserUpdateInput, type UserWithRelations } from '@/utils/mapping/user.mapper.js'
 import { encodedAccessSecret, encodedRefreshSecret } from '@/utils/other/authSecret.js'
 import { fromUserToUserResponse } from '@/utils/mapping/user.mapper.js'
-import { EmailNotificationService } from '@/services/EmailNotificationService.js'
-import { getRequestBaseUrl } from '@/utils/other/requestBaseUrl.js'
 
 
 export class UserController{
     #userService: UserService
     #refreshTokenService: RefreshTokenService
-    #emailNotificationsService: EmailNotificationService
-    constructor(userSerivce: UserService, refreshTokenService: RefreshTokenService, emailNotificationsService: EmailNotificationService){
+    constructor(userSerivce: UserService, refreshTokenService: RefreshTokenService){
         this.#userService = userSerivce
         this.#refreshTokenService = refreshTokenService
-        this.#emailNotificationsService = emailNotificationsService
     }
 
     #sendAuthResponse(res: Response, user: UserLoginResponse, rememberMe: boolean ){
@@ -61,12 +57,6 @@ export class UserController{
         }
         try{
             const user = await this.#userService.createUser(userRequest)
-            await this.#emailNotificationsService.sendRegistrationEmail(
-                user.email,
-                user.name,
-                user.login,
-                getRequestBaseUrl(req),
-            )
             return res.status(API_RESPONSE.OK).json(user)
         }catch(error){  
             console.error(error)

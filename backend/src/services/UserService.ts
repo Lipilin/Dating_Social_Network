@@ -8,8 +8,15 @@ import { GENDER } from '@boltaem/common/type.js'
 import { AUTH_ERROR_MESSAGE, EMAIL_CONFIRMATION_ERROR_MESSAGE, type JwtFormat } from '@/types.js'
 import { SERVER_ERRORS } from '@boltaem/common/config.js'
 import type { EmailConfirmationPayload } from '@/utils/other/emailConfirmationToken.js'
+import { getAppBaseUrl } from '@/utils/other/requestBaseUrl.js'
+import type { EmailNotificationService } from './EmailNotificationService.js'
 
 export class UserService{
+    #emailNotificationsService: EmailNotificationService
+    constructor(emailNotificationsService: EmailNotificationService){
+        this.#emailNotificationsService = emailNotificationsService
+    }
+    
     async getUser(id: number): Promise<UserWithRelations | null>{
         try{
             const entity = await prisma.user.findUnique({
@@ -73,7 +80,34 @@ export class UserService{
         const hashedPassword = await bcrypt.hash(data.password, 10)
 
         try {
-            return await prisma.user.create({
+            return await prisma.$transaction(async (tx) => {
+                const user =await tx.user.create({
+                    data: {
+                        email: normalizedEmail,
+                        login: normalizedLogin,
+                        password: hashedPassword,
+                        age: data.age,
+                        name: data.name,
+                        surname: data.surname,
+                        description: data.description,
+                        city: data.city,
+                        gender: data.gender as GENDER,
+                        interests: {
+                            connect: data.interests?.map((interest) => ({ id: interest.id })) || [],
+                        },
+                        role: UserRole.USER,
+                        status: UserStatus.NEW,
+                    },
+                })
+                await this.#emailNotificationsService.sendRegistrationEmail(
+                    user.email,
+                    user.name,
+                    user.login,
+                    getAppBaseUrl(),
+                )
+                return user
+            })
+            /*return await prisma.user.create({
                 data: {
                     email: normalizedEmail,
                     login: normalizedLogin,
@@ -90,7 +124,7 @@ export class UserService{
                     role: UserRole.USER,
                     status: UserStatus.NEW,
                 },
-            })
+            })*/
         } catch (error) {
             console.log(error)
             throw new Error(SERVER_ERRORS.REGISTRATION_ERROR)

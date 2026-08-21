@@ -1,11 +1,9 @@
-import type { Request } from 'express'
+export function getAppBaseUrl(): string {
+    const appHost = process.env.APP_HOST
 
-export function getRequestBaseUrl(request: Request): string {
-    const host = request.get('host')
-
-    if (!host) {
-        throw new Error('Не удалось определить домен запроса')
+    if (!appHost) {
+        throw new Error('APP_HOST не задан')
     }
 
-    return `${request.protocol}://${host}`
+    return appHost.replace(/\/$/, '')
 }

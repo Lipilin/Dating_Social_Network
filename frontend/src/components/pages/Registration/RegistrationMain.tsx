@@ -19,12 +19,16 @@ import { CategoryContext } from '@/utils/context/CategoryContext'
 import { User } from '@/utils/api/User'
 import { LoginStepSchema, InfoStepSchema } from '@/utils/validation/UserCreationRules'
 import { GENDER } from '@/utils/api/types'
+import { Loader } from '@/components/pages/Loader/Loader'
 
 enum RegistrationStep {
     LOGIN = 1,
     INTERESTS = 2,
     INFO = 3,
+    LOADING = 4,
 }
+
+const RegistrationStepCount = Object.keys(RegistrationStep).filter(key => isNaN(Number(key))).length
 
 interface RegistrationMainProps {
     isOpen?: boolean
@@ -67,11 +71,15 @@ export function RegistrationMain({
     const [errors, setErrors] = useState<Record<string, string>>({})
 
     const onSubmit = useCallback(async () => {
+        setStep(RegistrationStep.LOADING)
         try {
             await userProvider.createUser(userPostRequest)
             onSuccess?.()
         } catch (error) {
             onError?.(error instanceof Error ? error.message : 'Произошла ошибка при регистрации')
+        } finally {
+            onClose?.()
+            setStep(RegistrationStep.LOGIN)
         }
     }, [userPostRequest, onSuccess, onError])
 
@@ -141,7 +149,6 @@ export function RegistrationMain({
                     <InfoStep
                         onSubmit={() => {
                             if(!validate()) return
-                            onClose?.()
                             onSubmit?.()
                         }}
                         onBack={() => setStep(RegistrationStep.INTERESTS)}
@@ -150,6 +157,8 @@ export function RegistrationMain({
                         errors = {errors}
                     />
                 )
+            case RegistrationStep.LOADING:
+                return <Loader isLoading = { true }/>
         }
     }, [step, userPostRequest, errors, validate])
 
@@ -163,7 +172,7 @@ export function RegistrationMain({
                             <img src={arrowRightSvg} alt="" />
                         </div>
                         <div className="step">
-                            Шаг <span>{step}</span> из 3
+                            Шаг <span>{step}</span> из { RegistrationStepCount }
                         </div>
                     </h4>
                     <ModalCloseButton onClick={handleClose} />
