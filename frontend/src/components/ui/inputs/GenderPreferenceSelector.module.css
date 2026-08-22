@@ -1,0 +1,104 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 50%;
+}
+
+.label {
+    color: #001346;
+    font-family: "Gilroy", sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 100%;
+}
+
+.options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.option {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px 10px 12px;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    background: #FFFFFF;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    user-select: none;
+}
+
+.option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.option:hover {
+    border-color: #0041F2;
+}
+
+.option.active {
+    border-color: #0041F2;
+    background: rgba(0, 65, 242, 0.07);
+    box-shadow: 0 0 0 1px rgba(0, 65, 242, 0.15);
+}
+
+.icon {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.icon img {
+    display: block;
+    width: 15px;
+    height: 15px;
+}
+
+.text {
+    color: #53565e;
+    font-family: "Gilroy", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 100%;
+}
+
+.option.active .text {
+    color: #001346;
+}
+
+.male .icon {
+    background-color: #0041f2;
+}
+
+.female .icon {
+    background-color: #eb0d6f;
+}
+
+.anybody .icon {
+    background-color: #b445a8;
+}
+
+@media (max-width: 480px) {
+    .wrapper {
+        width: 100%;
+    }
+
+    .options {
+        flex-direction: column;
+    }
+
+    .option {
+        width: 100%;
+    }
+}

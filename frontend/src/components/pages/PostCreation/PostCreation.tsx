@@ -15,6 +15,7 @@ export function PostCreation(){
     const { user, userProvider, isLoading } = useContext(ProfileContext)
     const { error, handleError, clearError } = useError()
     const [successMessage, setSuccessMessage] = useState<string | null>(null)
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const [post, setPost] = useState<CreatePostRequest>({
         title: '',
         content: '',
@@ -23,10 +24,11 @@ export function PostCreation(){
     })
 
     const onSend = useCallback(async () => {
-        if (!userProvider) return
+        if (!userProvider || isSubmitting) return
 
         clearError()
         setSuccessMessage(null)
+        setIsSubmitting(true)
 
         try {
             const response = await userProvider.withRefreshing(async () => {
@@ -35,11 +37,13 @@ export function PostCreation(){
             setSuccessMessage(response.message)
         } catch (err) {
             handleError(err)
+        } finally {
+            setIsSubmitting(false)
         }
-    }, [userProvider, post, clearError, handleError])
+    }, [userProvider, post, clearError, handleError, isSubmitting])
 
     
-    if(isLoading) return <Loader isLoading={isLoading} />
+    if(isLoading || isSubmitting) return <Loader isLoading={true} />
     if(user == null ) return <NeedRegistration />
     return (
         <div className = { styles.postCreationWrapper }>

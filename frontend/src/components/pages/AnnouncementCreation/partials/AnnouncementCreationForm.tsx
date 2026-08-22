@@ -15,6 +15,7 @@ interface AnnouncementCreationFormProps {
     setAnnouncement: (announcement: AnnouncementCreateRequest) => void
     categories: CategoryWithInterestResource[]
     error?: string | null
+    successMessage?: string | null
 }
 
 export function AnnouncementCreationForm({
@@ -23,6 +24,7 @@ export function AnnouncementCreationForm({
     setAnnouncement,
     categories,
     error,
+    successMessage,
 }: AnnouncementCreationFormProps) {
     const [activeSection, setActiveSection] = useState<ActiveSection>('main')
 
@@ -52,6 +54,9 @@ export function AnnouncementCreationForm({
                 <div className={styles.announcementCreationFormFooter}>
                     {error && (
                         <Message message={error} type="error" />
+                    )}
+                    {successMessage && (
+                        <Message message={successMessage} type="success" />
                     )}
                     <DefaultButton
                         onSend={onSend}

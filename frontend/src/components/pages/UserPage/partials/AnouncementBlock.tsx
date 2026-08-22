@@ -1,17 +1,22 @@
-import type { UserResource } from '@/utils/api/types'
-import { useContext } from 'react'
+import { useCallback, useContext } from 'react'
 import { useNavigate } from 'react-router'
 import { ROUTES } from '@/config/General'
 import { ProfileContext } from '@/utils/context/ProfileContext'
 import { Announcement } from './Announcement'
+import { ContentItemActions } from './ContentItemActions'
 import { ProfileSectionEmpty } from './ProfileSectionEmpty'
+import type { Profile } from '../utils/types'
 
-export function AnouncementBlock({ user }: { user: UserResource }) {
+export function AnouncementBlock({ user }: { user: Profile }) {
     const { user: currentUser } = useContext(ProfileContext)
     const navigate = useNavigate()
     const isOwnProfile = currentUser?.id === user.id
 
-    if (user.announcements.length === 0) {
+    const editAnnouncement = useCallback((id: number) => {
+        navigate(ROUTES.ANNOUNCEMENT_EDIT.URL.replace(':id', String(id)))
+    }, [navigate])
+
+    if (!user.announcements || user.announcements.length === 0) {
         return (
             <ProfileSectionEmpty
                 title="Объявлений пока нет"
@@ -27,7 +32,11 @@ export function AnouncementBlock({ user }: { user: UserResource }) {
                 <Announcement
                     key={announcement.id}
                     {...announcement}
-                    user={user}
+                    actions={
+                        user.isCurrentProfile ? (
+                            <ContentItemActions onEdit={() => editAnnouncement(announcement.id)} />
+                        ) : null
+                    }
                 />
             ))}
         </div>

@@ -36,6 +36,9 @@ export function UserPage() {
     if(user.id === currentUser?.id) return <Navigate to={ROUTES.PROFILE.URL} />      
 
     return (
-        <UserContent profile={user} UserActions={UserCommunicationActions} />
+        <UserContent profile={{
+            ...user,
+            isCurrentProfile: false,
+        }} UserActions={UserCommunicationActions} />
     )
 }

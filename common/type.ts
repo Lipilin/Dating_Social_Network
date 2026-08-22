@@ -181,6 +181,7 @@ export interface AnnouncementCreateRequest extends PostRequest{
     genderPreference: GENDER_PREFERENCE
     userAge: number
     description: string
+    icon: string
     interests: InterestResource[]
 }
 

@@ -9,6 +9,9 @@ export function ProfilePage() {
     if(isLoading) return <Loader isLoading={isLoading} />
     if(!user) return <NeedRegistration />
     return (
-        <UserContent profile={user} UserActions={UserEditActions} />
+        <UserContent profile={{
+            ...user,
+            isCurrentProfile: true,
+        }} UserActions={UserEditActions}/>
     )
 }

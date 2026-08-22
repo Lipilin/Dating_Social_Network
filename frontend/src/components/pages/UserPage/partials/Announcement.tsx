@@ -7,6 +7,8 @@ import avatarFemaleSvg from '@/assets/images/avatar_female.svg'
 import avatarMaleSvg from '@/assets/images/avatar_male.svg'
 import avatarGroupSvg from '@/assets/images/avatar_group.svg'
 import { Link } from 'react-router'
+import { type ReactNode } from 'react'
+import { contentItemActionsStyles } from './ContentItemActions'
 
 
 const genderAvatarClass: Record<GENDER_PREFERENCE, string> = {
@@ -32,13 +34,17 @@ export function Announcement({
     destination,
     icon = "", 
     createdAt,
-}: AnnouncementResource) {
-
+    actions,
+}: AnnouncementResource & { actions?: ReactNode }) {
     return (
-        <div className="locations__item">
+        <div className={`locations__item ${actions ? contentItemActionsStyles.itemRelative : ''}`}>
+            {actions}
             <div className="locations__item-left">
                 <img className="locations__item-img" src={ icon || location1Png } alt="" />
                 <div className="locations__item-info">
+                    <h3 className={`locations__item-title ${actions ? contentItemActionsStyles.titleWithActions : ''}`}>
+                        {title}
+                    </h3>
                     <div className="locations__item-place">
                         <Link to={ROUTES.DESTINATION.URL} className="city">
                             {departure}

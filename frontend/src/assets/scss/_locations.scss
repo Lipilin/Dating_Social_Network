@@ -818,6 +818,25 @@
             }
         }
 
+        &-title {
+            color: #001346;
+            font-family: "TT Commons";
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 1.25;
+            margin: 0 0 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+
+            @media #{$tablet} {
+                font-size: 20px;
+                margin-bottom: 12px;
+            }
+        }
+
         &-published {
             display: flex;
             align-items: center;

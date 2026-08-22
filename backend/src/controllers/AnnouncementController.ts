@@ -29,18 +29,18 @@ export class AnnouncementController{
         }
         if(destination) clauses.destination = String(destination)
         if(departure) clauses.departure = String(departure)
-        console.log(purpose)
-        if(Array.isArray(purpose)) {
-            (purpose as any[]).forEach((purpose) => {
-                if(purpose.id) {
-                    interestsId.push(Number(purpose.id))
+        if (purpose) {
+            const purposes = Array.isArray(purpose) ? purpose : [purpose]
+            purposes.forEach((item) => {
+                if (typeof item === 'object' && item !== null && 'id' in item) {
+                    const id = Number((item as { id: unknown }).id)
+                    if (!Number.isNaN(id)) interestsId.push(id)
                 }
             })
         }
 
         try{
             const entites = await this.#annoucementProvider.getAnnouncements(take, skip, clauses, interestsId)
-            console.error(123)
             response.status(API_RESPONSE.OK).json(entites)
         }catch(error){
             response.status(API_RESPONSE.ERROR).json({

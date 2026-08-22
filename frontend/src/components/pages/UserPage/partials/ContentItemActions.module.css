@@ -1,0 +1,85 @@
+.titleWithActions {
+    padding-right: 88px;
+}
+
+@media (max-width: 768px) {
+    .titleWithActions {
+        padding-right: 76px;
+    }
+}
+
+@media (max-width: 480px) {
+    .titleWithActions {
+        padding-right: 70px;
+    }
+}
+
+.itemRelative {
+    position: relative;
+}
+
+.actions {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 1px 4px rgba(94, 92, 154, 0.12);
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button:hover {
+    background: #f6f8ff;
+    box-shadow: 0 2px 8px rgba(94, 92, 154, 0.16);
+}
+
+.button img {
+    width: 18px;
+    height: 18px;
+}
+
+@media (max-width: 768px) {
+    .actions {
+        top: 12px;
+        right: 12px;
+        gap: 6px;
+    }
+
+    .button {
+        width: 32px;
+        height: 32px;
+    }
+
+    .button img {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .actions {
+        top: 10px;
+        right: 10px;
+    }
+
+    .button {
+        width: 30px;
+        height: 30px;
+        border-radius: 6px;
+    }
+}

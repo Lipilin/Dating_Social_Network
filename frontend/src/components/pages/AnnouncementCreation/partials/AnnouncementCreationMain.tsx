@@ -1,6 +1,5 @@
 import { DefaultInput } from '@/components/ui/inputs/DefaultInput'
-import { DefaultDropdown } from '@/components/ui/dropdowns/DefaultDropdown'
-import { genderLabels } from '@/config/genderLabels'
+import { GenderPreferenceSelector } from '@/components/ui/inputs/GenderPreferenceSelector'
 import type { AnnouncementCreateRequest } from '@/utils/api/types'
 import styles from '../AnnouncementCreation.module.css'
 
@@ -67,11 +66,9 @@ export function AnnouncementCreationMain({ announcement, setAnnouncement }: Anno
                     />
                 </div>
             </div>
-            <DefaultDropdown
+            <GenderPreferenceSelector
                 value={announcement.genderPreference}
-                setValue={(value) => setAnnouncement({ ...announcement, genderPreference: value })}
-                labels={Object.values(genderLabels)}
-                placeholder="Я ищу"
+                onChange={(value) => setAnnouncement({ ...announcement, genderPreference: value })}
             />
             <div className={styles.textareaWrapper}>
                 <textarea

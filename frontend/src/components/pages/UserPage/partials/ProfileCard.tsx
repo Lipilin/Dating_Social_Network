@@ -18,7 +18,7 @@ export function ProfileCard({ profile, UserActions }: ProfileCardProps) {
         return maleAvatar
     }, [profile])
 
-    const lastSeen = formatLastSeen(profile.lastSeen)
+    const lastSeen = formatLastSeen(String(profile.lastSeen))
 
     return (
         <div className="about__top">

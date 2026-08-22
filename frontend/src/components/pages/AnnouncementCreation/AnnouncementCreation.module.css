@@ -279,6 +279,19 @@
     padding: 0 20px;
 }
 
+.announcementCreationFormFooter{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+    width: 50%;
+}
+
+.announcementCreationFormFooter :global(.need-registration__button){
+    width: 100%;
+    margin-top: 0;
+}
+
 @media (max-width: 480px) {
     .announcementCreationFormContent{
         width: 100%;
@@ -286,6 +299,10 @@
     }
 
     .textareaWrapper{
+        width: 100%;
+    }
+
+    .announcementCreationFormFooter{
         width: 100%;
     }
 

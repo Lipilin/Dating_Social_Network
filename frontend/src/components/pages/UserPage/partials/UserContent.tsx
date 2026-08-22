@@ -5,13 +5,14 @@ import { DescriptionBlock, PostBlock, AnouncementBlock } from '.'
 import aboutBackground from '@/assets/images/about-bg.png'
 import { ProfileCard } from './ProfileCard'
 import { ProfileMenu, type ProfileTab } from './ProfileMenu'
+import type { Profile } from '../utils/types'
 
 interface UserContentProps {
-    profile: UserResource
+    profile: Profile
     UserActions: ComponentType
 }
 
-const UserPartial: Record<ProfileTab, ComponentType<{ user: UserResource }>> = {
+const UserPartial: Record<ProfileTab, ComponentType<{ user: Profile }>> = {
     DESCRIPTION: DescriptionBlock,
     POSTS: PostBlock,
     ANNOUNCEMENTS: AnouncementBlock,
@@ -32,8 +33,8 @@ export function UserContent({ profile, UserActions }: UserContentProps) {
                 <ProfileCard profile={profile} UserActions={UserActions} />
                 <ProfileMenu
                     activeTab={activePartial}
-                    postsCount={profile.posts.length}
-                    announcementsCount={profile.announcements.length}
+                    postsCount={profile.posts?.length || 0}
+                    announcementsCount={profile.announcements?.length || 0}
                     onTabChange={setActivePartial}
                 />
                 <Partial user={profile} />

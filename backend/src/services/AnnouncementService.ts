@@ -74,6 +74,7 @@ export class AnnouncementService{
                 dateTo: new Date(data.dateTo),
                 genderInterest: data.genderPreference as GenderPreference,
                 description: data.description,
+                icon: data.icon || '',
                 userId,
                 status: UserContentStatus.PENDING_APPROVEMENT,
                 interests: {

@@ -4,6 +4,8 @@ import location2Png from '@/assets/images/location_2.png'
 import location3Png from '@/assets/images/location_3.png'
 import { Link } from 'react-router'
 import { ROUTES } from '@/config/General'
+import type { ReactNode } from 'react'
+import { contentItemActionsStyles } from './ContentItemActions'
 
 const locationImages = [location1Png, location2Png, location3Png]
 
@@ -17,6 +19,7 @@ function formatPostDate(date: string) {
 
 interface PostProps extends PostResource {
     imageIndex?: number
+    actions?: ReactNode
 }
 
 export function Post({
@@ -27,11 +30,13 @@ export function Post({
     createdAt,
     image,
     imageIndex = 0,
+    actions,
 }: PostProps) {
     const previewImage = image || locationImages[imageIndex % locationImages.length]
 
     return (
-        <div className="locations__item">
+        <div className={`locations__item ${actions ? contentItemActionsStyles.itemRelative : ''}`}>
+            {actions}
             <div className="locations__item-left">
                 <img className="locations__item-img" src={previewImage} alt="" />
                 <div className="locations__item-info">
@@ -48,7 +53,7 @@ export function Post({
                         )}
                     </div>
                     <div className="locations__item-published">
-                        Опубликовано: <span>{formatPostDate(createdAt)}</span>
+                        Опубликовано: <span>{formatPostDate(String(createdAt))}</span>
                     </div>
                 </div>
             </div>

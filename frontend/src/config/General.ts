@@ -11,7 +11,9 @@ import { PostsPage } from '@/components/pages/PostsPage/PostsPage'
 import { PostDetail } from '@/components/pages/PostDetail/PostDetail'
 import { ProfileEditPage } from '@/components/pages/ProfileEditPage/ProfileEditPage'
 import { PostCreation } from '@/components/pages/PostCreation/PostCreation'
+import { PostEdit } from '@/components/pages/PostEdit/PostEdit'
 import { AnnouncementCreation } from '@/components/pages/AnnouncementCreation'
+import { AnnouncementEdit } from '@/components/pages/AnnouncementEdit'
 export { STATIC_ROUTES_FOR_BUTTOS } from '@boltaem/common/config'
 export { userGenderLabels, genderLabels } from '@/config/genderLabels'
 export { API_SETTINGS, CATEGORY_DEFAULT_PAGINATION } from '@/config/apiSettings'
@@ -71,9 +73,17 @@ export const ROUTES: Record<string, Route> = {
         URL: '/post/create',
         COMPONENT: PostCreation,
     },
+    POST_EDIT: {
+        URL: '/post/:id/edit',
+        COMPONENT: PostEdit,
+    },
     ANNOUNCEMENT_CREATION: {
         URL: '/announcement/create',
         COMPONENT: AnnouncementCreation,
+    },
+    ANNOUNCEMENT_EDIT: {
+        URL: '/announcement/:id/edit',
+        COMPONENT: AnnouncementEdit,
     },
 } as const
 

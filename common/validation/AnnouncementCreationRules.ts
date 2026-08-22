@@ -11,6 +11,7 @@ export const AnnouncementCreateSchema = z.object({
     genderPreference: z.nativeEnum(GENDER_PREFERENCE, { message: VALIDATION_ERRORS.ANNOUNCEMENT_GENDER_REQUIRED }),
     userAge: z.number().min(18, { message: VALIDATION_ERRORS.AGE_MIN_18 }),
     description: z.string().trim().min(10, { message: VALIDATION_ERRORS.ANNOUNCEMENT_DESCRIPTION_MIN_LENGTH }).max(255, { message: VALIDATION_ERRORS.DESCRIPTION_MAX_LENGTH }),
+    icon: z.string().optional().default(''),
     interests: z.array(z.object({
         id: z.number(),
         name: z.string(),
