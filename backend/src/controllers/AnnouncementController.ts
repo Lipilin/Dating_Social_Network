@@ -87,4 +87,33 @@ export class AnnouncementController{
             })
         }
     }
+
+    async updateAnnouncement(request: Request, response: Response) {
+        const id = Number(request.body?.id)
+        const announcementRequest: AnnouncementCreateRequest = request.body
+        const validation = AnnouncementCreateSchema.safeParse(announcementRequest)
+
+        if (!id || Number.isNaN(id)) {
+            return response.status(API_RESPONSE.BAD_REQUEST).json({
+                message: ANNOUNCEMENT_ERROR_MESSAGE.NOT_FOUND,
+            })
+        }
+
+        if (validation.error) {
+            return response.status(API_RESPONSE.BAD_REQUEST).json({
+                message: getValidationErrorMessage(validation.error, ANNOUNCEMENT_ERROR_MESSAGE.VALIDATION),
+            })
+        }
+
+        try {
+            await this.#annoucementProvider.updateAnnouncement(request.authorizedUserId as number, id, validation.data)
+            response.status(API_RESPONSE.OK).json({
+                message: ANNOUNCEMENT_SUCCESS_MESSAGE.UPDATE,
+            })
+        } catch (error) {
+            response.status(API_RESPONSE.ERROR).json({
+                message: (error as Error).message || ANNOUNCEMENT_ERROR_MESSAGE.UPDATE,
+            })
+        }
+    }
 }

@@ -68,4 +68,33 @@ export class PostController {
             })
         }
     }
+
+    async updatePost(request: Request, response: Response) {
+        const id = Number(request.body?.id)
+        const postRequest: CreatePostRequest = request.body
+        const validation = CreatePostSchema.safeParse(postRequest)
+
+        if (!id || Number.isNaN(id)) {
+            return response.status(API_RESPONSE.BAD_REQUEST).json({
+                message: POST_ERROR_MESSAGE.NOT_FOUND,
+            })
+        }
+
+        if (validation.error) {
+            return response.status(API_RESPONSE.BAD_REQUEST).json({
+                message: getValidationErrorMessage(validation.error, POST_ERROR_MESSAGE.VALIDATION),
+            })
+        }
+
+        try {
+            await this.#postProvider.updatePost(request.authorizedUserId as number, id, validation.data)
+            response.status(API_RESPONSE.OK).json({
+                message: POST_SUCCESS_MESSAGE.UPDATE,
+            })
+        } catch (error) {
+            response.status(API_RESPONSE.ERROR).json({
+                message: (error as Error).message || POST_ERROR_MESSAGE.UPDATE,
+            })
+        }
+    }
 }

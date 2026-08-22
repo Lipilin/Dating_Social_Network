@@ -22,7 +22,7 @@ export const API_SETTINGS: ApiSettings = {
         ANNOUNCEMENT: {
             LIST: '/announcement/list',
             CREATE: '/announcement/create',
-            UPDATE: '',
+            UPDATE: '/announcement/update',
             GET: '/announcement/get',
         },
         CATEGORIES: {
@@ -46,7 +46,7 @@ export const API_SETTINGS: ApiSettings = {
         POST: {
             LIST: '/post/list',
             CREATE: '/post/create',
-            UPDATE: '',
+            UPDATE: '/post/update',
             GET: '/post/get',
         },
         PAGE: {

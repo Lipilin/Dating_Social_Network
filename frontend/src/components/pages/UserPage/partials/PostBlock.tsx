@@ -6,14 +6,19 @@ import { ContentItemActions } from './ContentItemActions'
 import { Post } from './Post'
 import { ProfileSectionEmpty } from './ProfileSectionEmpty'
 import type { Profile } from '../utils/types'
+import type { Post as PostResource } from '@/utils/api/types'
 
 export function PostBlock({ user }: { user: Profile }) {
     const { user: currentUser } = useContext(ProfileContext)
     const navigate = useNavigate()
     const isOwnProfile = currentUser?.id === user.id
 
-    const editPost = useCallback((id: number) => {
-        navigate(ROUTES.POST_EDIT.URL.replace(':id', String(id)))
+    const editPost = useCallback((post: PostResource) => {
+        navigate(ROUTES.POST_EDIT.URL.replace(':id', String(post.id)), {
+            state: {
+                post: post,
+            },
+        })
     }, [navigate])
 
     if (!user?.posts || user?.posts?.length === 0) {
@@ -35,7 +40,7 @@ export function PostBlock({ user }: { user: Profile }) {
                     imageIndex={index}
                     actions={
                         user.isCurrentProfile ? (
-                            <ContentItemActions onEdit={() => editPost(post.id)} />
+                            <ContentItemActions onEdit={() => editPost(post)} />
                         ) : null
                     }
                 />

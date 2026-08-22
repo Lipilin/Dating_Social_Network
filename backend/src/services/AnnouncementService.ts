@@ -91,4 +91,44 @@ export class AnnouncementService{
             },
         })
     }
+
+    async updateAnnouncement(userId: number, id: number, data: AnnouncementCreateRequest): Promise<Announcement> {
+        const announcement = await prisma.announcement.findUnique({
+            where: { id },
+        })
+
+        if (!announcement) {
+            throw new Error(ANNOUNCEMENT_ERROR_MESSAGE.NOT_FOUND)
+        }
+
+        if (announcement.userId !== userId) {
+            throw new Error(ANNOUNCEMENT_ERROR_MESSAGE.FORBIDDEN)
+        }
+
+        return prisma.announcement.update({
+            where: { id },
+            data: {
+                title: data.title,
+                departure: data.departure,
+                destination: data.destination,
+                dateFrom: new Date(data.dateFrom),
+                dateTo: new Date(data.dateTo),
+                genderInterest: data.genderPreference as GenderPreference,
+                description: data.description,
+                icon: data.icon || '',
+                status: UserContentStatus.PENDING_APPROVEMENT,
+                interests: {
+                    set: data.interests.map((interest) => ({ id: interest.id })),
+                },
+            },
+            include: {
+                user: true,
+                interests: {
+                    include: {
+                        category: true,
+                    },
+                },
+            },
+        })
+    }
 }

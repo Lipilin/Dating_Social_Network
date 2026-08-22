@@ -67,4 +67,32 @@ export class PostService {
             },
         })
     }
+
+    async updatePost(userId: number, id: number, data: Pick<CreatePostRequest, 'title' | 'content' | 'image' | 'tags'>): Promise<Post> {
+        const post = await prisma.post.findUnique({
+            where: { id },
+        })
+
+        if (!post) {
+            throw new Error(POST_ERROR_MESSAGE.NOT_FOUND)
+        }
+
+        if (post.userId !== userId) {
+            throw new Error(POST_ERROR_MESSAGE.FORBIDDEN)
+        }
+
+        return prisma.post.update({
+            where: { id },
+            data: {
+                title: data.title,
+                content: data.content,
+                image: data.image || '',
+                tags: data.tags ?? [],
+                status: UserContentStatus.PENDING_APPROVEMENT,
+            },
+            include: {
+                user: true,
+            },
+        })
+    }
 }

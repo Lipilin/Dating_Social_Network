@@ -1,4 +1,4 @@
-import type { CreatePostRequest, CreatePostResponse, Post as PostResource, PostRequest } from './types'
+import type { CreatePostRequest, CreatePostResponse, Post as PostResource, PostRequest, UpdatePostResponse } from './types'
 import { API_SETTINGS } from '@/config/General'
 import axios from 'axios'
 
@@ -24,6 +24,22 @@ export class Post{
             const response = await axios.post<CreatePostResponse>(
                 `${API_SETTINGS.API_HOST}${API_SETTINGS.ENDPOINTS.POST.CREATE}`,
                 request,
+                {
+                    withCredentials: true,
+                },
+            )
+            return response.data
+        } catch (error) {
+            console.error(error)
+            throw error
+        }
+    }
+
+    async updatePost(id: number, request: CreatePostRequest): Promise<UpdatePostResponse> {
+        try {
+            const response = await axios.patch<UpdatePostResponse>(
+                `${API_SETTINGS.API_HOST}${API_SETTINGS.ENDPOINTS.POST.UPDATE}`,
+                { id, ...request },
                 {
                     withCredentials: true,
                 },

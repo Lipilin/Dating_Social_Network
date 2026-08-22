@@ -172,6 +172,14 @@ export interface CreatePostResponse{
     message: string
 }
 
+export interface UpdatePostRequest extends CreatePostRequest {
+    id: number
+}
+
+export interface UpdatePostResponse{
+    message: string
+}
+
 export interface AnnouncementCreateRequest extends PostRequest{
     title: string
     departure: string
@@ -186,6 +194,14 @@ export interface AnnouncementCreateRequest extends PostRequest{
 }
 
 export interface AnnouncementCreateResponse{
+    message: string
+}
+
+export interface AnnouncementUpdateRequest extends AnnouncementCreateRequest {
+    id: number
+}
+
+export interface AnnouncementUpdateResponse{
     message: string
 }
 

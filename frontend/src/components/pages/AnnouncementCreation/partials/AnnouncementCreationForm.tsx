@@ -16,6 +16,8 @@ interface AnnouncementCreationFormProps {
     categories: CategoryWithInterestResource[]
     error?: string | null
     successMessage?: string | null
+    title?: string
+    submitButtonText?: string
 }
 
 export function AnnouncementCreationForm({
@@ -25,6 +27,8 @@ export function AnnouncementCreationForm({
     categories,
     error,
     successMessage,
+    title = 'Создание Объявления',
+    submitButtonText = 'Создать объявление',
 }: AnnouncementCreationFormProps) {
     const [activeSection, setActiveSection] = useState<ActiveSection>('main')
 
@@ -32,7 +36,7 @@ export function AnnouncementCreationForm({
         <div className={styles.announcementCreationFormContainer}>
             <div className={styles.announcementCreationFormWrapper}>
                 <div className={styles.announcementCreationFormHeader}>
-                    <h2 className="section__title">Создание Объявления</h2>
+                    <h2 className="section__title">{title}</h2>
                     <AnnouncementCreationToggler
                         activeSection={activeSection}
                         setActiveSection={setActiveSection}
@@ -60,7 +64,7 @@ export function AnnouncementCreationForm({
                     )}
                     <DefaultButton
                         onSend={onSend}
-                        content="Создать объявление"
+                        content={submitButtonText}
                         classNames="need-registration__button"
                     />
                 </div>

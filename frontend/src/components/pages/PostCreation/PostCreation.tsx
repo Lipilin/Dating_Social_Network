@@ -1,12 +1,10 @@
 import { useCallback, useContext, useState } from 'react'
 import { ProfileContext } from '@/utils/context/ProfileContext'
 import { Loader } from '@/components/pages/Loader/Loader'
-import styles from './PostCreation.module.css'
 import { PostCreationForm } from './partials/PostCreationForm'
 import type { CreatePostRequest } from '@/utils/api/types'
 import { Post } from '@/utils/api/Post'
 import { useError } from '@/hooks/useError'
-import { Message } from '@/components/ui/messages/Message'
 import { NeedRegistration } from '../Errors/NeedRegistration'
 
 const postProvider = new Post()
@@ -42,21 +40,15 @@ export function PostCreation(){
         }
     }, [userProvider, post, clearError, handleError, isSubmitting])
 
-    
     if(isLoading || isSubmitting) return <Loader isLoading={true} />
     if(user == null ) return <NeedRegistration />
     return (
-        <div className = { styles.postCreationWrapper }>
-            <h2 className = "section__title">Создание Публикации</h2>
-            <PostCreationForm onSend={onSend} post={post} setPost={setPost} />
-            {(error || successMessage) && (
-                <div className={styles.feedbackMessage}>
-                    <Message
-                        message={error ?? successMessage!}
-                        type={error ? 'error' : 'success'}
-                    />
-                </div>
-            )}
-        </div>
+        <PostCreationForm
+            onSend={onSend}
+            post={post}
+            setPost={setPost}
+            error={error}
+            successMessage={successMessage}
+        />
     )
 }
