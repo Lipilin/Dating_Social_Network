@@ -6,6 +6,7 @@ import { AnnouncementCreateSchema, getValidationErrorMessage } from "@/utils/val
 import type { AnnouncementCreateRequest } from "@boltaem/common/type.js"
 import { Prisma } from "@prisma/client"
 import { GenderPreference } from "@prisma/client"
+import { fromAnnouncementToResource } from '@/utils/mapping/announcement.mapper.js'
 
 export class AnnouncementController{
     #annoucementProvider: AnnouncementService 
@@ -41,7 +42,7 @@ export class AnnouncementController{
 
         try{
             const entites = await this.#annoucementProvider.getAnnouncements(take, skip, clauses, interestsId)
-            response.status(API_RESPONSE.OK).json(entites)
+            response.status(API_RESPONSE.OK).json(entites.map(fromAnnouncementToResource))
         }catch(error){
             response.status(API_RESPONSE.ERROR).json({
                 message: (error as Error).message,
@@ -58,7 +59,10 @@ export class AnnouncementController{
 
         try{
             const entity = await this.#annoucementProvider.getAnnouncementById(numericId)
-            response.status(API_RESPONSE.OK).json(entity)
+            if (!entity) {
+                return response.status(API_RESPONSE.OK).json(null)
+            }
+            response.status(API_RESPONSE.OK).json(fromAnnouncementToResource(entity))
         }catch(error){
             response.status(API_RESPONSE.ERROR).json({
                 message: (error as Error).message,

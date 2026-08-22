@@ -1,4 +1,5 @@
-import type { UserLoginResponse, UserResource, GENDER_PREFERENCE, GENDER } from '@boltaem/common/type.js'
+import { fromAnnouncementToResource } from '../mapping/announcement.mapper.js'
+import type { UserLoginResponse, UserResource, GENDER } from '@boltaem/common/type.js'
 import { Prisma } from '@prisma/client'
 import type { User } from '@prisma/client'
 import { SignJWT } from 'jose'
@@ -52,21 +53,9 @@ export async function fromUserToUserResponse(user: UserWithRelations): Promise<U
         updatedAt: user.updatedAt,
         gender: gender,
         city: city,
-        announcements: user.announcements.map((announcement) => {
-            return {
-                id: announcement.id,
-                title: announcement.title ?? '',
-                userAge: user.age,
-                genderInterest: announcement.genderInterest as GENDER_PREFERENCE,        
-                description: announcement.description ?? '',
-                dateFrom: announcement.dateFrom.toISOString(),
-                dateTo: announcement.dateTo.toISOString(),
-                destination: announcement.destination ?? '',
-                departure: announcement.departure ?? '',
-                icon: announcement.icon ?? '',
-                createdAt: announcement.createdAt.toISOString(),
-            }
-        }),
+        announcements: user.announcements.map((announcement) =>
+            fromAnnouncementToResource({ ...announcement, user }),
+        ),
         posts: user.posts.map((post) => {
             let tags: string[] = []
             try{

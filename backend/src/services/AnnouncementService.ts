@@ -1,11 +1,12 @@
+import type { AnnouncementWithRelations } from '@/utils/mapping/announcement.mapper.js'
 import { ANNOUNCEMENT_ERROR_MESSAGE } from "@/config/announcementMessages.js"
 import { prisma } from "@/prisma.js"
 import type { AnnouncementCreateRequest } from "@boltaem/common/type.js"
-import type { Announcement, Prisma } from '@prisma/client'
+import type { Prisma } from '@prisma/client'
 import { GenderPreference, UserContentStatus, UserStatus } from '@prisma/client'
 
 export class AnnouncementService{
-    async getAnnouncements(take: number, skip: number, clauses: Prisma.AnnouncementWhereInput, interestsId: number[]): Promise<Announcement[]>{
+    async getAnnouncements(take: number, skip: number, clauses: Prisma.AnnouncementWhereInput, interestsId: number[]): Promise<AnnouncementWithRelations[]>{
         if(interestsId.length > 0) {
             clauses.interests = {
                 some: {
@@ -33,7 +34,7 @@ export class AnnouncementService{
         return response
     }
 
-    async getAnnouncementById(id: number): Promise<Announcement | null>{
+    async getAnnouncementById(id: number): Promise<AnnouncementWithRelations | null>{
         const response = await prisma.announcement.findUnique({
             where: {
                 id: id,
@@ -53,7 +54,7 @@ export class AnnouncementService{
         return response
     }
 
-    async createAnnouncement(userId: number, data: AnnouncementCreateRequest): Promise<Announcement> {
+    async createAnnouncement(userId: number, data: AnnouncementCreateRequest): Promise<AnnouncementWithRelations> {
         const user = await prisma.user.findUnique({
             where: {
                 id: userId,
@@ -92,7 +93,7 @@ export class AnnouncementService{
         })
     }
 
-    async updateAnnouncement(userId: number, id: number, data: AnnouncementCreateRequest): Promise<Announcement> {
+    async updateAnnouncement(userId: number, id: number, data: AnnouncementCreateRequest): Promise<AnnouncementWithRelations> {
         const announcement = await prisma.announcement.findUnique({
             where: { id },
         })
