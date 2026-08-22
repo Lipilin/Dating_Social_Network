@@ -6,14 +6,20 @@ import { Announcement } from './Announcement'
 import { ContentItemActions } from './ContentItemActions'
 import { ProfileSectionEmpty } from './ProfileSectionEmpty'
 import type { Profile } from '../utils/types'
+import type { AnnouncementResource } from '@/utils/api/types'
+import type { NavigateOptions } from 'react-router'
 
 export function AnouncementBlock({ user }: { user: Profile }) {
     const { user: currentUser } = useContext(ProfileContext)
     const navigate = useNavigate()
     const isOwnProfile = currentUser?.id === user.id
 
-    const editAnnouncement = useCallback((id: number) => {
-        navigate(ROUTES.ANNOUNCEMENT_EDIT.URL.replace(':id', String(id)))
+    const editAnnouncement = useCallback((announcement: AnnouncementResource) => {
+        navigate(ROUTES.ANNOUNCEMENT_EDIT.URL.replace(':id', String(announcement.id)), {
+            state: {
+                announcement: announcement
+            }
+        })
     }, [navigate])
 
     if (!user.announcements || user.announcements.length === 0) {
@@ -34,7 +40,7 @@ export function AnouncementBlock({ user }: { user: Profile }) {
                     {...announcement}
                     actions={
                         user.isCurrentProfile ? (
-                            <ContentItemActions onEdit={() => editAnnouncement(announcement.id)} />
+                            <ContentItemActions onEdit={() => editAnnouncement(announcement)} />
                         ) : null
                     }
                 />

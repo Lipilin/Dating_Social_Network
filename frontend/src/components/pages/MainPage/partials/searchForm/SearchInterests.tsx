@@ -1,5 +1,5 @@
 import type { CategoryWithInterestResource, InterestResource } from '@/utils/api/types'
-import { DefaultDropdown, type Label } from '@/components/ui/dropdowns/DefaultDropdown'
+import { DefaultDropdown } from '@/components/ui/dropdowns/DefaultDropdown'
 import { useMemo } from 'react'
 
 interface SearchInterestsProps{

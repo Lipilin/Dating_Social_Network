@@ -3,6 +3,7 @@ import type { UserLoginResponse, UserResource } from '../api/types'
 import { useEffect, useState, useMemo } from 'react'
 import { ProfileContext } from './ProfileContext'
 import type { ProfileContextIntreface } from './ProfileContext'
+import axios from 'axios'
 
 interface ProfileProviderProps{
     children: React.ReactNode, 
@@ -17,8 +18,14 @@ export function ProfileProvider({children, onAuthModalOpen}: ProfileProviderProp
     useEffect(() => {
         userProvider.withRefreshing<UserLoginResponse>(async () => {
             return await userProvider.getMe()
-        }).then((response: UserLoginResponse) => setUser(response.user))
-        .finally(() => setIsLoading(false))
+        })
+        .then((response: UserLoginResponse) => {
+            setUser(response.user)
+            setIsLoading(false)
+        }).catch((err) => {
+            if(axios.isCancel(err)) return
+            setIsLoading(false)
+        })
     }, [])
 
     const context: ProfileContextIntreface = useMemo(() => ({
