@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { useParams, useLocation } from 'react-router'
+import { useParams } from 'react-router'
 import { NeedRegistration } from '@/components/pages/Errors/NeedRegistration'
 import { ProfileContext } from '@/utils/context/ProfileContext'
 import { Loader } from '@/components/pages/Loader/Loader'
@@ -29,7 +29,6 @@ async function fetchPost(id: number) {
 
 export function PostEdit() {
     const { id } = useParams()
-    const { state } = useLocation()
     const { user, userProvider, isLoading } = useContext(ProfileContext)
     const { error, handleError, clearError } = useError()
     const [post, setPost] = useState<PostResource | null>(null)
@@ -39,18 +38,14 @@ export function PostEdit() {
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     useEffect(() => {
-        if (state?.post != null) {
-            setPost(state.post)
-        } else {
-            async function getPost() {
-                const post = await fetchPost(Number(id))
-                setPost(post)
-            }
-            getPost().catch(() => {
-                setHasError(true)
-            })
+        async function getPost() {
+            const post = await fetchPost(Number(id))
+            setPost(post)
         }
-    }, [id, state])
+        getPost().catch(() => {
+            setHasError(true)
+        })
+    }, [id])
 
     useEffect(() => {
         if (post != null) {

@@ -7,7 +7,6 @@ import { ContentItemActions } from './ContentItemActions'
 import { ProfileSectionEmpty } from './ProfileSectionEmpty'
 import type { Profile } from '../utils/types'
 import type { AnnouncementResource } from '@/utils/api/types'
-import type { NavigateOptions } from 'react-router'
 
 export function AnouncementBlock({ user }: { user: Profile }) {
     const { user: currentUser } = useContext(ProfileContext)
@@ -15,11 +14,7 @@ export function AnouncementBlock({ user }: { user: Profile }) {
     const isOwnProfile = currentUser?.id === user.id
 
     const editAnnouncement = useCallback((announcement: AnnouncementResource) => {
-        navigate(ROUTES.ANNOUNCEMENT_EDIT.URL.replace(':id', String(announcement.id)), {
-            state: {
-                announcement: announcement
-            }
-        })
+        navigate(ROUTES.ANNOUNCEMENT_EDIT.URL.replace(':id', String(announcement.id)))
     }, [navigate])
 
     if (!user.announcements || user.announcements.length === 0) {

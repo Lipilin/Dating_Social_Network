@@ -4,7 +4,6 @@ import { NeedRegistration } from '@/components/pages/Errors/NeedRegistration'
 import { ProfileContext } from '@/utils/context/ProfileContext'
 import { CategoryContext } from '@/utils/context/CategoryContext'
 import { Loader } from '@/components/pages/Loader/Loader'
-import { useLocation } from 'react-router'
 import { Announcement } from '@/utils/api/Announcement'
 import { NotFound } from '../Errors/NotFound'
 import type { AnnouncementCreateRequest, AnnouncementResource } from '@/utils/api/types'
@@ -21,7 +20,7 @@ function toAnnouncementFormData(announcement: AnnouncementResource): Announcemen
         dateFrom: announcement.dateFrom.split('T')[0],
         dateTo: announcement.dateTo.split('T')[0],
         genderPreference: announcement.genderInterest,
-        userAge: announcement.userAge,
+        userAge: announcement.userAge ?? announcement.user?.age ?? 18,
         description: announcement.description,
         icon: announcement.icon ?? '',
         interests: announcement.interests ?? [],
@@ -37,7 +36,6 @@ async function fetchAnnouncement(id: number) {
 
 export function AnnouncementEdit() {
     const { id } = useParams()
-    const { state } = useLocation()
     const { user, userProvider, isLoading } = useContext(ProfileContext)
     const { categories } = useContext(CategoryContext)
     const { error, handleError, clearError } = useError()
@@ -48,19 +46,14 @@ export function AnnouncementEdit() {
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     useEffect(() => {
-        if(state?.announcement != null){
-            setAnnouncement(state.announcement)
+        async function getAnnouncement() {
+            const announcement = await fetchAnnouncement(Number(id))
+            setAnnouncement(announcement)
         }
-        else {
-            async function getAnnouncement() {
-                const announcement = await fetchAnnouncement(Number(id))
-                setAnnouncement(announcement)
-            }
-            getAnnouncement().catch(() => {
-                setHasError(true)
-            })
-        }
-    }, [id, state])
+        getAnnouncement().catch(() => {
+            setHasError(true)
+        })
+    }, [id])
 
     useEffect(() => {
         if (announcement != null) {

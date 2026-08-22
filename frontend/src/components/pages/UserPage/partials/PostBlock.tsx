@@ -14,11 +14,7 @@ export function PostBlock({ user }: { user: Profile }) {
     const isOwnProfile = currentUser?.id === user.id
 
     const editPost = useCallback((post: PostResource) => {
-        navigate(ROUTES.POST_EDIT.URL.replace(':id', String(post.id)), {
-            state: {
-                post: post,
-            },
-        })
+        navigate(ROUTES.POST_EDIT.URL.replace(':id', String(post.id)))
     }, [navigate])
 
     if (!user?.posts || user?.posts?.length === 0) {
