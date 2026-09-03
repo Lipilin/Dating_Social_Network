@@ -36,16 +36,16 @@
     height: 36px;
     padding: 0;
     border: none;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 1px 4px rgba(94, 92, 154, 0.12);
+    border-radius: var(--radius-base);
+    background: var(--color-white-alpha-95);
+    box-shadow: var(--shadow-button);
     cursor: pointer;
     transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .button:hover {
-    background: #f6f8ff;
-    box-shadow: 0 2px 8px rgba(94, 92, 154, 0.16);
+    background: var(--color-primary-soft);
+    box-shadow: var(--shadow-button-hover);
 }
 
 .button img {
@@ -80,6 +80,6 @@
     .button {
         width: 30px;
         height: 30px;
-        border-radius: 6px;
+        border-radius: var(--radius-sm);
     }
 }

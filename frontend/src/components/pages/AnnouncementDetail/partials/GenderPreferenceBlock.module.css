@@ -6,12 +6,12 @@
     margin-top: 16px;
     margin-bottom: 12px;
     padding: 12px 16px 12px 12px;
-    border-radius: 8px;
-    background: rgba(0, 65, 242, 0.07);
-    box-shadow: 0 0 40px 0 rgba(94, 92, 154, 0.06);
-    color: #53565e;
-    font-family: Gilroy, sans-serif;
-    font-size: 15px;
+    border-radius: var(--radius-base);
+    background: var(--color-primary-alpha-07);
+    box-shadow: var(--shadow-card);
+    color: var(--color-text-subtle);
+    font-family: var(--font-heading);
+    font-size: var(--font-size-base);
     font-weight: 500;
     line-height: 100%;
 }
@@ -25,7 +25,7 @@
     height: 19px;
     border-radius: 50%;
     overflow: hidden;
-    background-color: #0041f2;
+    background-color: var(--color-primary);
 }
 
 .icon img {
@@ -39,15 +39,15 @@
 }
 
 .male .icon {
-    background-color: #0041f2;
+    background-color: var(--color-primary);
 }
 
 .female .icon {
-    background-color: #eb0d6f;
+    background-color: var(--color-accent-pink);
 }
 
 .anybody .icon {
-    background-color: #b445a8;
+    background-color: var(--color-accent-purple);
 }
 
 @media (max-width: 768px) {

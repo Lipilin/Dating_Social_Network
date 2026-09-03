@@ -1,13 +1,13 @@
 .postDetailContent{
-    background-color: #fff;
-    border-radius: 8px;
+    background-color: var(--color-bg-white);
+    border-radius: var(--radius-base);
     padding: 48px 56px;
 }
 
 .postDetailContainer{
     margin: 0 auto;
     padding: 40px 0 60px;
-    max-width: 1406px;
+    max-width: var(--container-max-width);
     width: 100%;
 }
 
@@ -18,30 +18,30 @@
 }
 
 .postDetailTitle{
-    color: #001346;
-    font-family: Gilroy, sans-serif;
-    font-size: 32px;
+    color: var(--color-text-primary);
+    font-family: var(--font-heading);
+    font-size: var(--font-size-9xl);
     font-weight: 600;
     line-height: 120%;
     margin: 0 0 28px;
 }
 
 .postDetailAuthor{
-    color: rgba(32, 33, 46, 0.8);
-    font-family: "TT Commons", sans-serif;
-    font-size: 17px;
+    color: var(--color-text-body-alpha-80);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-xl);
     font-weight: 500;
 }
 
 .postDetailDate{
-    color: rgba(32, 33, 46, 0.6);
-    font-family: "TT Commons", sans-serif;
-    font-size: 15px;
+    color: var(--color-text-body-alpha-60);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
     margin-bottom: 32px;
 }
 
 .postDetailValue{
-    color: rgba(32, 33, 46, 0.85);
+    color: var(--color-text-body-alpha-85);
     font-weight: 500;
 }
 
@@ -52,14 +52,14 @@
 }
 
 .tag{
-    background: rgba(0, 65, 242, 0.07);
-    color: #53565E;
-    font-family: "TT Commons";
-    font-size: 14px;
+    background: var(--color-primary-alpha-07);
+    color: var(--color-text-subtle);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-md);
     font-style: normal;
     font-weight: 400;
     line-height: 100%;
-    border-radius: 8px;
+    border-radius: var(--radius-base);
     padding: 9px 12px 8px 12px;
 }
 
@@ -69,22 +69,22 @@
     justify-content: space-between;
     gap: 24px;
     padding: 28px 32px;
-    border-radius: 8px;
-    background: rgba(0, 65, 242, 0.06);
-    border: 1px solid rgba(0, 65, 242, 0.1);
+    border-radius: var(--radius-base);
+    background: var(--color-primary-alpha-06);
+    border: 1px solid var(--color-primary-alpha-10);
 }
 
 .authorCtaText {
     margin: 0;
-    color: rgba(32, 33, 46, 0.8);
-    font-family: "TT Commons", sans-serif;
-    font-size: 17px;
+    color: var(--color-text-body-alpha-80);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-xl);
     font-weight: 400;
     line-height: 140%;
 }
 
 .authorCtaName {
-    color: #001346;
+    color: var(--color-text-primary);
     font-weight: 600;
 }
 
@@ -94,11 +94,11 @@
     gap: 8px;
     flex-shrink: 0;
     padding: 12px 20px;
-    border-radius: 7px;
-    background: rgba(0, 65, 242, 0.13);
-    color: #0041f2;
-    font-family: "TT Commons", sans-serif;
-    font-size: 16px;
+    border-radius: var(--radius-md);
+    background: var(--color-primary-alpha-13);
+    color: var(--color-primary);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-lg);
     font-weight: 600;
     line-height: normal;
     text-decoration: none;
@@ -110,7 +110,7 @@
 }
 
 .authorCtaLink:hover {
-    background: rgba(0, 65, 242, 0.2);
+    background: var(--color-primary-alpha-20);
     transform: translateY(-1px);
 }
 

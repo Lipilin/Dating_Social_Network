@@ -6,9 +6,9 @@
 }
 
 .label {
-    color: #001346;
-    font-family: "Gilroy", sans-serif;
-    font-size: 17px;
+    color: var(--color-text-primary);
+    font-family: var(--font-heading);
+    font-size: var(--font-size-xl);
     font-weight: 600;
     line-height: 100%;
 }
@@ -24,9 +24,9 @@
     align-items: center;
     gap: 10px;
     padding: 10px 16px 10px 12px;
-    border: 1px solid #E0E0E0;
-    border-radius: 8px;
-    background: #FFFFFF;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-base);
+    background: var(--color-bg-white);
     cursor: pointer;
     transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
     user-select: none;
@@ -39,13 +39,13 @@
 }
 
 .option:hover {
-    border-color: #0041F2;
+    border-color: var(--color-primary);
 }
 
 .option.active {
-    border-color: #0041F2;
-    background: rgba(0, 65, 242, 0.07);
-    box-shadow: 0 0 0 1px rgba(0, 65, 242, 0.15);
+    border-color: var(--color-primary);
+    background: var(--color-primary-alpha-07);
+    box-shadow: 0 0 0 1px var(--color-primary-alpha-15);
 }
 
 .icon {
@@ -66,27 +66,27 @@
 }
 
 .text {
-    color: #53565e;
-    font-family: "Gilroy", sans-serif;
-    font-size: 15px;
+    color: var(--color-text-subtle);
+    font-family: var(--font-heading);
+    font-size: var(--font-size-base);
     font-weight: 500;
     line-height: 100%;
 }
 
 .option.active .text {
-    color: #001346;
+    color: var(--color-text-primary);
 }
 
 .male .icon {
-    background-color: #0041f2;
+    background-color: var(--color-primary);
 }
 
 .female .icon {
-    background-color: #eb0d6f;
+    background-color: var(--color-accent-pink);
 }
 
 .anybody .icon {
-    background-color: #b445a8;
+    background-color: var(--color-accent-purple);
 }
 
 @media (max-width: 480px) {

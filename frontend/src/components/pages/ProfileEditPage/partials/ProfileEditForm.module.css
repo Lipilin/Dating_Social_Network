@@ -1,11 +1,11 @@
 .profileEditFormContainer{
     height: 100hv;
-    background: #FFFFFF;
-    max-width: 1408px;
+    background: var(--color-bg-white);
+    max-width: var(--container-max-width-wide);
     width: 100%;
     margin: auto;
     border-radius: 0 0 8px 8px;
-    box-shadow: 1px 1px 4px 0px rgba(94, 92, 154, 0.06);
+    box-shadow: var(--shadow-input);
 }
 
 .profileEditFormWrapper{
@@ -33,24 +33,24 @@
 .profileEditFormContent input:not(:placeholder-shown) ~ label, .inputWrapper:focus-within label{
     top: 0px;
     left: 6px;
-    background: #FFFFFF;
+    background: var(--color-bg-white);
     padding: 0 4px;
     opacity: 1;
     z-index: 3;
     line-height: 1;
-    box-shadow: 0 0 0 2px #FFFFFF;
+    box-shadow: 0 0 0 2px var(--color-bg-white);
 }
 
 .inputWrapper:focus-within{
-    border: 1px solid #0041F2;
+    border: 1px solid var(--color-primary);
 }
 
 .inputWrapper{
     position: relative;
-    border: 1px solid #E0E0E0;
+    border: 1px solid var(--color-border-light);
     padding: 0 10px;
     height: 45px;
-    border-radius: 8px;
+    border-radius: var(--radius-base);
 }
 
 .inputWrapper label{
@@ -60,8 +60,8 @@
     display: inline-block;
     z-index: 2;
     pointer-events: none;
-    color: #6D727E;
-    font-size: 17px;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xl);
     font-style: normal;
     font-weight: 400;
     top: 50%;
@@ -71,15 +71,15 @@
 }
 
 .textareaWrapper:focus-within{
-    border: 1px solid #0041F2;
+    border: 1px solid var(--color-primary);
 }
 
 .textareaWrapper{
     position: relative;
-    border: 1px solid #E0E0E0;
+    border: 1px solid var(--color-border-light);
     padding: 0 10px;
     min-height: 120px;
-    border-radius: 8px;
+    border-radius: var(--radius-base);
     width: 50%;
 }
 
@@ -93,18 +93,18 @@
     border: none;
     padding-top: 20px;
     font-family: inherit;
-    font-size: 17px;
+    font-size: var(--font-size-xl);
 }
 
 .textareaWrapper textarea:not(:placeholder-shown) ~ label, .textareaWrapper:focus-within label{
     top: 0px;
     left: 6px;
-    background: #FFFFFF;
+    background: var(--color-bg-white);
     padding: 0 4px;
     opacity: 1;
     z-index: 3;
     line-height: 1;
-    box-shadow: 0 0 0 2px #FFFFFF;
+    box-shadow: 0 0 0 2px var(--color-bg-white);
 }
 
 .textareaWrapper label{
@@ -114,8 +114,8 @@
     display: inline-block;
     z-index: 2;
     pointer-events: none;
-    color: #6D727E;
-    font-size: 17px;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xl);
     font-style: normal;
     font-weight: 400;
     top: 50%;
@@ -140,7 +140,7 @@
 
 .profileEditInterests :global(.interest__item){
     padding-top: 21px;
-    border-top: 1px solid #E6E7E9;
+    border-top: 1px solid var(--color-border);
     padding-bottom: 26px;
 }
 
@@ -153,9 +153,9 @@
     display: flex;
     gap: 10px;
     align-items: center;
-    color: #001346;
-    font-family: "Gilroy";
-    font-size: 17px;
+    color: var(--color-text-primary);
+    font-family: var(--font-heading);
+    font-size: var(--font-size-xl);
     font-style: normal;
     font-weight: 600;
     line-height: 100%;
@@ -210,15 +210,15 @@
 
 .profileEditInterests :global(.interest__item-body label span),
 .profileEditCountries label span{
-    border-radius: 7px;
-    background: #F0F0F2;
+    border-radius: var(--radius-md);
+    background: var(--color-bg-secondary);
     display: flex;
     padding: 11px 14px 7px 15px;
     justify-content: center;
     align-items: center;
-    color: rgba(32, 33, 46, 0.8);
-    font-family: "TT Commons";
-    font-size: 14px;
+    color: var(--color-text-body-alpha-80);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-md);
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -228,8 +228,8 @@
 
 .profileEditInterests :global(.interest__item-body label input:checked ~ span),
 .profileEditCountries label input:checked ~ span{
-    background: #0041F2;
-    color: #fff;
+    background: var(--color-primary);
+    color: var(--color-text-on-primary);
     padding-right: 36px;
 }
 
@@ -269,9 +269,9 @@
 
 .chooseSection span{
     position: relative;
-    color: #00195B;
-    font-family: "TT Commons";
-    font-size: 16px;
+    color: var(--color-text-secondary);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-lg);
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -280,7 +280,7 @@
 
 .chooseSection span::after{
     content: "";
-    border-bottom: 2px solid #0041F2;
+    border-bottom: 2px solid var(--color-primary);
     width: 0;
     position: absolute;
     left: 0;

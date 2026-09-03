@@ -1,7 +1,6 @@
 import { fromAnnouncementToResource } from '../mapping/announcement.mapper.js'
 import type { UserLoginResponse, UserResource, GENDER } from '@boltaem/common/type.js'
 import { Prisma } from '@prisma/client'
-import type { User } from '@prisma/client'
 import { SignJWT } from 'jose'
 import { encodedAccessSecret, encodedRefreshSecret } from '../other/authSecret.js'
 import {

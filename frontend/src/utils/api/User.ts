@@ -110,7 +110,8 @@ export class User{
             )
             return response.data
         } catch (error) {
-            throw new Error(getApiErrorMessage(error))
+            console.error(error)
+            throw error
         }
     }
 }

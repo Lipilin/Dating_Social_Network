@@ -1,18 +1,18 @@
 .message {
     padding: 12px 16px;
-    border-radius: 8px;
-    font-size: 15px;
-    line-height: 140%;
+    border-radius: var(--radius-base);
+    font-size: var(--font-size-base);
+    line-height: 1.4;
 }
 
 .success {
-    color: #1B5E20;
-    background: #E8F5E9;
-    border: 1px solid #A5D6A7;
+    color: var(--color-message-success-text);
+    background: var(--color-message-success-bg);
+    border: 1px solid var(--color-message-success-border);
 }
 
 .error {
-    color: #B71C1C;
-    background: #FFEBEE;
-    border: 1px solid #EF9A9A;
+    color: var(--color-message-error-text);
+    background: var(--color-message-error-bg);
+    border: 1px solid var(--color-message-error-border);
 }

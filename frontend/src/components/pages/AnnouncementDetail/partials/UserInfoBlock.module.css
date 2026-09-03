@@ -1,9 +1,9 @@
 .block {
     flex: 0 0 320px;
     width: 320px;
-    border-radius: 8px;
-    background: #fff;
-    box-shadow: 1px 1px 4px 0 rgba(94, 92, 154, 0.06);
+    border-radius: var(--radius-base);
+    background: var(--color-bg-white);
+    box-shadow: var(--shadow-input);
     padding: 32px 28px;
     display: flex;
     flex-direction: column;
@@ -29,9 +29,9 @@
 
 .name {
     display: inline-block;
-    color: #001346;
-    font-family: Gilroy, sans-serif;
-    font-size: 22px;
+    color: var(--color-text-primary);
+    font-family: var(--font-heading);
+    font-size: var(--font-size-4xl);
     font-weight: 600;
     line-height: 120%;
     text-decoration: none;
@@ -40,13 +40,13 @@
 }
 
 .name:hover {
-    color: #0041f2;
+    color: var(--color-primary);
 }
 
 .meta {
-    color: rgba(32, 33, 46, 0.75);
-    font-family: "TT Commons", sans-serif;
-    font-size: 16px;
+    color: var(--color-text-body-alpha-75);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-lg);
     font-weight: 400;
     line-height: 140%;
     margin-bottom: 4px;
@@ -54,14 +54,14 @@
 
 .lastSeen {
     margin-top: 12px;
-    color: rgba(32, 33, 46, 0.55);
-    font-family: "TT Commons", sans-serif;
-    font-size: 14px;
+    color: var(--color-text-body-alpha-55);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-md);
     line-height: 140%;
 }
 
 .lastSeen span {
-    color: rgba(32, 33, 46, 0.75);
+    color: var(--color-text-body-alpha-75);
 }
 
 .profileLink {
@@ -70,18 +70,18 @@
     justify-content: center;
     width: 100%;
     padding: 12px 20px;
-    border-radius: 7px;
-    background: rgba(0, 65, 242, 0.13);
-    color: #0041f2;
-    font-family: "TT Commons", sans-serif;
-    font-size: 16px;
+    border-radius: var(--radius-md);
+    background: var(--color-primary-alpha-13);
+    color: var(--color-primary);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-lg);
     font-weight: 600;
     text-decoration: none;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .profileLink:hover {
-    background: rgba(0, 65, 242, 0.2);
+    background: var(--color-primary-alpha-20);
     transform: translateY(-1px);
 }
 
@@ -104,6 +104,6 @@
     }
 
     .name {
-        font-size: 20px;
+        font-size: var(--font-size-3xl);
     }
 }

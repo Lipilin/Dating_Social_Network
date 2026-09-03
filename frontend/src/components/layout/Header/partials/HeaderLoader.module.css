@@ -5,8 +5,8 @@
     min-width: 180px;
     min-height: 44px;
     padding: 4px 12px;
-    border-radius: 12px;
-    background: rgba(0, 65, 242, 0.06);
+    border-radius: var(--radius-lg);
+    background: var(--color-primary-alpha-06);
 }
 
 .icon {
@@ -51,8 +51,8 @@
 }
 
 @keyframes headerLoaderGlow {
-    0%, 100% { filter: drop-shadow(0 0 0 rgba(0, 65, 242, 0)); }
-    50%      { filter: drop-shadow(0 0 6px rgba(0, 65, 242, 0.35)); }
+    0%, 100% { filter: drop-shadow(0 0 0 var(--color-primary-alpha-00)); }
+    50%      { filter: drop-shadow(0 0 6px var(--color-primary-alpha-35)); }
 }
 
 @keyframes headerLoaderArcPulse {
