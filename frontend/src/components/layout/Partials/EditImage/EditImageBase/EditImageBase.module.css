@@ -1,0 +1,71 @@
+.editImageBase{
+    width: 100%;
+}
+
+.editImageBase__body{
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+}
+
+.editImageBase__placeholder{
+    width: 100%;
+    overflow: hidden;
+}
+
+.editImageBase__placeholder__icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    border: 2px dashed #ccc;
+    transition: border-color 0.2s ease;
+}
+
+.editImageBase__placeholder__plus{
+    display: block;
+    width: 32px;
+    height: 32px;
+    background-color: #ccc;
+    -webkit-mask-image: url('../../../../../assets/images/add-plus.svg');
+    mask-image: url('../../../../../assets/images/add-plus.svg');
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    transition: background-color 0.2s ease;
+}
+
+.editImageBase__placeholder__icon:hover{
+    border-color: var(--color-primary-hover);
+}
+
+.editImageBase__placeholder__icon:hover .editImageBase__placeholder__plus{
+    background-color: var(--color-primary);
+}
+
+.editImageBase__input{
+    display: none;
+}
+
+.editImageBase__placeholder__image{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.editImageBase__rules{
+    margin: 8px 0 0;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: var(--font-primary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.4;
+    color: var(--color-text-muted);
+}

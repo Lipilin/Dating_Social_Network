@@ -1,35 +1,14 @@
-import styles from './EditBanner.module.scss'
+import styles from './EditBanner.module.css'
+import { EditImageBase } from '../EditImageBase/EditImageBase'
+import type { EditImageProps } from '../types'
 
-
-interface EditBannerProps{
-    image: File | null
-    rules: string
-    onChange: (image: File | null) => void
-}
-
-export function EditBanner({ image, rules, onChange }: EditBannerProps){
+export function EditBanner(props: EditImageProps) {
     return (
-        <div className = {styles.editBanner}>
-            <div className = { styles.editBanner__placeholder }>
-                {
-                    image ? (
-                        <img src = { URL.createObjectURL(image) } alt = "Banner" />
-                    ) : (
-                        <div className = { styles.editBanner__placeholder__icon }>
-                            Картинка не загружена
-                        </div>
-                    )
-                }
-            </div>
-            <div className = { styles.editBanner__input }>
-                <input type = "file"
-                    accept = "image/*"
-                    onChange = { (e) => onChange(e.target.files?.[0] as File || null) }
-                />
-            </div>
-            <div className = { styles.editBanner__rules }>
-                {rules}
-            </div>
-        </div>
+        <EditImageBase
+            {...props}
+            className={styles.editBanner}
+            placeholderClassName={styles.editBanner__placeholder}
+            alt="Баннер"
+        />
     )
 }

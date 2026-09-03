@@ -1,0 +1,7 @@
+.editAvatar{
+    width: 250px;
+}
+
+.editAvatar__placeholder{
+    aspect-ratio: 1 / 1;
+}
