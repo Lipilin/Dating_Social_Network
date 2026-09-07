@@ -1,8 +1,9 @@
 import { fromAnnouncementToResource } from '../mapping/announcement.mapper.js'
-import type { UserLoginResponse, UserResource, GENDER } from '@boltaem/common/type.js'
+import type { UserLoginResponse, UserResource, UserUpdatedRequest, GENDER } from '@boltaem/common/type.js'
 import { Prisma } from '@prisma/client'
 import { SignJWT } from 'jose'
 import { encodedAccessSecret, encodedRefreshSecret } from '../other/authSecret.js'
+import { PHOTOS_BASE_URL } from '@/config/photosConfig.js'
 import {
     ACCESS_TOKEN_EXPIRATION_TIME,
     JWT_ALGORITHM,
@@ -91,6 +92,25 @@ export async function fromUserToUserResponse(user: UserWithRelations): Promise<U
     return response
 }
 
+export type UserMultipartBody = UserUpdatedRequest & {
+    avatarFile?: string
+    bannerFile?: string
+}
+
+export function fromUserUpdatedRequestToUserResource(body: UserMultipartBody): UserResource {
+    const user: UserResource = { ...body.updatedUser }
+
+    if (body.avatarFile) {
+        user.avatar = `${PHOTOS_BASE_URL}/${body.avatarFile}`
+    }
+
+    if (body.bannerFile) {
+        user.banner = `${PHOTOS_BASE_URL}/${body.bannerFile}`
+    }
+
+    return user
+}
+
 export function fromUserResourceToUserUpdateInput(user: UserResource): Prisma.UserUpdateInput{
     const userUpdateInput: Prisma.UserUpdateInput = {
         name: user.name,
@@ -99,9 +119,16 @@ export function fromUserResourceToUserUpdateInput(user: UserResource): Prisma.Us
         gender: user.gender,
         city: user.city,
         age: user.age,
-        avatar: user.avatar,
-        banner: user.banner,
     }
+
+    if (user.avatar !== undefined) {
+        userUpdateInput.avatar = user.avatar
+    }
+
+    if (user.banner !== undefined) {
+        userUpdateInput.banner = user.banner
+    }
+
     userUpdateInput.interests = {
         set: user?.interests?.map((interest) => ({id: interest.id})) ?? [],
     }

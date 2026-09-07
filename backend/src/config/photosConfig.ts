@@ -26,6 +26,8 @@ export function getPhotosDir(): string {
     return path.join(projectRoot, PHOTOS_RELATIVE_PATH)
 }
 
-export function getUserPhotosDir(userId: number | string): string {
-    return path.join(getPhotosDir(), String(userId))
+export function getEntityPhotosDir(entityId: number | string): string {
+    return path.join(getPhotosDir(), String(entityId))
 }
+
+export const getUserPhotosDir = getEntityPhotosDir

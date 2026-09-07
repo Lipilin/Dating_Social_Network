@@ -1,11 +1,32 @@
 import type {
     AnnouncementResource,
     GENDER,
-    GENDER_PREFERENCE,
     InterestResource,
     UserResource,
 } from '@boltaem/common/type.js'
+import { GENDER_PREFERENCE } from '@boltaem/common/type.js'
 import type { Announcement, Category, Interest, User } from '@prisma/client'
+import { PHOTOS_BASE_URL } from '@/config/photosConfig.js'
+
+export interface AnnouncementMultipartBody {
+    announcement?: Partial<AnnouncementResource> & {
+        id?: number
+        genderPreference?: GENDER_PREFERENCE
+    }
+    iconFile?: string
+    id?: number
+    title?: string
+    departure?: string
+    destination?: string
+    dateFrom?: string
+    dateTo?: string
+    genderPreference?: GENDER_PREFERENCE
+    userAge?: number
+    description?: string
+    icon?: string
+    interests?: InterestResource[]
+    createdAt?: string
+}
 
 type AnnouncementUser = Pick<
     User,
@@ -87,4 +108,63 @@ export function fromAnnouncementToResource(announcement: AnnouncementWithRelatio
     }
 
     return resource
+}
+
+type AnnouncementRequestSource = Partial<AnnouncementResource> & {
+    id?: number
+    genderPreference?: GENDER_PREFERENCE
+}
+
+function getAnnouncementRequestSource(body: AnnouncementMultipartBody): AnnouncementRequestSource {
+    if (body.announcement) {
+        return body.announcement
+    }
+
+    return body
+}
+
+export function fromAnnouncementRequestBodyToAnnouncementResource(
+    body: AnnouncementMultipartBody,
+): AnnouncementResource {
+    const source = getAnnouncementRequestSource(body)
+    const genderInterest = source.genderInterest
+        ?? source.genderPreference
+        ?? body.genderPreference
+        ?? GENDER_PREFERENCE.ANYBODY
+
+    const announcementResource: AnnouncementResource = {
+        id: Number(source.id ?? body.id),
+        title: source.title ?? body.title ?? '',
+        userAge: source.userAge ?? body.userAge ?? 18,
+        genderInterest,
+        description: source.description ?? body.description ?? '',
+        dateFrom: source.dateFrom ?? body.dateFrom ?? '',
+        dateTo: source.dateTo ?? body.dateTo ?? '',
+        destination: source.destination ?? body.destination ?? '',
+        departure: source.departure ?? body.departure ?? '',
+        icon: source.icon ?? body.icon ?? '',
+        createdAt: source.createdAt ?? body.createdAt ?? new Date().toISOString(),
+        interests: source.interests ?? body.interests ?? [],
+    }
+
+    if (body.iconFile) {
+        announcementResource.icon = `${PHOTOS_BASE_URL}/${body.iconFile}`
+    }
+
+    return announcementResource
+}
+
+export function fromAnnouncementResourceToCreateInput(resource: AnnouncementResource) {
+    return {
+        title: resource.title,
+        departure: resource.departure,
+        destination: resource.destination,
+        dateFrom: resource.dateFrom,
+        dateTo: resource.dateTo,
+        genderPreference: resource.genderInterest,
+        userAge: resource.userAge,
+        description: resource.description,
+        icon: resource.icon ?? '',
+        interests: resource.interests ?? [],
+    }
 }

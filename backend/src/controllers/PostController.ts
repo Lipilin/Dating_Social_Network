@@ -3,7 +3,7 @@ import { PostService } from "@/services/PostService.js"
 import type { Request, Response } from "express"
 import { API_RESPONSE } from "@/types.js"
 import { CreatePostSchema, getValidationErrorMessage } from "@/utils/validation/rules.js"
-import type { CreatePostRequest } from "@boltaem/common/type.js"
+import { fromPostRequestBodyToPostResource, fromPostResourceToCreateInput } from '@/utils/mapping/post.mapper.js'
 
 export class PostController {
     #postProvider: PostService
@@ -48,8 +48,8 @@ export class PostController {
     }
 
     async createPost(request: Request, response: Response) {
-        const postRequest: CreatePostRequest = request.body
-        const validation = CreatePostSchema.safeParse(postRequest)
+        const postResource = fromPostRequestBodyToPostResource(request.body)
+        const validation = CreatePostSchema.safeParse(fromPostResourceToCreateInput(postResource))
 
         if (validation.error) {
             return response.status(API_RESPONSE.BAD_REQUEST).json({
@@ -70,15 +70,15 @@ export class PostController {
     }
 
     async updatePost(request: Request, response: Response) {
-        const id = Number(request.body?.id)
-        const postRequest: CreatePostRequest = request.body
-        const validation = CreatePostSchema.safeParse(postRequest)
+        const postResource = fromPostRequestBodyToPostResource(request.body)
 
-        if (!id || Number.isNaN(id)) {
+        if (!postResource.id || Number.isNaN(postResource.id)) {
             return response.status(API_RESPONSE.BAD_REQUEST).json({
                 message: POST_ERROR_MESSAGE.NOT_FOUND,
             })
         }
+
+        const validation = CreatePostSchema.safeParse(fromPostResourceToCreateInput(postResource))
 
         if (validation.error) {
             return response.status(API_RESPONSE.BAD_REQUEST).json({
@@ -87,7 +87,11 @@ export class PostController {
         }
 
         try {
-            await this.#postProvider.updatePost(request.authorizedUserId as number, id, validation.data)
+            await this.#postProvider.updatePost(
+                request.authorizedUserId as number,
+                postResource.id,
+                validation.data,
+            )
             response.status(API_RESPONSE.OK).json({
                 message: POST_SUCCESS_MESSAGE.UPDATE,
             })

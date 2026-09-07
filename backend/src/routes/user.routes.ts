@@ -5,7 +5,7 @@ import { securityMiddlewareDefault } from '@/middleware/security.js'
 import { RefreshTokenService } from '@/services/RefreshTokenService.js'
 import { authMiddleware } from '@/middleware/Auth.js'
 import { EmailNotificationService } from '@/services/EmailNotificationService.js'
-import { multerUserUpload } from '@/utils/multer/multerSettings.js'
+import { multerUserUpload } from '@/utils/multer/user/upload.js'
 
 const emailNotificationsService = new EmailNotificationService()
 const userSerivce = new UserService(emailNotificationsService)               

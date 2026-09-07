@@ -3,10 +3,13 @@ import { AnnouncementService } from "@/services/AnnouncementService.js"
 import type { Request, Response } from "express"
 import { API_RESPONSE } from "@/types.js"
 import { AnnouncementCreateSchema, getValidationErrorMessage } from "@/utils/validation/rules.js"
-import type { AnnouncementCreateRequest } from "@boltaem/common/type.js"
 import { Prisma } from "@prisma/client"
 import { GenderPreference } from "@prisma/client"
-import { fromAnnouncementToResource } from '@/utils/mapping/announcement.mapper.js'
+import {
+    fromAnnouncementRequestBodyToAnnouncementResource,
+    fromAnnouncementResourceToCreateInput,
+    fromAnnouncementToResource,
+} from '@/utils/mapping/announcement.mapper.js'
 
 export class AnnouncementController{
     #annoucementProvider: AnnouncementService 
@@ -71,8 +74,10 @@ export class AnnouncementController{
     }
 
     async createAnnouncement(request: Request, response: Response) {
-        const announcementRequest: AnnouncementCreateRequest = request.body
-        const validation = AnnouncementCreateSchema.safeParse(announcementRequest)
+        const announcementResource = fromAnnouncementRequestBodyToAnnouncementResource(request.body)
+        const validation = AnnouncementCreateSchema.safeParse(
+            fromAnnouncementResourceToCreateInput(announcementResource),
+        )
 
         if (validation.error) {
             return response.status(API_RESPONSE.BAD_REQUEST).json({
@@ -93,15 +98,17 @@ export class AnnouncementController{
     }
 
     async updateAnnouncement(request: Request, response: Response) {
-        const id = Number(request.body?.id)
-        const announcementRequest: AnnouncementCreateRequest = request.body
-        const validation = AnnouncementCreateSchema.safeParse(announcementRequest)
+        const announcementResource = fromAnnouncementRequestBodyToAnnouncementResource(request.body)
 
-        if (!id || Number.isNaN(id)) {
+        if (!announcementResource.id || Number.isNaN(announcementResource.id)) {
             return response.status(API_RESPONSE.BAD_REQUEST).json({
                 message: ANNOUNCEMENT_ERROR_MESSAGE.NOT_FOUND,
             })
         }
+
+        const validation = AnnouncementCreateSchema.safeParse(
+            fromAnnouncementResourceToCreateInput(announcementResource),
+        )
 
         if (validation.error) {
             return response.status(API_RESPONSE.BAD_REQUEST).json({
@@ -110,7 +117,11 @@ export class AnnouncementController{
         }
 
         try {
-            await this.#annoucementProvider.updateAnnouncement(request.authorizedUserId as number, id, validation.data)
+            await this.#annoucementProvider.updateAnnouncement(
+                request.authorizedUserId as number,
+                announcementResource.id,
+                validation.data,
+            )
             response.status(API_RESPONSE.OK).json({
                 message: ANNOUNCEMENT_SUCCESS_MESSAGE.UPDATE,
             })

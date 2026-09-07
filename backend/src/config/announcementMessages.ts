@@ -5,6 +5,7 @@ export const ANNOUNCEMENT_ERROR_MESSAGE = {
     FORBIDDEN: 'Нет доступа к редактированию объявления',
     USER_NOT_FOUND: 'Пользователь не найден',
     VALIDATION: 'Некорректные данные для создания объявления',
+    MISSING_ANNOUNCEMENT_ID: 'ID объявления не передан',
 } as const
 
 export const ANNOUNCEMENT_SUCCESS_MESSAGE = {

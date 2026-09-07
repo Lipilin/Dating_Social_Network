@@ -5,6 +5,7 @@ export const POST_ERROR_MESSAGE = {
     FORBIDDEN: 'Нет доступа к редактированию публикации',
     USER_NOT_FOUND: 'Пользователь не найден',
     VALIDATION: 'Некорректные данные для создания публикации',
+    MISSING_POST_ID: 'ID публикации не передан',
 } as const
 
 export const POST_SUCCESS_MESSAGE = {
