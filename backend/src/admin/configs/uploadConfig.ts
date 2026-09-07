@@ -1,24 +1,18 @@
 import uploadFeature from '@adminjs/upload'
 import { Components, componentLoader } from '@/admin/configs/componentLoader.js'
 import { CrossDeviceLocalProvider } from '@/admin/configs/localPhotosProvider.js'
-
-const photosDir = 'resources/photos'
+import {
+    PHOTOS_BASE_URL,
+    PHOTOS_MIME_TYPES,
+    PHOTOS_RELATIVE_PATH,
+} from '@/config/photosConfig.js'
 
 const photosProvider = new CrossDeviceLocalProvider({
-    bucket: photosDir,
+    bucket: PHOTOS_RELATIVE_PATH,
     opts: {
-        baseUrl: '/resources/photos',
+        baseUrl: PHOTOS_BASE_URL,
     },
 })
-
-const imageMimeTypes = [
-    'image/png',
-    'image/jpeg',
-    'image/jpg',
-    'image/gif',
-    'image/webp',
-    'image/svg+xml',
-]
 
 export function createImageUpload(keyProperty: string, fileProperty: string) {
     return uploadFeature({
@@ -30,7 +24,7 @@ export function createImageUpload(keyProperty: string, fileProperty: string) {
             filePath: `${fileProperty}Path`,
             filesToDelete: `${fileProperty}ToDelete`,
         },
-        validation: { mimeTypes: imageMimeTypes },
+        validation: { mimeTypes: [...PHOTOS_MIME_TYPES] },
     })
 }
 

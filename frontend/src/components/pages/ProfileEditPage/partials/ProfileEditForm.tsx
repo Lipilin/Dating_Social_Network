@@ -1,5 +1,5 @@
 import styles from './ProfileEditForm.module.css'
-import type { UserResource } from '@/utils/api/types'
+import type { UserUpdatedRequest } from '@/utils/api/types'
 import { DefaultButton } from '@/components/ui/buttons/DefaultButton'
 import { ProfileEditInterests } from './ProfileEditInterests'
 import { useState,useContext } from 'react'
@@ -10,15 +10,15 @@ import { ProfileEditCountries } from './ProfileEditCountries'
 import { Message } from '@/components/ui/messages/Message'
 
 export interface ProfileEditFormProps{
-    profile: UserResource
-    setUpdatedUser: (user: UserResource) => void
+    updatedUserRequest: UserUpdatedRequest
+    setUpdatedUserRequest: (updatedUserRequest: UserUpdatedRequest) => void
     error?: string | null
     successMessage?: string | null
 }
 
 export type ActiveSection = 'main' | 'interests' | 'countries'
 
-export function ProfileEditForm({ profile, setUpdatedUser, onSend, error, successMessage }: ProfileEditFormProps & { 
+export function ProfileEditForm({ updatedUserRequest, setUpdatedUserRequest, onSend, error, successMessage }: ProfileEditFormProps & { 
     onSend: () => Promise<void>
 }) {
     const { categories } = useContext(CategoryContext)
@@ -30,12 +30,12 @@ export function ProfileEditForm({ profile, setUpdatedUser, onSend, error, succes
                     <h2 className="section__title">Редактирование</h2>
                     <ProfileToggler activeSection={activeSection} setActiveSection={setActiveSection} />
                 </div>
-                { activeSection === 'main' && <ProfileEditMain profile={profile} setUpdatedUser={setUpdatedUser} /> }
+                { activeSection === 'main' && <ProfileEditMain updatedUserRequest={updatedUserRequest} setUpdatedUserRequest={setUpdatedUserRequest} /> }
                 { 
                     activeSection === 'interests' &&
                     <ProfileEditInterests 
-                        profile={profile} 
-                        setUpdatedUser={setUpdatedUser} 
+                        updatedUserRequest={updatedUserRequest} 
+                        setUpdatedUserRequest={setUpdatedUserRequest} 
                         categories={categories} 
                     /> 
                 }
@@ -44,8 +44,8 @@ export function ProfileEditForm({ profile, setUpdatedUser, onSend, error, succes
                     activeSection === 'countries' &&
                     (
                         <ProfileEditCountries
-                            profile={profile}
-                            setUpdatedUser={setUpdatedUser}
+                            updatedUserRequest={updatedUserRequest}
+                            setUpdatedUserRequest={setUpdatedUserRequest}
                             categories={categories}
                         />
                     )

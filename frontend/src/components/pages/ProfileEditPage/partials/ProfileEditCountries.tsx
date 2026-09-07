@@ -7,8 +7,9 @@ type ProfileEditCountriesProps = ProfileEditFormProps & {
     categories: CategoryWithInterestResource[]
 }
 
-export function ProfileEditCountries({ profile, setUpdatedUser, categories }: ProfileEditCountriesProps) {
-    const selectedInterests = profile.interests ?? []
+export function ProfileEditCountries({ updatedUserRequest, setUpdatedUserRequest, categories }: ProfileEditCountriesProps) {
+    const { updatedUser } = updatedUserRequest
+    const selectedInterests = updatedUser.interests ?? []
 
     const countryCategories = useMemo(() => {
         return categories.filter((category) => category.isCountry)
@@ -27,7 +28,7 @@ export function ProfileEditCountries({ profile, setUpdatedUser, categories }: Pr
 
     const handleCountryChange = useCallback(
         (interest: InterestResource) => {
-            const currentInterests = profile.interests ?? []
+            const currentInterests = updatedUser.interests ?? []
             const personalInterests = currentInterests.filter((item) => !countryInterestIds.has(item.id))
             const countryInterests = currentInterests.filter((item) => countryInterestIds.has(item.id))
             const alreadySelected = countryInterests.some((item) => item.id === interest.id)
@@ -35,12 +36,15 @@ export function ProfileEditCountries({ profile, setUpdatedUser, categories }: Pr
                 ? countryInterests.filter((item) => item.id !== interest.id)
                 : [...countryInterests, interest]
 
-            setUpdatedUser({
-                ...profile,
-                interests: [...personalInterests, ...nextCountryInterests],
+            setUpdatedUserRequest({
+                ...updatedUserRequest,
+                updatedUser: {
+                    ...updatedUser,
+                    interests: [...personalInterests, ...nextCountryInterests],
+                },
             })
         },
-        [profile, setUpdatedUser, countryInterestIds]
+        [updatedUserRequest, setUpdatedUserRequest, updatedUser, countryInterestIds]
     )
 
     return (

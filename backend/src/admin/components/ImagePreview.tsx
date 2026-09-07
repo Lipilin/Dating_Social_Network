@@ -1,7 +1,6 @@
 import { flat, type BasePropertyProps, type PropertyJSON } from 'adminjs'
 import React from 'react'
-
-const PHOTOS_BASE_URL = '/resources/photos'
+import { PHOTOS_BASE_URL } from '@/config/photosConfig.js'
 
 type UploadPropertyCustom = PropertyJSON['custom'] & {
     keyProperty?: string

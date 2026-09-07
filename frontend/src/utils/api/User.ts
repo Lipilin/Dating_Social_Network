@@ -101,17 +101,39 @@ export class User{
         return response.data
     }
 
-    async updateProfile(updatedUser: UserUpdatedRequest): Promise<UserUpdatedResponse>{
+    async updateProfile(request: UserUpdatedRequest): Promise<UserUpdatedResponse>{
+        const hasFiles = request.avatarFile instanceof File || request.bannerFile instanceof File
+        const payload = hasFiles
+            ? this.#buildUpdateFormData(request)
+            : { updatedUser: request.updatedUser }
+
         try {
             const response = await axios.patch<UserUpdatedResponse>(
                 `${ API_SETTINGS.API_HOST }${ API_SETTINGS.ENDPOINTS.USER.UPDATE }`,
-                updatedUser,
-                { withCredentials: true },
+                payload,
+                {
+                    withCredentials: true,
+                },
             )
             return response.data
         } catch (error) {
             console.error(error)
             throw error
         }
+    }
+
+    #buildUpdateFormData(request: UserUpdatedRequest): FormData {
+        const formData = new FormData()
+        formData.append('updatedUser', JSON.stringify(request.updatedUser))
+
+        if (request.avatarFile instanceof File) {
+            formData.append('avatarFile', request.avatarFile)
+        }
+
+        if (request.bannerFile instanceof File) {
+            formData.append('bannerFile', request.bannerFile)
+        }
+
+        return formData
     }
 }

@@ -52,6 +52,7 @@ export const AUTH_ERROR_MESSAGE = {
     UPDATE_USER_ERROR: 'Ошибка при обновлении пользователя',
     INVALID_PASSWORD: SERVER_ERRORS.LOGIN_FAILED,
     NO_TOKEN_PROVIDED: 'Не авторизован. Нет токена',
+    MISSING_USER_ID: 'Не авторизован. ID пользователя не передан',
     USER_ALREADY_EXISTS: SERVER_ERRORS.USER_ALREADY_EXISTS,
     REGISTRATION_ERROR: SERVER_ERRORS.REGISTRATION_ERROR,
 } as const

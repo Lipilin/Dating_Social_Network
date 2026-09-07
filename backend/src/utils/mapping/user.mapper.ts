@@ -99,6 +99,8 @@ export function fromUserResourceToUserUpdateInput(user: UserResource): Prisma.Us
         gender: user.gender,
         city: user.city,
         age: user.age,
+        avatar: user.avatar,
+        banner: user.banner,
     }
     userUpdateInput.interests = {
         set: user?.interests?.map((interest) => ({id: interest.id})) ?? [],

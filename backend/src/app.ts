@@ -5,6 +5,7 @@ import { router as AdminRouter } from '@/admin/index.js'
 import cors from 'cors'
 import qs from "qs"
 import cookieParser from 'cookie-parser'
+import { RESOURCES_DIR } from '@/config/photosConfig.js'
 export const app = express()
 app.set('trust proxy', true)
 app.set('query parser', (str: string) => qs.parse(str));
@@ -16,4 +17,4 @@ app.get('/', (req, res) => {
 app.use(cors())
 app.use('/admin', AdminRouter)
 app.use('/api', ApiRouter)
-app.use('/resources', express.static('./resources'))
+app.use(`/${RESOURCES_DIR}`, express.static(`./${RESOURCES_DIR}`))

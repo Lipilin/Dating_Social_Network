@@ -3,44 +3,61 @@ import styles from './ProfileEditForm.module.css'
 import type { ProfileEditFormProps } from './ProfileEditForm'
 import { EditBanner, EditAvatar } from '@/components/layout/Partials/EditImage'
 
-export function ProfileEditMain({ profile, setUpdatedUser }: ProfileEditFormProps) {
+export function ProfileEditMain({ updatedUserRequest, setUpdatedUserRequest }: ProfileEditFormProps) {
+    const { updatedUser } = updatedUserRequest
+
     return (
         <div className = { styles.profileEditContainer }>
             <div className = { styles.profileEditText }>
                 <div className={styles.inputWrapper}>
                     <DefaultInput 
                         label="Имя" 
-                        value={profile.name} 
-                        setValue={(name: string) => setUpdatedUser({ ...profile, name })} 
+                        value={updatedUser.name} 
+                        setValue={(name: string) => setUpdatedUserRequest({ 
+                            ...updatedUserRequest, 
+                            updatedUser: { ...updatedUser, name },
+                        })} 
                     />   
                 </div>
                 <div className={styles.inputWrapper}>  
                     <DefaultInput
                         label="Фамилия"
-                        value={profile.surname}
-                        setValue={(surname: string) => setUpdatedUser({ ...profile, surname })}
+                        value={updatedUser.surname}
+                        setValue={(surname: string) => setUpdatedUserRequest({ 
+                            ...updatedUserRequest, 
+                            updatedUser: { ...updatedUser, surname },
+                        })}
                     />
                 </div>
                 <div className={styles.inputWrapper}>
                     <DefaultInput
                         label="Возраст"
-                        value={profile.age}
-                        setValue={(age: number) => setUpdatedUser({ ...profile, age: Number(age) })}
+                        value={updatedUser.age}
+                        setValue={(age: number) => setUpdatedUserRequest({ 
+                            ...updatedUserRequest, 
+                            updatedUser: { ...updatedUser, age: Number(age) },
+                        })}
                         type="number"
                     />
                 </div>
                 <div className={styles.inputWrapper}>
                     <DefaultInput
                         label="Город"
-                        value={profile.city}
-                        setValue={(city: string) => setUpdatedUser({ ...profile, city })}
+                        value={updatedUser.city}
+                        setValue={(city: string) => setUpdatedUserRequest({ 
+                            ...updatedUserRequest, 
+                            updatedUser: { ...updatedUser, city },
+                        })}
                     />
                 </div>
                 <div className={styles.textareaWrapper}>
                     <textarea
                         placeholder=" "
-                        value={profile.description}
-                        onChange={(e) => setUpdatedUser({ ...profile, description: e.target.value })}
+                        value={updatedUser.description}
+                        onChange={(e) => setUpdatedUserRequest({ 
+                            ...updatedUserRequest, 
+                            updatedUser: { ...updatedUser, description: e.target.value },
+                        })}
                         id="profile-description"
                     />
                     <label htmlFor="profile-description">О себе</label>
@@ -48,14 +65,16 @@ export function ProfileEditMain({ profile, setUpdatedUser }: ProfileEditFormProp
             </div>
             <div className = { styles.profileEditImage }>
                 <EditAvatar 
-                    image={profile.avatar} 
-                    rules="Размер изображения должен быть не более 1024x1024 пикселей" 
-                    onChange={(image) => setUpdatedUser({ ...profile, avatar: image })} 
+                    image={updatedUserRequest.avatarFile ?? null} 
+                    currentImage = { updatedUser.avatar || null }
+                    rules="Аватар должен быть не боле 250*250px" 
+                    onChange={(image) => setUpdatedUserRequest({ ...updatedUserRequest, avatarFile: image ?? undefined })} 
                 />
                 <EditBanner 
-                    image={profile.banner} 
-                    rules="Размер изображения должен быть не более 1024x1024 пикселей" 
-                    onChange={(image) => setUpdatedUser({ ...profile, banner: image })} 
+                    image={updatedUserRequest.bannerFile ?? null} 
+                    currentImage = { updatedUser.banner || null }
+                    rules="Баннер должен быть не боле 1920*1080px" 
+                    onChange={(image) => setUpdatedUserRequest({ ...updatedUserRequest, bannerFile: image ?? undefined })} 
                 />
             </div>
         </div>

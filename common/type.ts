@@ -160,6 +160,8 @@ export interface UserLogoutResponse{
 
 export interface UserUpdatedRequest extends PatchRequest{
     updatedUser: UserResource
+    avatarFile?: File
+    bannerFile?: File
 }
 
 export interface UserUpdatedResponse extends PatchResponse {

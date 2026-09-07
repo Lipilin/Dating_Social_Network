@@ -5,6 +5,7 @@ import { securityMiddlewareDefault } from '@/middleware/security.js'
 import { RefreshTokenService } from '@/services/RefreshTokenService.js'
 import { authMiddleware } from '@/middleware/Auth.js'
 import { EmailNotificationService } from '@/services/EmailNotificationService.js'
+import { multerUserUpload } from '@/utils/multer/multerSettings.js'
 
 const emailNotificationsService = new EmailNotificationService()
 const userSerivce = new UserService(emailNotificationsService)               
@@ -17,5 +18,5 @@ router.post('/create', userController.register)
 router.post('/refresh', userController.refresh)
 router.post('/logout', authMiddleware, userController.logout)
 router.get('/me', authMiddleware, userController.me)
-router.patch('/update', authMiddleware, userController.update)
+router.patch('/update', authMiddleware, multerUserUpload, userController.update)
 router.get('/list', userController.list)    

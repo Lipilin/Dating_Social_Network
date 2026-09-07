@@ -1,17 +1,17 @@
-import type { CategoryWithInterestResource, InterestResource, UserResource } from '@/utils/api/types'
+import type { CategoryWithInterestResource, InterestResource } from '@/utils/api/types'
 import { InterestCategoryItem } from '@/components/pages/Registration/partials/InterestCategoryItem'
 import styles from './ProfileEditForm.module.css'
 import { useMemo } from 'react'
+import type { ProfileEditFormProps } from './ProfileEditForm'
 
-interface ProfileEditInterestsProps {
-    profile: UserResource
-    setUpdatedUser: (user: UserResource) => void
+interface ProfileEditInterestsProps extends ProfileEditFormProps {
     categories: CategoryWithInterestResource[]
 }
 
-export function ProfileEditInterests({ profile, setUpdatedUser, categories }: ProfileEditInterestsProps) {
+export function ProfileEditInterests({ updatedUserRequest, setUpdatedUserRequest, categories }: ProfileEditInterestsProps) {
+    const { updatedUser } = updatedUserRequest
     const interestCategories = categories.filter((category) => category.isCountry === false)
-    const selectedInterests = profile.interests ?? []
+    const selectedInterests = updatedUser.interests ?? []
 
     const countryInterestIds = useMemo(() => {
         return new Set(
@@ -25,7 +25,10 @@ export function ProfileEditInterests({ profile, setUpdatedUser, categories }: Pr
 
     const handleInterestsChange = (interests: InterestResource[]) => {
         const countryInterests = selectedInterests.filter((interest) => countryInterestIds.has(interest.id))
-        setUpdatedUser({ ...profile, interests: [...countryInterests, ...interests] })
+        setUpdatedUserRequest({ 
+            ...updatedUserRequest, 
+            updatedUser: { ...updatedUser, interests: [...countryInterests, ...interests] },
+        })
     }
 
     return (

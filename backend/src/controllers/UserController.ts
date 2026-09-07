@@ -14,11 +14,12 @@ import {
     REFRESH_TOKEN_COOKIE_REMEMBER_ME_MAX_AGE 
 } from '@/types.js'
 import { LoginStepSchema, InfoStepSchema, UserLoginSchema, UserUpdateSchema, getValidationErrorMessage } from '@/utils/validation/rules.js'
-import type { UserLoginRequest, UserLoginResponse, UserPostRequest, UserUpdatedRequest } from '@boltaem/common/type.js'
+import type { UserLoginRequest, UserLoginResponse, UserPostRequest, UserResource, UserUpdatedRequest } from '@boltaem/common/type.js'
 import type { RefreshTokenService } from '@/services/RefreshTokenService.js'
 import { generateJwtToken, fromUserResourceToUserUpdateInput, type UserWithRelations } from '@/utils/mapping/user.mapper.js'
 import { encodedAccessSecret, encodedRefreshSecret } from '@/utils/other/authSecret.js'
 import { fromUserToUserResponse } from '@/utils/mapping/user.mapper.js'
+import { PHOTOS_BASE_URL } from '@/config/photosConfig.js'
 
 
 export class UserController{
@@ -152,15 +153,26 @@ export class UserController{
     }
 
     update = async(req: Request, res: Response) => {
-        const userRequest: UserUpdatedRequest = req.body
-        const validation = UserUpdateSchema.safeParse(userRequest.updatedUser)
+        const userRequest = req.body as UserUpdatedRequest
+
+        const updatedUser: UserResource = { ...userRequest.updatedUser }
+
+        if (userRequest.avatarFile) {
+            updatedUser.avatar = `${PHOTOS_BASE_URL}/${userRequest.avatarFile}`
+        }
+
+        if (userRequest.bannerFile) {
+            updatedUser.banner = `${PHOTOS_BASE_URL}/${userRequest.bannerFile}`
+        }
+
+        const validation = UserUpdateSchema.safeParse(updatedUser)
         if(validation.error){
             return res.status(API_RESPONSE.BAD_REQUEST).json({
                 message: getValidationErrorMessage(validation.error),
             })
         }
         try{
-            const user = await this.#userService.update(userRequest.updatedUser.id, fromUserResourceToUserUpdateInput(userRequest.updatedUser))
+            const user = await this.#userService.update(updatedUser.id, fromUserResourceToUserUpdateInput(updatedUser))
             return res.status(API_RESPONSE.OK).json({
                 user: user,
                 message: AUTH_SUCCESS_MESSAGE.UPDATE_USER,
