@@ -1663,6 +1663,63 @@ body {
   border: none;
   outline: none;
 }
+.modal__body-form .textarea_item {
+  position: relative;
+  border: 1px solid #E0E0E0;
+  padding: 0 10px;
+  min-height: 120px;
+  border-radius: 8px;
+  width: 100%;
+  background: #FFF;
+  box-shadow: 1px 1px 4px 0px rgba(94, 92, 154, 0.06);
+}
+.modal__body-form .textarea_item:focus-within {
+  border: 1px solid #0041F2;
+}
+.modal__body-form .textarea_item textarea {
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  resize: none;
+  height: auto;
+  min-height: 120px;
+  padding: 20px 0 10px;
+  outline: none;
+  border: none;
+  width: 100%;
+  color: #212932;
+  font-family: "TT Commons", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.modal__body-form .textarea_item label {
+  display: inline-block;
+  position: absolute;
+  left: 10px;
+  z-index: 2;
+  pointer-events: none;
+  color: #989DA5;
+  font-family: "TT Commons", sans-serif;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+  top: 10%;
+  opacity: 0.7;
+  transition: all 0.3s ease-in-out;
+}
+.modal__body-form .textarea_item textarea:not(:placeholder-shown) ~ label,
+.modal__body-form .textarea_item:focus-within label {
+  top: 0;
+  left: 6px;
+  background: #FFF;
+  padding: 0 4px;
+  opacity: 1;
+  z-index: 3;
+  line-height: 1;
+  box-shadow: 0 0 0 2px #FFF;
+}
 .modal__body-form textarea::placeholder {
   font-size: 16px;
   color: #989DA5;
@@ -5954,6 +6011,7 @@ img.mfp-img {
   width: 99px;
   height: 99px;
   object-fit: cover;
+  border-radius: 50%;
 }
 @media (max-width: 480px) {
   .about__top .profile__card-image img {

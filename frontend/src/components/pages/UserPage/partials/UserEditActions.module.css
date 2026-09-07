@@ -7,7 +7,7 @@
 .actionButton {
     border: none;
     cursor: pointer;
-    font-family: inherit;
+    font-family: var(--font-primary);
 }
 
 .iconAction {

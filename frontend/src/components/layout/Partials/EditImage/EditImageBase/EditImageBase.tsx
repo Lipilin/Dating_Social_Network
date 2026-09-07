@@ -1,27 +1,19 @@
 import styles from './EditImageBase.module.css'
-import { useRef, useCallback, useEffect, useState } from 'react'
+import { useRef, useCallback } from 'react'
 import type { EditImageBaseProps } from '../types'
 
 export function EditImageBase({
-    image,
+    imageSrc,
     rules,
     onChange,
     className,
     placeholderClassName,
     alt,
-    currentImage,
 }: EditImageBaseProps) {
     const inputRef = useRef<HTMLInputElement>(null)
     const handleClick = useCallback(() => {
         inputRef.current?.click()
     }, [])
-    const [imageUrl, setImageUrl] = useState<string | null>(null)
-    useEffect(() => {
-        if(image) setImageUrl(URL.createObjectURL(image))
-        else if(currentImage) setImageUrl(currentImage)
-        else setImageUrl(null)
-        return () => { imageUrl && URL.revokeObjectURL(imageUrl) }
-    }, [image, currentImage])
 
     const bodyClassName = className
         ? `${styles.editImageBase__body} ${className}`
@@ -36,9 +28,9 @@ export function EditImageBase({
             <div className={bodyClassName}>
                 <div className={placeholderClassNames} onClick={handleClick}>
                     <div className={styles.editImageBase__placeholder__icon}>
-                        {imageUrl ? (
+                        {imageSrc ? (
                             <img
-                                src={imageUrl}
+                                src={imageSrc}
                                 alt={alt}
                                 className={styles.editImageBase__placeholder__image}
                             />
@@ -54,8 +46,9 @@ export function EditImageBase({
                 className={styles.editImageBase__input}
                 accept="image/*"
                 onChange={(e) => {
-                    if(!e.target.files?.[0]) return
-                    onChange(e.target.files[0])
+                    const file = e.target.files?.[0]
+                    if (!file) return
+                    onChange(file)
                 }}
                 ref={inputRef}
             />

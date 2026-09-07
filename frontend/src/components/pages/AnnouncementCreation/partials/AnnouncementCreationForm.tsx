@@ -55,12 +55,14 @@ export function AnnouncementCreationForm({
                         categories={categories}
                     />
                 )}
-                <div className={styles.announcementCreationFormFooter}>
-                    {error && (
-                        <Message message={error} type="error" />
-                    )}
-                    {successMessage && (
-                        <Message message={successMessage} type="success" />
+                <div className={styles.formActions}>
+                    {(error || successMessage) && (
+                        <div className={styles.feedbackMessage}>
+                            <Message
+                                message={error ?? successMessage!}
+                                type={error ? 'error' : 'success'}
+                            />
+                        </div>
                     )}
                     <DefaultButton
                         onSend={onSend}

@@ -1,0 +1,1 @@
+export { DeleteEntityModal } from './DeleteEntityModal'

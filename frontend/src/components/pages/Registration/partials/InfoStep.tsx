@@ -98,13 +98,16 @@ export function InfoStep(
                         </label>
                     </div>
                 </div>
-                <textarea
-                    className={errors.description ? textareaErrorClasses : undefined}
-                    name="about"
-                    placeholder="Краткая информация" 
-                    value={ user.description }
-                    onChange = { (e) => setUserData({ ...user, description: e.target.value }) }
-                />
+                <div className={`textarea_item ${errors.description ? textareaErrorClasses : ''}`}>
+                    <textarea
+                        name="about"
+                        placeholder=" "
+                        value={ user.description }
+                        onChange = { (e) => setUserData({ ...user, description: e.target.value }) }
+                        id="description_reg"
+                    />
+                    <label htmlFor="description_reg">Краткая информация</label>
+                </div>
                 {errorMessages.length > 0 && (
                     <div className={errorListClasses} role="alert">
                         {errorMessages.map((field) => (

@@ -1,8 +1,7 @@
 export interface EditImageProps {
-    image: File | null
+    imageSrc?: string
     rules: string
-    onChange: (image: File | null) => void
-    currentImage: string | null
+    onChange: (image: File) => void
 }
 
 export interface EditImageBaseProps extends EditImageProps {

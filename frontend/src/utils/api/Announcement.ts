@@ -35,10 +35,15 @@ export class Announcement{
     async createAnnouncement(request: AnnouncementCreateRequest): Promise<AnnouncementCreateResponse> {
         this.#abortCreateController.abort()
         this.#abortCreateController = new AbortController()
+
+        const payload = request.iconFile instanceof File
+            ? this.#buildAnnouncementFormData(undefined, request)
+            : request
+
         try {
             const response = await axios.post<AnnouncementCreateResponse>(
                 `${API_SETTINGS.API_HOST}${API_SETTINGS.ENDPOINTS.ANNOUNCEMENT.CREATE}`,
-                request,
+                payload,
                 {
                     withCredentials: true,
                     signal: this.#abortCreateController.signal,
@@ -54,10 +59,15 @@ export class Announcement{
     async updateAnnouncement(id: number, request: AnnouncementCreateRequest): Promise<AnnouncementUpdateResponse> {
         this.#abortCreateController.abort()
         this.#abortCreateController = new AbortController()
+
+        const payload = request.iconFile instanceof File
+            ? this.#buildAnnouncementFormData(id, request)
+            : { id, ...request }
+
         try {
             const response = await axios.patch<AnnouncementUpdateResponse>(
                 `${API_SETTINGS.API_HOST}${API_SETTINGS.ENDPOINTS.ANNOUNCEMENT.UPDATE}`,
-                { id, ...request },
+                payload,
                 {
                     withCredentials: true,
                     signal: this.#abortCreateController.signal,
@@ -68,6 +78,21 @@ export class Announcement{
             console.error(error)
             throw error
         }
+    }
+
+    #buildAnnouncementFormData(id: number | undefined, request: AnnouncementCreateRequest): FormData {
+        const { iconFile, ...announcementData } = request
+        const formData = new FormData()
+        formData.append(
+            'announcement',
+            JSON.stringify(id != null ? { ...announcementData, id } : announcementData),
+        )
+
+        if (iconFile instanceof File) {
+            formData.append('iconFile', iconFile)
+        }
+
+        return formData
     }
 
     async getById(id: number): Promise<AnnouncementResource | null>{
