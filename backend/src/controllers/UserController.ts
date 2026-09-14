@@ -19,6 +19,10 @@ import type { RefreshTokenService } from '@/services/RefreshTokenService.js'
 import { generateJwtToken, fromUserResourceToUserUpdateInput, fromUserUpdatedRequestToUserResource, type UserWithRelations } from '@/utils/mapping/user.mapper.js'
 import { encodedAccessSecret, encodedRefreshSecret } from '@/utils/other/authSecret.js'
 import { fromUserToUserResponse } from '@/utils/mapping/user.mapper.js'
+import {
+    getUploadedFile,
+    saveUploadedPhoto,
+} from '@/utils/multer/saveUploadedPhoto.js'
 
 
 export class UserController{
@@ -152,7 +156,11 @@ export class UserController{
     }
 
     update = async(req: Request, res: Response) => {
-        const updatedUser = fromUserUpdatedRequestToUserResource(req.body)
+        const userId = req.authorizedUserId as number
+        const updatedUser = {
+            ...fromUserUpdatedRequestToUserResource(req.body),
+            id: userId,
+        }
 
         const validation = UserUpdateSchema.safeParse(updatedUser)
         if(validation.error){
@@ -161,9 +169,38 @@ export class UserController{
             })
         }
         try{
-            const user = await this.#userService.update(updatedUser.id, fromUserResourceToUserUpdateInput(updatedUser))
+            const user = await this.#userService.update(
+                userId,
+                fromUserResourceToUserUpdateInput(updatedUser),
+            )
+            const photos: { avatar?: string; banner?: string } = {}
+            const avatarFile = getUploadedFile(req, 'avatarFile')
+            const bannerFile = getUploadedFile(req, 'bannerFile')
+
+            if (avatarFile) {
+                photos.avatar = await saveUploadedPhoto(
+                    avatarFile,
+                    'users',
+                    userId,
+                    'avatarFile',
+                )
+            }
+
+            if (bannerFile) {
+                photos.banner = await saveUploadedPhoto(
+                    bannerFile,
+                    'users',
+                    userId,
+                    'bannerFile',
+                )
+            }
+
+            if (Object.keys(photos).length > 0) {
+                await this.#userService.updatePhotos(userId, photos)
+            }
+
             return res.status(API_RESPONSE.OK).json({
-                user: user,
+                user: user ? { ...user, ...photos } : user,
                 message: AUTH_SUCCESS_MESSAGE.UPDATE_USER,
             })
         }catch(error){

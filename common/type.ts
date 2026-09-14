@@ -65,7 +65,7 @@ export enum GENDER_PREFERENCE{
 }
 
 
-export interface Post{
+export interface PostResource{
     id: number
     title: string
     content: string
@@ -74,6 +74,8 @@ export interface Post{
     createdAt: Date
     user?: UserResource
 }
+
+export type Post = PostResource
 
 export interface UserResource{
     id: number, 
@@ -126,6 +128,20 @@ export interface ApiSuccessResponse {
     message: string
 }
 
+export class DeleteRequest {
+    id: number
+
+    constructor(id: number) {
+        this.id = id
+    }
+}
+
+export class AnnouncementDeleteRequest extends DeleteRequest {}
+
+export class PostDeleteRequest extends DeleteRequest {}
+
+export interface DeleteResponse extends ApiSuccessResponse {}
+
 export interface PatchResponse {
     message: string
 }
@@ -168,7 +184,10 @@ export interface UserUpdatedResponse extends PatchResponse {
     user: UserResource
 }
 
-export type CreatePostRequest = Pick<Post, 'title' | 'content' | 'tags' | 'image'> & PostRequest
+export type CreatePostRequest = 
+    Pick<Post, 'title' | 'content' | 'tags' | 'image'> 
+    & PostRequest
+    & { file?: File }
 
 export interface CreatePostResponse{
     message: string
@@ -193,6 +212,7 @@ export interface AnnouncementCreateRequest extends PostRequest{
     description: string
     icon: string
     interests: InterestResource[]
+    file?: File
 }
 
 export interface AnnouncementCreateResponse{
@@ -215,5 +235,8 @@ export interface SendRegistrationEmailRequest extends PostRequest {
 
 export interface SendPasswordResetEmailRequest extends PostRequest {
     email: string
-    resetLink: string
+}
+
+export interface SendPasswordResetEmailResponse {
+    message: string
 }

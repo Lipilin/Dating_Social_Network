@@ -10,7 +10,7 @@ interface AnnouncementCreationMainProps {
 }
 
 export function AnnouncementCreationMain({ announcement, setAnnouncement }: AnnouncementCreationMainProps) {
-    const iconSrc = useImageSrc(announcement.iconFile, announcement.icon)
+    const iconSrc = useImageSrc(announcement.file, announcement.icon)
 
     return (
         <div className={styles.announcementEditContainer}>
@@ -88,8 +88,8 @@ export function AnnouncementCreationMain({ announcement, setAnnouncement }: Anno
                 <EditIcon
                     className={styles.announcementEditIcon}
                     imageSrc={iconSrc}
-                    rules="Иконка должна быть в формате PNG, JPEG или JPG и не превышать 10MB"
-                    onChange={(image) => setAnnouncement({ ...announcement, iconFile: image })}
+                    rules="Иконка должна быть в формате PNG, JPEG или JPG и не превышать 5MB"
+                    onChange={(image) => setAnnouncement({ ...announcement, file: image })}
                 />
             </div>
         </div>

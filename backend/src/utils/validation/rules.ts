@@ -7,4 +7,5 @@ export {
     SendRegistrationEmailSchema,
     SendPasswordResetEmailSchema,
 } from '@boltaem/common/validation/EmailNotificationRules.js'
+export { PasswordResetSchema } from '@boltaem/common/validation/PasswordResetRules.js'
 export { getValidationErrorMessage } from '@boltaem/common/validation/getValidationErrorMessage.js'

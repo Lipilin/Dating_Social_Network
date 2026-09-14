@@ -3,7 +3,6 @@ import type { UserLoginResponse, UserResource, UserUpdatedRequest, GENDER } from
 import { Prisma } from '@prisma/client'
 import { SignJWT } from 'jose'
 import { encodedAccessSecret, encodedRefreshSecret } from '../other/authSecret.js'
-import { PHOTOS_BASE_URL } from '@/config/photosConfig.js'
 import {
     ACCESS_TOKEN_EXPIRATION_TIME,
     JWT_ALGORITHM,
@@ -92,23 +91,8 @@ export async function fromUserToUserResponse(user: UserWithRelations): Promise<U
     return response
 }
 
-export type UserMultipartBody = UserUpdatedRequest & {
-    avatarFile?: string
-    bannerFile?: string
-}
-
-export function fromUserUpdatedRequestToUserResource(body: UserMultipartBody): UserResource {
-    const user: UserResource = { ...body.updatedUser }
-
-    if (body.avatarFile) {
-        user.avatar = `${PHOTOS_BASE_URL}/${body.avatarFile}`
-    }
-
-    if (body.bannerFile) {
-        user.banner = `${PHOTOS_BASE_URL}/${body.bannerFile}`
-    }
-
-    return user
+export function fromUserUpdatedRequestToUserResource(body: UserUpdatedRequest): UserResource {
+    return { ...body.updatedUser }
 }
 
 export function fromUserResourceToUserUpdateInput(user: UserResource): Prisma.UserUpdateInput{

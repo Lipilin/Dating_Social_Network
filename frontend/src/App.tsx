@@ -13,9 +13,15 @@ import '@/assets/css/main.css'
 import { ProfileProvider } from '@/utils/context/ProfileProvider'
 import { StaticPage } from '@/components/pages/StaticPage/StaticPage'
 import { CategoryProvider } from '@/utils/context/CategoryProvider'
+import { ResetPasswordModal } from '@/components/layout/Modals'
+import { User } from '@/utils/api/User'
+
+const userApi = new User()
 
 function App() {
     const [authOpen, setAuthOpen] = useState(false)
+    const [resetPasswordOpen, setResetPasswordOpen] = useState(false)
+    const [resetPasswordEmail, setResetPasswordEmail] = useState('')
     const [registrationOpen, setRegistrationOpen] = useState(false)
     const [registrationSuccessOpen, setRegistrationSuccessOpen] = useState(false)
     const [registrationErrorOpen, setRegistrationErrorOpen] = useState(false)
@@ -50,7 +56,23 @@ function App() {
                             setAuthOpen(false)
                             setRegistrationOpen(true)
                         }}
+                        onForgotPassword={() => {
+                            setAuthOpen(false)
+                            setResetPasswordOpen(true)
+                        }}
                     />
+                    {resetPasswordOpen && (
+                        <ResetPasswordModal
+                            onInput={setResetPasswordEmail}
+                            onClose={() => {
+                                setResetPasswordOpen(false)
+                                setResetPasswordEmail('')
+                            }}
+                            onSend={async () => {
+                                await userApi.sendPasswordReset({ email: resetPasswordEmail })
+                            }}
+                        />
+                    )}
                     <RegistrationMain
                         isOpen={registrationOpen}
                         onClose={() => setRegistrationOpen(false)}

@@ -1090,12 +1090,22 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.3s ease;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
   visibility: hidden;
   opacity: 0;
   overflow-y: scroll;
   padding: 20px 0;
   overflow-y: auto;
+}
+@media (max-width: 768px) {
+  .modal {
+    padding: 20px 16px;
+  }
+}
+@media (max-width: 480px) {
+  .modal {
+    padding: 16px 12px;
+  }
 }
 .modal.authorization .modal__body-form .row span {
   color: #42454B;
@@ -1110,7 +1120,11 @@ body {
 .modal.show {
   visibility: visible;
   opacity: 1;
-  transform: scale(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .modal__content {
+    transition: none;
+  }
 }
 .modal.success .modal__head h4 {
   font-size: 20px;
@@ -1134,6 +1148,13 @@ body {
   overflow: hidden;
   max-height: fit-content;
   margin: auto;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.modal.show .modal__content {
+  opacity: 1;
+  transform: translateY(0);
 }
 @media (max-width: 1600px) {
   .modal__content {
@@ -1392,6 +1413,27 @@ body {
 }
 .modal__body-form .row button.blue:hover svg {
   transform: translateX(5px);
+}
+.modal__body-form .row button.gray {
+  border-radius: 12px;
+  background: #BFC4D2;
+  color: #FFF;
+  font-family: "TT Commons", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding: 15.24px 58px 12.76px 58px;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: fit-content;
+  width: fit-content;
+}
+.modal__body-form .row button.gray:hover {
+  background: #a4a8af;
 }
 .modal__body-form .row label {
   display: flex;
@@ -2505,24 +2547,27 @@ img.mfp-img {
 }
 .sidebar__copyright {
   flex-direction: column;
-  gap: 7px;
+  gap: 5px;
   color: #fff;
   padding-left: 20px;
-  padding-top: 24px;
+  padding-top: 16px;
   border-top: 1px solid #606b89;
+  font-size: clamp(14px, 1.6vw, 15px);
+  line-height: 1.25;
+}
+@media (max-width: 480px) {
+  .sidebar__copyright {
+    font-size: 14px;
+  }
 }
 .sidebar__copyright a {
   text-decoration: none;
   color: #fff;
-  font-size: 12px;
   position: relative;
   width: fit-content;
 }
 .sidebar__copyright a:hover {
   color: #d0d8ef;
-}
-.sidebar__copyright span {
-  font-size: 12px;
 }
 .sidebar__socials {
   padding-left: 20px;
@@ -5489,17 +5534,15 @@ img.mfp-img {
   margin-top: 41px;
   gap: 30px;
 }
-.locations__wrapper.blog .locations__item-info {
+.locations__wrapper .locations__item-info {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex: 1;
   min-width: 0;
 }
-.locations__wrapper.blog .locations__item-right {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.locations__wrapper .locations__item-right {
+  justify-content: flex-start;
 }
 .locations__item {
   border-radius: 8px;
@@ -5520,11 +5563,11 @@ img.mfp-img {
 .locations__item-img {
   width: 314px;
   flex-shrink: 0;
-  height: 310px;
-  max-height: 310px;
+  min-height: 310px;
+  height: auto;
   object-fit: cover;
   object-position: center;
-  align-self: flex-start;
+  align-self: stretch;
 }
 @media (max-width: 768px) {
   .locations__item-img {
@@ -5681,11 +5724,11 @@ img.mfp-img {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin-top: 62px;
+  margin-top: 24px;
 }
 @media (max-width: 768px) {
   .locations__item-published {
-    margin-top: 20px;
+    margin-top: 16px;
   }
 }
 .locations__item-desc {
@@ -5700,6 +5743,8 @@ img.mfp-img {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  max-height: 60px;
+  flex-shrink: 0;
 }
 .locations__item-details {
   display: flex;
@@ -5726,8 +5771,7 @@ img.mfp-img {
 .locations__item-bottom {
   display: flex;
   justify-content: space-between;
-  margin-top: auto;
-  padding-top: 20px;
+  margin-top: 16px;
   align-items: center;
   flex-shrink: 0;
 }

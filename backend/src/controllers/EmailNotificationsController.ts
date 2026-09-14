@@ -4,6 +4,7 @@ import type { UserService } from '@/services/UserService.js'
 import { API_RESPONSE } from '@/types.js'
 import {
     EMAIL_CONFIRMATION_SUCCESS_MESSAGE,
+    PASSWORD_RESET_ERROR_MESSAGE,
 } from '@/types.js'
 import {
     EMAIL_NOTIFICATION_ERROR_MESSAGE,
@@ -77,10 +78,21 @@ export class EmailNotificationsController {
         }
 
         try {
+            const user = await this.#userService.getUserByEmailForPasswordReset(validation.data.email)
+
+            if (!user) {
+                return response.status(API_RESPONSE.NOT_FOUND).json({
+                    message: PASSWORD_RESET_ERROR_MESSAGE.USER_NOT_FOUND,
+                })
+            }
+
             await this.#emailNotificationService.sendPasswordResetEmail(
-                validation.data.email,
-                validation.data.resetLink,
+                user.email,
+                user.id,
+                user.login,
+                getAppBaseUrl(),
             )
+
             return response.status(API_RESPONSE.OK).json({
                 message: EMAIL_NOTIFICATION_SUCCESS_MESSAGE.PASSWORD_RESET,
             })

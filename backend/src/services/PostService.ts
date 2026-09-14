@@ -1,5 +1,6 @@
 import { POST_ERROR_MESSAGE } from "@/config/postMessages.js"
 import { prisma } from "@/prisma.js"
+import { assertContentOwnership } from "@/utils/other/assertContentOwnership.js"
 import type { CreatePostRequest } from "@boltaem/common/type.js"
 import type { Post, Prisma } from "@prisma/client"
 import { UserContentStatus, UserStatus } from "@prisma/client"
@@ -73,13 +74,12 @@ export class PostService {
             where: { id },
         })
 
-        if (!post) {
-            throw new Error(POST_ERROR_MESSAGE.NOT_FOUND)
-        }
-
-        if (post.userId !== userId) {
-            throw new Error(POST_ERROR_MESSAGE.FORBIDDEN)
-        }
+        assertContentOwnership(
+            userId,
+            post,
+            POST_ERROR_MESSAGE.NOT_FOUND,
+            POST_ERROR_MESSAGE.FORBIDDEN,
+        )
 
         return prisma.post.update({
             where: { id },
@@ -93,6 +93,30 @@ export class PostService {
             include: {
                 user: true,
             },
+        })
+    }
+
+    async updatePostImage(id: number, image: string): Promise<Post> {
+        return prisma.post.update({
+            where: { id },
+            data: { image },
+        })
+    }
+
+    async deletePost(userId: number, id: number): Promise<void> {
+        const post = await prisma.post.findUnique({
+            where: { id },
+        })
+
+        assertContentOwnership(
+            userId,
+            post,
+            POST_ERROR_MESSAGE.NOT_FOUND,
+            POST_ERROR_MESSAGE.FORBIDDEN,
+        )
+
+        await prisma.post.delete({
+            where: { id },
         })
     }
 }

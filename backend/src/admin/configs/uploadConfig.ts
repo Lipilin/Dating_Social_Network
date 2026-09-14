@@ -4,27 +4,36 @@ import { CrossDeviceLocalProvider } from '@/admin/configs/localPhotosProvider.js
 import {
     PHOTOS_BASE_URL,
     PHOTOS_MIME_TYPES,
-    PHOTOS_RELATIVE_PATH,
+    UPLOAD_DIR
 } from '@/config/photosConfig.js'
 
 const photosProvider = new CrossDeviceLocalProvider({
-    bucket: PHOTOS_RELATIVE_PATH,
+    bucket: UPLOAD_DIR,
     opts: {
-        baseUrl: PHOTOS_BASE_URL,
-    },
+        baseUrl: PHOTOS_BASE_URL
+    }
 })
 
-export function createImageUpload(keyProperty: string, fileProperty: string) {
+type AdminPhotoEntity = 'users' | 'posts' | 'announcements' | 'categories' | 'interests'
+
+export function createImageUpload(
+    entity: AdminPhotoEntity,
+    keyProperty: string,
+    fileProperty: string,
+    filename: string
+) {
     return uploadFeature({
         componentLoader,
         provider: photosProvider,
+        uploadPath: (record) =>
+            `${PHOTOS_BASE_URL}/${entity}/${record.id()}/${filename}`,
         properties: {
             key: keyProperty,
             file: fileProperty,
             filePath: `${fileProperty}Path`,
-            filesToDelete: `${fileProperty}ToDelete`,
+            filesToDelete: `${fileProperty}ToDelete`
         },
-        validation: { mimeTypes: [...PHOTOS_MIME_TYPES] },
+        validation: { mimeTypes: [ ...PHOTOS_MIME_TYPES ] }
     })
 }
 
@@ -35,8 +44,8 @@ export function hiddenKeyProperty() {
             new: false,
             list: false,
             show: false,
-            filter: false,
-        },
+            filter: false
+        }
     }
 }
 
@@ -51,15 +60,15 @@ export function imagePreviewPropertyOverride(keyProperty: string) {
         [fileProperty]: {
             components: {
                 list: Components.ImagePreview,
-                show: Components.ImagePreview,
-            },
-        },
+                show: Components.ImagePreview
+            }
+        }
     }
 }
 
 export function imagePreviewPropertyOverrides(keyProperties: string[]) {
     return keyProperties.reduce<Record<string, object>>((acc, keyProperty) => ({
         ...acc,
-        ...imagePreviewPropertyOverride(keyProperty),
+        ...imagePreviewPropertyOverride(keyProperty)
     }), {})
 }

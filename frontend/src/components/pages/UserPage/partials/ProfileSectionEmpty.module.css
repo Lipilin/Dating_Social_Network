@@ -1,31 +1,17 @@
-.emptyWrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 32px 0 8px;
+.section {
+    margin-top: 41px;
 }
 
-.emptyWrapperCompact {
-    padding: 16px 0 8px;
-}
-
-@media (min-width: 769px) {
-    .emptyWrapper {
-        padding: 48px 40px 16px;
-    }
-
-    .emptyWrapperCompact {
-        padding: 20px 0 8px;
-    }
+.sectionCompact {
+    margin-top: 20px;
 }
 
 @media (max-width: 768px) {
-    .emptyWrapper {
-        padding: 24px 0 8px;
+    .section {
+        margin-top: 24px;
     }
 
-    .emptyWrapperCompact {
-        padding: 12px 0 4px;
+    .sectionCompact {
+        margin-top: 12px;
     }
 }

@@ -9,11 +9,15 @@ interface NoDataFoundProps {
 }
 
 export function NoDataFound({ Button, embedded = false, compact = false, title }: NoDataFoundProps) {
-    const cardClassName = [
-        styles.card,
-        embedded ? styles.cardEmbedded : '',
-        compact ? styles.cardCompact : '',
-    ].filter(Boolean).join(' ')
+    const cardClassName = embedded
+        ? [
+            styles.embeddedInner,
+            compact ? styles.embeddedInnerCompact : '',
+        ].filter(Boolean).join(' ')
+        : [
+            styles.card,
+            compact ? styles.cardCompact : '',
+        ].filter(Boolean).join(' ')
 
     const card = (
         <div className={cardClassName}>

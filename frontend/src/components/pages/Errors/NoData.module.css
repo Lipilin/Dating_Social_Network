@@ -33,9 +33,24 @@
     overflow: hidden;
 }
 
-.cardEmbedded {
-    max-width: 100%;
+.embeddedInner {
+    width: 100%;
     padding: 48px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.embeddedInner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%, var(--color-primary-alpha-08) 0%, var(--color-primary-alpha-00) 55%);
+    pointer-events: none;
+}
+
+.embeddedInnerCompact {
+    padding: 32px 24px;
 }
 
 .cardCompact {
@@ -55,7 +70,7 @@
         padding: 48px 24px;
     }
 
-    .cardEmbedded {
+    .embeddedInner {
         padding: 48px 24px;
     }
 

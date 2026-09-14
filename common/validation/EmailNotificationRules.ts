@@ -7,7 +7,4 @@ export const SendRegistrationEmailSchema = z.object({
     login: z.string().min(3, { message: VALIDATION_ERRORS.LOGIN_MIN_LENGTH }),
 })
 
-export const SendPasswordResetEmailSchema = z.object({
-    email: z.email({ message: VALIDATION_ERRORS.EMAIL_INVALID }),
-    resetLink: z.string().min(1, { message: 'Ссылка сброса пароля обязательна' }),
-})
+export { PasswordResetSchema as SendPasswordResetEmailSchema } from './PasswordResetRules.js'

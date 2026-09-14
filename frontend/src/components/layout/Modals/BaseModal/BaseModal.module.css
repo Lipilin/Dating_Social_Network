@@ -1,0 +1,3 @@
+.overlay:global(.modal) {
+    z-index: 10002;
+}

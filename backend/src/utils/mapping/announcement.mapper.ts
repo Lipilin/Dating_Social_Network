@@ -6,14 +6,12 @@ import type {
 } from '@boltaem/common/type.js'
 import { GENDER_PREFERENCE } from '@boltaem/common/type.js'
 import type { Announcement, Category, Interest, User } from '@prisma/client'
-import { PHOTOS_BASE_URL } from '@/config/photosConfig.js'
 
 export interface AnnouncementMultipartBody {
     announcement?: Partial<AnnouncementResource> & {
         id?: number
         genderPreference?: GENDER_PREFERENCE
     }
-    iconFile?: string
     id?: number
     title?: string
     departure?: string
@@ -145,10 +143,6 @@ export function fromAnnouncementRequestBodyToAnnouncementResource(
         icon: source.icon ?? body.icon ?? '',
         createdAt: source.createdAt ?? body.createdAt ?? new Date().toISOString(),
         interests: source.interests ?? body.interests ?? [],
-    }
-
-    if (body.iconFile) {
-        announcementResource.icon = `${PHOTOS_BASE_URL}/${body.iconFile}`
     }
 
     return announcementResource

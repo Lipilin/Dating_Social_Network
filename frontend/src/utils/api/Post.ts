@@ -1,4 +1,12 @@
-import type { CreatePostRequest, CreatePostResponse, Post as PostResource, PostRequest, UpdatePostResponse } from './types'
+import type {
+    CreatePostRequest,
+    CreatePostResponse,
+    DeleteResponse,
+    Post as PostResource,
+    PostDeleteRequest,
+    PostRequest,
+    UpdatePostResponse,
+} from './types'
 import { API_SETTINGS } from '@/config/General'
 import axios from 'axios'
 
@@ -20,7 +28,7 @@ export class Post{
     }
 
     async createPost(request: CreatePostRequest): Promise<CreatePostResponse> {
-        const payload = request.imageFile instanceof File
+        const payload = request.file instanceof File
             ? this.#buildPostFormData(undefined, request)
             : request
 
@@ -40,7 +48,7 @@ export class Post{
     }
 
     async updatePost(id: number, request: CreatePostRequest): Promise<UpdatePostResponse> {
-        const payload = request.imageFile instanceof File
+        const payload = request.file instanceof File
             ? this.#buildPostFormData(id, request)
             : { id, ...request }
 
@@ -60,12 +68,12 @@ export class Post{
     }
 
     #buildPostFormData(id: number | undefined, request: CreatePostRequest): FormData {
-        const { imageFile, ...postData } = request
+        const { file, ...postData } = request
         const formData = new FormData()
         formData.append('post', JSON.stringify(id != null ? { ...postData, id } : postData))
 
-        if (imageFile instanceof File) {
-            formData.append('imageFile', imageFile)
+        if (file instanceof File) {
+            formData.append('file', file)
         }
 
         return formData
@@ -85,6 +93,22 @@ export class Post{
             return response.data
         }catch(error){
             console.log((error as Error).message)
+            throw error
+        }
+    }
+
+    async deletePost(request: PostDeleteRequest): Promise<DeleteResponse> {
+        try {
+            const response = await axios.delete<DeleteResponse>(
+                `${API_SETTINGS.API_HOST}${API_SETTINGS.ENDPOINTS.POST.DELETE}`,
+                {
+                    data: request,
+                    withCredentials: true,
+                },
+            )
+            return response.data
+        } catch (error) {
+            console.error(error)
             throw error
         }
     }

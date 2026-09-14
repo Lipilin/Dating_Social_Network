@@ -14,9 +14,15 @@ interface AuthMainProps {
     isOpen?: boolean
     onClose?: () => void
     onSwitchToRegistration?: () => void
+    onForgotPassword?: () => void
 }
 
-export function AuthMain({ isOpen = false, onClose, onSwitchToRegistration }: AuthMainProps) {
+export function AuthMain({
+    isOpen = false,
+    onClose,
+    onSwitchToRegistration,
+    onForgotPassword,
+}: AuthMainProps) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [rememberMe, setRememberMe] = useState(false)
@@ -105,7 +111,15 @@ export function AuthMain({ isOpen = false, onClose, onSwitchToRegistration }: Au
                                 </ul>
                             )}
                             <div className="links">
-                                <Link to="#">Забыли пароль?</Link>
+                                <Link
+                                    to="#"
+                                    onClick={(event) => {
+                                        event.preventDefault()
+                                        onForgotPassword?.()
+                                    }}
+                                >
+                                    Забыли пароль?
+                                </Link>
                                 <Link
                                     to="#"
                                     onClick={(e) => {

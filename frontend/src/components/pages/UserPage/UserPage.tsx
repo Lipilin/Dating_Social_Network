@@ -4,8 +4,8 @@ import { useEffect, useState, useContext } from 'react'
 import { NotFound } from '@/components/pages/Errors/NotFound'
 import { UserCommunicationActions } from './partials/UserCommunicationActions'
 import { User } from '@/utils/api/User'
-import { UserContent } from './partials/UserContent'
 import { Loader } from '@/components/pages/Loader/Loader'
+import { UserContent } from './partials/UserContent'
 import { ProfileContext } from '@/utils/context/ProfileContext'
 import { ROUTES } from '@/config/General'
 
@@ -30,7 +30,7 @@ export function UserPage() {
         })
     }, [id])
 
-    if(isLoading) return <Loader isLoading = { isLoading } />
+    if(isLoading) return <Loader isLoading={isLoading} />
     if (hasError) return <NotFound />
     if (!user) return null
     if(user.id === currentUser?.id) return <Navigate to={ROUTES.PROFILE.URL} />      

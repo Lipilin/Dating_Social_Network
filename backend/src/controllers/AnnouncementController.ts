@@ -10,6 +10,10 @@ import {
     fromAnnouncementResourceToCreateInput,
     fromAnnouncementToResource,
 } from '@/utils/mapping/announcement.mapper.js'
+import {
+    getUploadedFile,
+    saveUploadedPhoto,
+} from '@/utils/multer/saveUploadedPhoto.js'
 
 export class AnnouncementController{
     #annoucementProvider: AnnouncementService 
@@ -86,7 +90,17 @@ export class AnnouncementController{
         }
 
         try {
-            await this.#annoucementProvider.createAnnouncement(request.authorizedUserId as number, validation.data)
+            const announcement = await this.#annoucementProvider.createAnnouncement(
+                request.authorizedUserId as number,
+                validation.data,
+            )
+            const file = getUploadedFile(request, 'file')
+
+            if (file) {
+                const icon = await saveUploadedPhoto(file, 'announcements', announcement.id, 'file')
+                await this.#annoucementProvider.updateAnnouncementIcon(announcement.id, icon)
+            }
+
             response.status(API_RESPONSE.OK).json({
                 message: ANNOUNCEMENT_SUCCESS_MESSAGE.CREATE,
             })
@@ -117,17 +131,45 @@ export class AnnouncementController{
         }
 
         try {
-            await this.#annoucementProvider.updateAnnouncement(
+            const announcement = await this.#annoucementProvider.updateAnnouncement(
                 request.authorizedUserId as number,
                 announcementResource.id,
                 validation.data,
             )
+            const file = getUploadedFile(request, 'file')
+
+            if (file) {
+                const icon = await saveUploadedPhoto(file, 'announcements', announcement.id, 'file')
+                await this.#annoucementProvider.updateAnnouncementIcon(announcement.id, icon)
+            }
+
             response.status(API_RESPONSE.OK).json({
                 message: ANNOUNCEMENT_SUCCESS_MESSAGE.UPDATE,
             })
         } catch (error) {
             response.status(API_RESPONSE.ERROR).json({
                 message: (error as Error).message || ANNOUNCEMENT_ERROR_MESSAGE.UPDATE,
+            })
+        }
+    }
+
+    async deleteAnnouncement(request: Request, response: Response) {
+        const id = Number(request.body?.id)
+
+        if (!id || Number.isNaN(id)) {
+            return response.status(API_RESPONSE.BAD_REQUEST).json({
+                message: ANNOUNCEMENT_ERROR_MESSAGE.MISSING_ANNOUNCEMENT_ID,
+            })
+        }
+
+        try {
+            await this.#annoucementProvider.deleteAnnouncement(request.authorizedUserId as number, id)
+            response.status(API_RESPONSE.OK).json({
+                message: ANNOUNCEMENT_SUCCESS_MESSAGE.DELETE,
+            })
+        } catch (error) {
+            response.status(API_RESPONSE.ERROR).json({
+                message: (error as Error).message || ANNOUNCEMENT_ERROR_MESSAGE.DELETE,
             })
         }
     }

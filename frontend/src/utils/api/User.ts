@@ -6,7 +6,9 @@ import type
     UserLoginRequest, 
     UserLoginResponse, 
     UserLogoutResponse, 
-    UserUpdatedResponse
+    UserUpdatedResponse,
+    SendPasswordResetEmailRequest,
+    SendPasswordResetEmailResponse,
 } from './types'
 import { API_SETTINGS } from '@/config/General'
 import { HTTP_STATUS } from '@boltaem/common/config'
@@ -90,6 +92,18 @@ export class User{
         )
         return response.data as UserLoginResponse
     }   
+
+    async sendPasswordReset(request: SendPasswordResetEmailRequest): Promise<SendPasswordResetEmailResponse> {
+        try {
+            const response = await axios.post<SendPasswordResetEmailResponse>(
+                `${API_SETTINGS.API_HOST}${API_SETTINGS.ENDPOINTS.EMAIL_NOTIFICATION.PASSWORD_RESET}`,
+                request,
+            )
+            return response.data
+        } catch (error) {
+            throw new Error(getApiErrorMessage(error, 'Ошибка при отправке письма для восстановления пароля'))
+        }
+    }
 
     async logout(): Promise<UserLogoutResponse>{
         const response = await axios.post<UserLogoutResponse>(

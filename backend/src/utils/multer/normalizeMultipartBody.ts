@@ -11,7 +11,7 @@ export function normalizeMultipartBody(req: Request, jsonFields: readonly string
         try {
             req.body[field] = JSON.parse(value)
         } catch {
-            // controller validation handles invalid JSON
+            
         }
     }
 }

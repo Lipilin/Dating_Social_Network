@@ -9,6 +9,10 @@ import {
     buildEmailConfirmationLink,
     generateEmailConfirmationToken,
 } from '@/utils/other/emailConfirmationToken.js'
+import {
+    buildPasswordResetLink,
+    generatePasswordResetToken,
+} from '@/utils/other/passwordResetToken.js'
 
 function applyTemplate(content: string, variables: Record<string, string>): string {
     return Object.entries(variables).reduce(
@@ -40,7 +44,15 @@ export class EmailNotificationService {
         )
     }
 
-    async sendPasswordResetEmail(email: string, resetLink: string): Promise<void> {
+    async sendPasswordResetEmail(
+        email: string,
+        id: number,
+        login: string,
+        baseUrl: string,
+    ): Promise<void> {
+        const token = await generatePasswordResetToken(email, id, login)
+        const resetLink = buildPasswordResetLink(token, baseUrl)
+
         await this.#sendTemplatedEmail(
             EMAIL_MESSAGE_IDS.PASSWORD_RESET,
             email,

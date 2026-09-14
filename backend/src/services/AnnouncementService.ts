@@ -1,6 +1,7 @@
 import type { AnnouncementWithRelations } from '@/utils/mapping/announcement.mapper.js'
 import { ANNOUNCEMENT_ERROR_MESSAGE } from "@/config/announcementMessages.js"
 import { prisma } from "@/prisma.js"
+import { assertContentOwnership } from "@/utils/other/assertContentOwnership.js"
 import type { AnnouncementCreateRequest } from "@boltaem/common/type.js"
 import type { Prisma } from '@prisma/client'
 import { GenderPreference, UserContentStatus, UserStatus } from '@prisma/client'
@@ -98,13 +99,12 @@ export class AnnouncementService{
             where: { id },
         })
 
-        if (!announcement) {
-            throw new Error(ANNOUNCEMENT_ERROR_MESSAGE.NOT_FOUND)
-        }
-
-        if (announcement.userId !== userId) {
-            throw new Error(ANNOUNCEMENT_ERROR_MESSAGE.FORBIDDEN)
-        }
+        assertContentOwnership(
+            userId,
+            announcement,
+            ANNOUNCEMENT_ERROR_MESSAGE.NOT_FOUND,
+            ANNOUNCEMENT_ERROR_MESSAGE.FORBIDDEN,
+        )
 
         return prisma.announcement.update({
             where: { id },
@@ -130,6 +130,30 @@ export class AnnouncementService{
                     },
                 },
             },
+        })
+    }
+
+    async updateAnnouncementIcon(id: number, icon: string): Promise<void> {
+        await prisma.announcement.update({
+            where: { id },
+            data: { icon },
+        })
+    }
+
+    async deleteAnnouncement(userId: number, id: number): Promise<void> {
+        const announcement = await prisma.announcement.findUnique({
+            where: { id },
+        })
+
+        assertContentOwnership(
+            userId,
+            announcement,
+            ANNOUNCEMENT_ERROR_MESSAGE.NOT_FOUND,
+            ANNOUNCEMENT_ERROR_MESSAGE.FORBIDDEN,
+        )
+
+        await prisma.announcement.delete({
+            where: { id },
         })
     }
 }

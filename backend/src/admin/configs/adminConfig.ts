@@ -152,8 +152,8 @@ export const admin = new AdminJS({
                 }
             },
             features: [
-                createImageUpload('avatar', uploadFilePropertyName('avatar')),
-                createImageUpload('banner', uploadFilePropertyName('banner')),
+                createImageUpload('users', 'avatar', uploadFilePropertyName('avatar'), 'avatarFile'),
+                createImageUpload('users', 'banner', uploadFilePropertyName('banner'), 'bannerFile'),
             ],
         },
         {
@@ -199,7 +199,7 @@ export const admin = new AdminJS({
                 }
             },
             features: [
-                createImageUpload('image', uploadFilePropertyName('image')),
+                createImageUpload('posts', 'image', uploadFilePropertyName('image'), 'file'),
             ],
         },
         {
@@ -236,7 +236,7 @@ export const admin = new AdminJS({
                 }
             },
             features: [
-                createImageUpload('icon', uploadFilePropertyName('icon')),
+                createImageUpload('announcements', 'icon', uploadFilePropertyName('icon'), 'file'),
             ],
         },
         {
@@ -251,7 +251,7 @@ export const admin = new AdminJS({
                 }
             },
             features: [
-                createImageUpload('icon', uploadFilePropertyName('icon')),
+                createImageUpload('categories', 'icon', uploadFilePropertyName('icon'), 'icon'),
             ],
         },
         {
@@ -270,7 +270,7 @@ export const admin = new AdminJS({
                 }
             },
             features: [
-                createImageUpload('image', uploadFilePropertyName('image')),
+                createImageUpload('interests', 'image', uploadFilePropertyName('image'), 'image'),
             ],
         },
         {

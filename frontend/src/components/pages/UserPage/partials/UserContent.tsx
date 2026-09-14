@@ -1,4 +1,3 @@
-import type { UserResource } from '@/utils/api/types'
 import type { ComponentType } from 'react'
 import { useState } from 'react'
 import { DescriptionBlock, PostBlock, AnouncementBlock } from '.'

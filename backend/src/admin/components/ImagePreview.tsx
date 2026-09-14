@@ -1,6 +1,5 @@
 import { flat, type BasePropertyProps, type PropertyJSON } from 'adminjs'
 import React from 'react'
-import { PHOTOS_BASE_URL } from '@/config/photosConfig.js'
 
 type UploadPropertyCustom = PropertyJSON['custom'] & {
     keyProperty?: string
@@ -19,6 +18,10 @@ function getImageSrc(record: BasePropertyProps['record'], property: BaseProperty
         return null
     }
 
+    if (key.startsWith('/') || /^https?:\/\//.test(key)) {
+        return key
+    }
+
     if (custom.opts?.baseUrl) {
         return `${custom.opts.baseUrl}/${key}`
     }
@@ -28,7 +31,7 @@ function getImageSrc(record: BasePropertyProps['record'], property: BaseProperty
         return filePath
     }
 
-    return `${PHOTOS_BASE_URL}/${key}`
+    return null
 }
 
 const ImagePreview: React.FC<BasePropertyProps> = ({ record, property, where }) => {
@@ -50,7 +53,7 @@ const ImagePreview: React.FC<BasePropertyProps> = ({ record, property, where }) 
                     maxHeight: maxSize,
                     objectFit: 'contain',
                     borderRadius: 4,
-                    border: '1px solid #e0e0e0',
+                    border: '1px solid #e0e0e0'
                 }}
             />
         </div>

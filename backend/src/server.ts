@@ -1,12 +1,15 @@
-import { app } from '@/app.js'
-import { admin } from '@/admin/configs/adminConfig.js'
 import { config } from 'dotenv'
 
-config()
+config({ path: [ '../.env', '.env' ] })
 
 const PORT = process.env.PORT || 3000
 
 async function start() {
+    const [ { app }, { admin } ] = await Promise.all([
+        import('@/app.js'),
+        import('@/admin/configs/adminConfig.js')
+    ])
+
     if (process.env.NODE_ENV === 'production') {
         await admin.initialize()
     } else {

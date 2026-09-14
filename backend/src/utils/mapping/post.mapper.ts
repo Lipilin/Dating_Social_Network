@@ -1,9 +1,7 @@
-import { PHOTOS_BASE_URL } from '@/config/photosConfig.js'
 import type { PostResource } from '@boltaem/common/type.js'
 
 export interface PostMultipartBody {
     post?: Partial<PostResource> & { id?: number }
-    imageFile?: string
     id?: number
     title?: string
     content?: string
@@ -24,10 +22,6 @@ export function fromPostRequestBodyToPostResource(body: PostMultipartBody): Post
         image: source.image ?? body.image ?? '',
         tags: source.tags ?? body.tags ?? [],
         createdAt: createdAt ? new Date(createdAt) : new Date(),
-    }
-
-    if (body.imageFile) {
-        postResource.image = `${PHOTOS_BASE_URL}/${body.imageFile}`
     }
 
     return postResource

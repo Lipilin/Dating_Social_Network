@@ -4,6 +4,10 @@ import type { Request, Response } from "express"
 import { API_RESPONSE } from "@/types.js"
 import { CreatePostSchema, getValidationErrorMessage } from "@/utils/validation/rules.js"
 import { fromPostRequestBodyToPostResource, fromPostResourceToCreateInput } from '@/utils/mapping/post.mapper.js'
+import {
+    getUploadedFile,
+    saveUploadedPhoto,
+} from '@/utils/multer/saveUploadedPhoto.js'
 
 export class PostController {
     #postProvider: PostService
@@ -58,7 +62,17 @@ export class PostController {
         }
 
         try {
-            await this.#postProvider.createPost(request.authorizedUserId as number, validation.data)
+            const post = await this.#postProvider.createPost(
+                request.authorizedUserId as number,
+                validation.data,
+            )
+            const file = getUploadedFile(request, 'file')
+
+            if (file) {
+                const image = await saveUploadedPhoto(file, 'posts', post.id, 'file')
+                await this.#postProvider.updatePostImage(post.id, image)
+            }
+
             response.status(API_RESPONSE.OK).json({
                 message: POST_SUCCESS_MESSAGE.CREATE,
             })
@@ -87,17 +101,45 @@ export class PostController {
         }
 
         try {
-            await this.#postProvider.updatePost(
+            const post = await this.#postProvider.updatePost(
                 request.authorizedUserId as number,
                 postResource.id,
                 validation.data,
             )
+            const file = getUploadedFile(request, 'file')
+
+            if (file) {
+                const image = await saveUploadedPhoto(file, 'posts', post.id, 'file')
+                await this.#postProvider.updatePostImage(post.id, image)
+            }
+
             response.status(API_RESPONSE.OK).json({
                 message: POST_SUCCESS_MESSAGE.UPDATE,
             })
         } catch (error) {
             response.status(API_RESPONSE.ERROR).json({
                 message: (error as Error).message || POST_ERROR_MESSAGE.UPDATE,
+            })
+        }
+    }
+
+    async deletePost(request: Request, response: Response) {
+        const id = Number(request.body?.id)
+
+        if (!id || Number.isNaN(id)) {
+            return response.status(API_RESPONSE.BAD_REQUEST).json({
+                message: POST_ERROR_MESSAGE.MISSING_POST_ID,
+            })
+        }
+
+        try {
+            await this.#postProvider.deletePost(request.authorizedUserId as number, id)
+            response.status(API_RESPONSE.OK).json({
+                message: POST_SUCCESS_MESSAGE.DELETE,
+            })
+        } catch (error) {
+            response.status(API_RESPONSE.ERROR).json({
+                message: (error as Error).message || POST_ERROR_MESSAGE.DELETE,
             })
         }
     }

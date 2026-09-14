@@ -25,7 +25,7 @@ export function PostCreationForm({
     title = 'Создание Публикации',
     submitButtonText = 'Создать публикацию',
 }: PostCreationFormProps) {
-    const imageSrc = useImageSrc(post.imageFile, post.image)
+    const imageSrc = useImageSrc(post.file, post.image)
 
     return (
         <div className={styles.postCreationWrapper}>
@@ -54,8 +54,8 @@ export function PostCreationForm({
                     <div className = { styles.imageWrapper }>
                         <EditAvatar
                             imageSrc={imageSrc}
-                            rules="Изображение должно быть в формате PNG, JPEG или JPG и не превышать 10MB"
-                            onChange={(image) => setPost({ ...post, imageFile: image })}
+                            rules="Изображение должно быть в формате PNG, JPEG или JPG и не превышать 5MB"
+                            onChange={(image) => setPost({ ...post, file: image })}
                         />
                     </div>   
                 </div>

@@ -123,26 +123,27 @@
 
     &__copyright {
         flex-direction: column;
-        gap: 7px;
+        gap: 5px;
         color: #fff;
         padding-left: 20px;
-        padding-top: 24px;
+        padding-top: 16px;
         border-top: 1px solid #606b89;
+        font-size: clamp(14px, 1.6vw, 15px);
+        line-height: 1.25;
+
+        @media #{$mobile} {
+            font-size: 14px;
+        }
 
         a {
             text-decoration: none;
             color: #fff;
-            font-size: 12px;
             position: relative;
             width: fit-content;
 
             &:hover {
                 color: #d0d8ef;
             }
-        }
-
-        span {
-            font-size: 12px;
         }
     }
 

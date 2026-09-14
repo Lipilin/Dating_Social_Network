@@ -1,4 +1,12 @@
-import type { AnnouncementCreateRequest, AnnouncementCreateResponse, AnnouncementRequest, AnnouncementResource, AnnouncementUpdateResponse } from './types'
+import type {
+    AnnouncementCreateRequest,
+    AnnouncementCreateResponse,
+    AnnouncementDeleteRequest,
+    AnnouncementRequest,
+    AnnouncementResource,
+    AnnouncementUpdateResponse,
+    DeleteResponse,
+} from './types'
 import { API_SETTINGS } from '@/config/apiSettings'
 import axios from 'axios'
 
@@ -36,7 +44,7 @@ export class Announcement{
         this.#abortCreateController.abort()
         this.#abortCreateController = new AbortController()
 
-        const payload = request.iconFile instanceof File
+        const payload = request.file instanceof File
             ? this.#buildAnnouncementFormData(undefined, request)
             : request
 
@@ -60,7 +68,7 @@ export class Announcement{
         this.#abortCreateController.abort()
         this.#abortCreateController = new AbortController()
 
-        const payload = request.iconFile instanceof File
+        const payload = request.file instanceof File
             ? this.#buildAnnouncementFormData(id, request)
             : { id, ...request }
 
@@ -81,15 +89,15 @@ export class Announcement{
     }
 
     #buildAnnouncementFormData(id: number | undefined, request: AnnouncementCreateRequest): FormData {
-        const { iconFile, ...announcementData } = request
+        const { file, ...announcementData } = request
         const formData = new FormData()
         formData.append(
             'announcement',
             JSON.stringify(id != null ? { ...announcementData, id } : announcementData),
         )
 
-        if (iconFile instanceof File) {
-            formData.append('iconFile', iconFile)
+        if (file instanceof File) {
+            formData.append('file', file)
         }
 
         return formData
@@ -108,6 +116,22 @@ export class Announcement{
         }catch(error){
             console.log((error as Error).message)
             return null
+        }
+    }
+
+    async deleteAnnouncement(request: AnnouncementDeleteRequest): Promise<DeleteResponse> {
+        try {
+            const response = await axios.delete<DeleteResponse>(
+                `${API_SETTINGS.API_HOST}${API_SETTINGS.ENDPOINTS.ANNOUNCEMENT.DELETE}`,
+                {
+                    data: request,
+                    withCredentials: true,
+                },
+            )
+            return response.data
+        } catch (error) {
+            console.error(error)
+            throw error
         }
     }
 }

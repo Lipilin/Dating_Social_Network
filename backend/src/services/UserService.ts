@@ -61,6 +61,16 @@ export class UserService{
         }
     }
 
+    async updatePhotos(
+        id: number,
+        photos: { avatar?: string; banner?: string },
+    ): Promise<User> {
+        return prisma.user.update({
+            where: { id },
+            data: photos,
+        })
+    }
+
     async createUser(data: UserPostRequest): Promise<User> {
         const normalizedEmail = data.email.toLowerCase().trim()
         const normalizedLogin = data.login.toLowerCase().trim()
@@ -160,6 +170,15 @@ export class UserService{
         return prisma.user.update({
             where: { id: user.id },
             data: { status: UserStatus.PENDING_APPROVEMENT },
+        })
+    }
+
+    async getUserByEmailForPasswordReset(email: string): Promise<User | null> {
+        return prisma.user.findFirst({
+            where: {
+                email: email.toLowerCase().trim(),
+                status: { in: [UserStatus.REGISTERED, UserStatus.PENDING_APPROVEMENT] },
+            },
         })
     }
 
