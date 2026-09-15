@@ -3,7 +3,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 13px 20px;
+    padding: clamp(14px, 1.8vw, 20px) clamp(16px, 2.5vw, 28px);
+    min-height: clamp(68px, 10vw, 85px);
     z-index: 3999 !important;
     background: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -11,10 +12,11 @@
     top: 0;
     right: 0;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: clamp(8px, 1.5vw, 12px);
 
     @media #{$mobile} {
-        padding: 13px 10px;
+        padding: 14px 12px;
+        min-height: 64px;
     }
 
     &__left {
@@ -97,11 +99,31 @@
     }
 
     &__logo {
-        @media #{$tablet} {
-            height: 33px;
+        display: flex;
+        align-items: center;
 
+        img {
+            width: auto;
+            height: clamp(44px, 7vw, 55px);
+            transition: transform 0.3s ease;
+        }
+
+        &:hover img {
+            transform: scale(0.88);
+        }
+
+        @media #{$tablet} {
             img {
-                width: 100px;
+                height: clamp(40px, 8vw, 50px);
+                width: auto;
+                max-width: clamp(120px, 30vw, 155px);
+            }
+        }
+
+        @media #{$mobile} {
+            img {
+                height: clamp(36px, 10vw, 44px);
+                max-width: clamp(110px, 34vw, 140px);
             }
         }
     }
@@ -150,14 +172,23 @@
 
     &__actions {
         display: flex;
-        gap: 25px;
-        padding-left: 30px;
+        align-items: center;
+        gap: clamp(18px, 2.5vw, 25px);
+        padding-left: clamp(16px, 2.5vw, 30px);
 
         a {
-            &:hover {
-                img {
-                    filter: brightness(2);
-                }
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+                width: auto;
+                height: clamp(20px, 3vw, 24px);
+                transition: transform 0.3s ease;
+            }
+
+            &:hover img {
+                transform: scale(0.88);
             }
         }
 
@@ -176,10 +207,10 @@
         }
 
         @media #{$mobile} {
-            gap: 15px;
-            padding-left: 15px;
+            gap: 14px;
+            padding-left: 12px;
 
-            a {
+            a img {
                 height: 22px;
             }
         }
@@ -187,13 +218,13 @@
 
     &__acc {
         position: relative;
-        margin-left: 20px;
-        height: 59px;
+        margin-left: clamp(12px, 2vw, 20px);
+        height: clamp(48px, 8vw, 59px);
         display: block;
 
         @media #{$tablet} {
-            width: 40px;
-            height: 40px;
+            width: clamp(44px, 8vw, 52px);
+            height: clamp(44px, 8vw, 52px);
         }
 
         .dropdown-toggle {
@@ -220,13 +251,18 @@
             }
 
             img {
-                width: 59px;
-                height: 59px;
+                width: clamp(48px, 8vw, 59px);
+                height: clamp(48px, 8vw, 59px);
+                transition: transform 0.3s ease;
 
                 @media #{$tablet} {
-                    width: 40px;
-                    height: 40px;
+                    width: clamp(44px, 8vw, 52px);
+                    height: clamp(44px, 8vw, 52px);
                 }
+            }
+
+            &:hover img {
+                transform: scale(0.88);
             }
         }
 
@@ -234,7 +270,7 @@
             position: absolute;
             position: absolute;
             z-index: 5000 !important;
-            top: 80px;
+            top: calc(100% + 12px);
             right: 0;
             background: white;
             border-radius: 8px;
@@ -248,7 +284,7 @@
             pointer-events: none;
 
             @media #{$tablet} {
-                top: 60px;
+                top: calc(100% + 10px);
             }
 
             &.active {
@@ -420,7 +456,19 @@
     }
 
     &__burger {
-        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            width: clamp(24px, 3.2vw, 28px);
+            height: clamp(24px, 3.2vw, 28px);
+            transition: transform 0.3s ease;
+        }
+
+        &:hover svg {
+            transform: scale(0.88);
+        }
     }
 
     &__buttons {

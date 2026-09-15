@@ -94,6 +94,13 @@
                 font-style: normal;
                 font-weight: 600;
                 line-height: 100%;
+
+                img {
+                    width: 24px;
+                    height: 24px;
+                    flex-shrink: 0;
+                    object-fit: contain;
+                }
             }
         }
     }
@@ -190,6 +197,13 @@
                 font-weight: 500;
                 line-height: normal;
                 transition: .3s all ease;
+
+                img {
+                    width: 24px;
+                    height: 24px;
+                    flex-shrink: 0;
+                    object-fit: contain;
+                }
 
                 &:hover {
                     transform: scale(1.1);

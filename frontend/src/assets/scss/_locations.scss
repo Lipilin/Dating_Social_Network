@@ -657,23 +657,21 @@
         box-shadow: 1px 1px 4px 0px rgba(94, 92, 154, 0.06);
         overflow: hidden;
         display: flex;
-        align-items: stretch;
-        min-height: 310px;
+        align-items: flex-start;
 
         @media #{$table} {
             flex-direction: column;
             height: auto;
-            min-height: auto;
         }
 
         &-img {
             width: 314px;
             flex-shrink: 0;
-            min-height: 310px;
-            height: auto;
+            height: 310px;
+            max-height: 310px;
             object-fit: cover;
             object-position: center;
-            align-self: stretch;
+            align-self: flex-start;
 
             @media #{$tablet} {
                 width: 100%;
@@ -687,7 +685,7 @@
         &-left {
             display: flex;
             flex: 0 0 auto;
-            align-items: stretch;
+            align-items: flex-start;
             max-width: 670px;
             width: 100%;
 
@@ -701,14 +699,14 @@
         }
 
         &-info {
-            padding: 57px 50px 57px 50px;
+            padding: 57px 50px 0 50px;
 
             @media #{$laptop} {
-                padding: 30px;
+                padding: 30px 30px 0;
             }
 
             @media #{$tablet} {
-                padding: 20px;
+                padding: 20px 20px 0;
             }
 
             p {
@@ -780,7 +778,7 @@
             flex-direction: column;
             flex: 1;
             min-width: 0;
-            padding: 57px 68px 50px 57px;
+            padding: 57px 68px 0 57px;
             border-left: 1px solid #f0f0f0;
 
             @media #{$bigLaptop} {
@@ -789,11 +787,11 @@
 
             @media #{$laptop} {
                 max-width: fit-content;
-                padding: 30px;
+                padding: 30px 30px 0;
             }
 
             @media #{$tablet} {
-                padding: 20px;
+                padding: 20px 20px 0;
             }
         }
 

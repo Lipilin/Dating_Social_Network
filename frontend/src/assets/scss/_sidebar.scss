@@ -1,23 +1,15 @@
 .sidebar {
     background: linear-gradient(0deg, #00195B 0%, #00195B 100%), linear-gradient(219deg, rgba(235, 13, 111, 0.00) -2.18%, rgba(235, 13, 111, 0.60) 157.52%), #0041F2;
     position: fixed;
-    top: 0;
+    top: var(--header-height);
     left: 0;
-    height: 100vh;
-    padding: 88px 0 24px 0;
+    height: calc(100vh - var(--header-height));
+    padding: 8px 0 24px 0;
     overflow-y: auto;
     scrollbar-width: none !important;
     z-index: 3998 !important;
-    transition: .3s all ease;
+    transition: top 0.3s ease, height 0.3s ease, width 0.3s ease;
     width: 80px;
-
-    @media #{$laptop} {
-        padding-top: 157px;
-    }
-
-    @media #{$table} {
-        padding-top: 87px;
-    }
 
     @media #{$tablet} {
         left: -240px;
@@ -46,10 +38,6 @@
             display: block !important;
 
         }
-    }
-
-    @media #{$mobile} {
-        padding-top: 77px;
     }
 
     &.active {

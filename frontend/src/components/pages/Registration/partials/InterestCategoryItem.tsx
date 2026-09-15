@@ -26,8 +26,8 @@ export function InterestCategoryItem({ category, selectedInterests, onInterestsC
                     setOpen((prev) => !prev)
                 }}
             >
-                <img src={ category.image } alt="" />
-                { category.name }
+                {category.icon && <img src={category.icon} alt="" />}
+                {category.name}
             </div>
             <div className={`interest__item-body${open ? ' show' : ''}`}>
                 {category.interests.map((interest) => (

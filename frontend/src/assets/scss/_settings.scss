@@ -6,6 +6,14 @@ ol {
     box-sizing: border-box;
 }
 
+:root {
+    --header-height: clamp(
+        80px,
+        calc(2 * clamp(14px, 1.8vw, 20px) + clamp(48px, 8vw, 59px)),
+        102px
+    );
+}
+
 .wrapper {
     overflow: clip;
 }
@@ -66,7 +74,7 @@ body {
 // message-content
 .header .message-content-sms {
     position: fixed;
-    top: 100px;
+    top: calc(var(--header-height) + 8px);
     right: 20px;
     z-index: 1002 !important;
     background: #fff;
@@ -84,7 +92,7 @@ body {
     @media #{$mobile} {
         width: calc(100% - 20px);
         left: 10px;
-        top: 73px;
+        top: calc(var(--header-height) + 8px);
     }
 }
 
@@ -307,7 +315,7 @@ body {
 .header .settings {
     position: absolute;
     right: 20px;
-    top: 100px;
+    top: calc(var(--header-height) + 8px);
     visibility: hidden;
     opacity: 0;
     transition: all 0.3s ease;
@@ -320,7 +328,7 @@ body {
 
     @media #{$mobile} {
         width: calc(100% - 20px);
-        top: 73px;
+        top: calc(var(--header-height) + 8px);
         right: 10px;
     }
 
@@ -1772,6 +1780,13 @@ body {
                         position: relative;
                         cursor: pointer;
                         margin-bottom: 17px;
+
+                        img {
+                            width: 24px;
+                            height: 24px;
+                            flex-shrink: 0;
+                            object-fit: contain;
+                        }
 
                         &:after {
                             content: '';

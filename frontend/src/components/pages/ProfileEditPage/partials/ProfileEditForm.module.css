@@ -158,6 +158,13 @@
     margin-bottom: 17px;
 }
 
+.profileEditInterests :global(.interest__item-head img){
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
 .profileEditInterests :global(.interest__item-head:after){
     content: "";
     position: absolute;
