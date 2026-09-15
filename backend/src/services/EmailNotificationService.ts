@@ -5,14 +5,9 @@ import {
 } from '@boltaem/common/emailMessages.js'
 import { EMAIL_NOTIFICATION_ERROR_MESSAGE } from '@/config/emailNotificationMessages.js'
 import { sendMail } from '@/utils/other/mailSender.js'
-import {
-    buildEmailConfirmationLink,
-    generateEmailConfirmationToken,
-} from '@/utils/other/emailConfirmationToken.js'
-import {
-    buildPasswordResetLink,
-    generatePasswordResetToken,
-} from '@/utils/other/passwordResetToken.js'
+import { buildEmailNotificationLink } from '@/utils/other/emailNotificationLink.js'
+import { generateEmailConfirmationToken } from '@/utils/other/emailConfirmationToken.js'
+import { generatePasswordResetToken } from '@/utils/other/passwordResetToken.js'
 
 function applyTemplate(content: string, variables: Record<string, string>): string {
     return Object.entries(variables).reduce(
@@ -32,10 +27,9 @@ export class EmailNotificationService {
         email: string,
         name: string,
         login: string,
-        baseUrl: string,
     ): Promise<void> {
         const token = await generateEmailConfirmationToken(email, name, login)
-        const confirmLink = buildEmailConfirmationLink(token, baseUrl)
+        const confirmLink = buildEmailNotificationLink('CONFIRM_REGISTRATION', token)
 
         await this.#sendTemplatedEmail(
             EMAIL_MESSAGE_IDS.REGISTRATION,
@@ -48,10 +42,9 @@ export class EmailNotificationService {
         email: string,
         id: number,
         login: string,
-        baseUrl: string,
     ): Promise<void> {
         const token = await generatePasswordResetToken(email, id, login)
-        const resetLink = buildPasswordResetLink(token, baseUrl)
+        const resetLink = buildEmailNotificationLink('PASSWORD_RESET', token)
 
         await this.#sendTemplatedEmail(
             EMAIL_MESSAGE_IDS.PASSWORD_RESET,

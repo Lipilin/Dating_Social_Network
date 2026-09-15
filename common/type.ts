@@ -240,3 +240,13 @@ export interface SendPasswordResetEmailRequest extends PostRequest {
 export interface SendPasswordResetEmailResponse {
     message: string
 }
+
+export interface ResetPasswordRequest extends PostRequest {
+    token: string
+    password: string
+    confirmPassword: string
+}
+
+export interface ResetPasswordResponse {
+    message: string
+}

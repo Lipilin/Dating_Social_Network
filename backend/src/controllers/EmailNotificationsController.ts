@@ -20,7 +20,7 @@ import type {
     SendRegistrationEmailRequest,
 } from '@boltaem/common/type.js'
 import { verifyEmailConfirmationToken } from '@/utils/other/emailConfirmationToken.js'
-import { getAppBaseUrl } from '@/utils/other/requestBaseUrl.js'
+import { verifyPasswordResetToken } from '@/utils/other/passwordResetToken.js'
 
 export class EmailNotificationsController {
     #emailNotificationService: EmailNotificationService
@@ -52,7 +52,6 @@ export class EmailNotificationsController {
                 validation.data.email,
                 validation.data.name,
                 validation.data.login,
-                getAppBaseUrl(),
             )
             return response.status(API_RESPONSE.OK).json({
                 message: EMAIL_NOTIFICATION_SUCCESS_MESSAGE.REGISTRATION,
@@ -90,7 +89,6 @@ export class EmailNotificationsController {
                 user.email,
                 user.id,
                 user.login,
-                getAppBaseUrl(),
             )
 
             return response.status(API_RESPONSE.OK).json({
@@ -119,7 +117,30 @@ export class EmailNotificationsController {
 
             return response.status(API_RESPONSE.OK).json({
                 message: EMAIL_CONFIRMATION_SUCCESS_MESSAGE.CONFIRMED,
-            }).redirect('/')
+            })
+        } catch (error) {
+            return response.status(API_RESPONSE.BAD_REQUEST).json({
+                message: (error as Error).message,
+            })
+        }
+    }
+
+    validatePasswordResetToken = async (request: Request, response: Response) => {
+        const tokenParam = request.params.token
+        const token = Array.isArray(tokenParam) ? tokenParam[0] : tokenParam
+
+        if (!token) {
+            return response.status(API_RESPONSE.BAD_REQUEST).json({
+                message: EMAIL_NOTIFICATION_ERROR_MESSAGE.VALIDATION,
+            })
+        }
+
+        try {
+            const payload = await verifyPasswordResetToken(decodeURIComponent(token))
+
+            return response.status(API_RESPONSE.OK).json({
+                email: payload.email,
+            })
         } catch (error) {
             return response.status(API_RESPONSE.BAD_REQUEST).json({
                 message: (error as Error).message,

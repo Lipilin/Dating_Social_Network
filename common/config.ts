@@ -5,12 +5,45 @@ export const STATIC_ROUTES_FOR_BUTTOS = {
     HELP: '/help',
 } as const
 
+export const EMAIL_NOTIFICATIONS_URLS = {
+    CONFIRM_REGISTRATION: '/email/confirm',
+    PASSWORD_RESET: '/password-reset',
+} as const
+
+export const SITE_SUPPORT_EMAIL = 'support@boltaem.ru'
+
+export const EMAIL_CONFIRMATION_ERROR_MESSAGE = {
+    INVALID_TOKEN: 'Недействительный токен подтверждения',
+    EXPIRED_TOKEN: 'Срок действия токена подтверждения истёк',
+    USER_NOT_FOUND: 'Пользователь для подтверждения не найден',
+    USER_MISMATCH: 'Данные пользователя не совпадают с токеном',
+    ALREADY_CONFIRMED: 'Email уже подтверждён',
+} as const
+
+export const EMAIL_CONFIRMATION_SUCCESS_MESSAGE = {
+    CONFIRMED: 'Email успешно подтверждён',
+} as const
+
+export const PASSWORD_RESET_ERROR_MESSAGE = {
+    INVALID_TOKEN: 'Недействительный токен восстановления пароля',
+    EXPIRED_TOKEN: 'Срок действия токена восстановления пароля истёк',
+    USER_NOT_FOUND: 'Пользователь с таким email не найден',
+} as const
+
+export const PASSWORD_RESET_SUCCESS_MESSAGE = {
+    PASSWORD_CHANGED: 'Пароль успешно изменён',
+} as const
+
+export const EMAIL_NOTIFICATION_FALLBACK_ERROR_MESSAGE =
+    'Не удалось выполнить операцию. Попробуйте позже или обратитесь в поддержку.'
+
 export const HTTP_STATUS = {
     UNAUTHORIZED: 401,
 } as const
 
 export const VALIDATION_ERRORS = {
     EMAIL_INVALID: 'Неверный email!',
+    TOKEN_REQUIRED: 'Токен обязателен!',
     PASSWORD_MIN_LENGTH: 'Пароль должен быть не менее 8 символов!',
     PASSWORD_MISMATCH: 'Пароли не совпадают!',
     LOGIN_MIN_LENGTH: 'Логин должен быть не менее 3 символов!',

@@ -14,7 +14,10 @@ import { PostCreation } from '@/components/pages/PostCreation/PostCreation'
 import { PostEdit } from '@/components/pages/PostEdit/PostEdit'
 import { AnnouncementCreation } from '@/components/pages/AnnouncementCreation'
 import { AnnouncementEdit } from '@/components/pages/AnnouncementEdit'
-export { STATIC_ROUTES_FOR_BUTTOS } from '@boltaem/common/config'
+import { EmailConfirmWrapper } from '@/components/pages/EmailConfirm'
+import { PasswordResetWrapper } from '@/components/pages/PasswordReset'
+import { EMAIL_NOTIFICATIONS_URLS } from '@boltaem/common/config'
+export { STATIC_ROUTES_FOR_BUTTOS, EMAIL_NOTIFICATIONS_URLS } from '@boltaem/common/config'
 export { userGenderLabels, genderLabels } from '@/config/genderLabels'
 export { API_SETTINGS, CATEGORY_DEFAULT_PAGINATION } from '@/config/apiSettings'
 
@@ -84,6 +87,14 @@ export const ROUTES: Record<string, Route> = {
     ANNOUNCEMENT_EDIT: {
         URL: '/announcement/:id/edit',
         COMPONENT: AnnouncementEdit,
+    },
+    EMAIL_CONFIRM: {
+        URL: `${EMAIL_NOTIFICATIONS_URLS.CONFIRM_REGISTRATION}/:token`,
+        COMPONENT: EmailConfirmWrapper,
+    },
+    PASSWORD_RESET: {
+        URL: `${EMAIL_NOTIFICATIONS_URLS.PASSWORD_RESET}/:token`,
+        COMPONENT: PasswordResetWrapper,
     },
 } as const
 

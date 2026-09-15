@@ -13,3 +13,4 @@ const emailNotificationsController = new EmailNotificationsController(
 export const router = Router()
 
 router.get('/confirm/:token', emailNotificationsController.confirmRegistration.bind(emailNotificationsController))
+router.get('/password-reset/:token', emailNotificationsController.validatePasswordResetToken.bind(emailNotificationsController))

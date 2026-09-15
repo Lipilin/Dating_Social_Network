@@ -35,25 +35,20 @@ export const AUTH_ENV = {
     PASSWORD_RESET_SECRET: 'PASSWORD_RESET_TOKEN_SECRET',
 } as const
 
-export const EMAIL_CONFIRMATION_ERROR_MESSAGE = {
-    INVALID_TOKEN: 'Недействительный токен подтверждения',
-    EXPIRED_TOKEN: 'Срок действия токена подтверждения истёк',
-    USER_NOT_FOUND: 'Пользователь для подтверждения не найден',
-    USER_MISMATCH: 'Данные пользователя не совпадают с токеном',
-    ALREADY_CONFIRMED: 'Email уже подтверждён',
-} as const
+import {
+    EMAIL_CONFIRMATION_ERROR_MESSAGE,
+    EMAIL_CONFIRMATION_SUCCESS_MESSAGE,
+    PASSWORD_RESET_ERROR_MESSAGE,
+    PASSWORD_RESET_SUCCESS_MESSAGE,
+    SERVER_ERRORS,
+} from '@boltaem/common/config.js'
 
-export const EMAIL_CONFIRMATION_SUCCESS_MESSAGE = {
-    CONFIRMED: 'Email успешно подтверждён',
-} as const
-
-export const PASSWORD_RESET_ERROR_MESSAGE = {
-    INVALID_TOKEN: 'Недействительный токен восстановления пароля',
-    EXPIRED_TOKEN: 'Срок действия токена восстановления пароля истёк',
-    USER_NOT_FOUND: 'Пользователь с таким email не найден',
-} as const
-
-import { SERVER_ERRORS } from '@boltaem/common/config.js'
+export {
+    EMAIL_CONFIRMATION_ERROR_MESSAGE,
+    EMAIL_CONFIRMATION_SUCCESS_MESSAGE,
+    PASSWORD_RESET_ERROR_MESSAGE,
+    PASSWORD_RESET_SUCCESS_MESSAGE,
+}
 
 export const AUTH_ERROR_MESSAGE = {
     NO_VALID_SECRETS: 'Не установлены валидные секреты',

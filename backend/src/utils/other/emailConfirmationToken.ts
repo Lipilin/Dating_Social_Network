@@ -60,7 +60,3 @@ export async function verifyEmailConfirmationToken(token: string): Promise<Email
     }
 }
 
-export function buildEmailConfirmationLink(token: string, baseUrl: string): string {
-    const normalizedBaseUrl = baseUrl.replace(/\/$/, '')
-    return `${normalizedBaseUrl}/api/email/confirm/${encodeURIComponent(token)}`
-}

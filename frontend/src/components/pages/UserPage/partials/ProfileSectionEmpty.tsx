@@ -27,7 +27,14 @@ export function ProfileSectionEmpty({
         : undefined
 
     return (
-        <div className={`about__top ${styles.section}${compact ? ` ${styles.sectionCompact}` : ''}`}>
+        <div
+            className={[
+                'profile-section-empty',
+                styles.section,
+                compact ? styles.sectionCompact : '',
+                compact ? styles.embedded : styles.standalone,
+            ].filter(Boolean).join(' ')}
+        >
             <NoDataFound
                 embedded
                 compact={compact}

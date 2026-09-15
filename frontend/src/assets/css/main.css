@@ -3732,6 +3732,10 @@ img.mfp-img {
 .friends__interests {
   display: flex;
   flex-direction: column;
+  width: 100%;
+}
+.friends__interests .profile-section-empty {
+  width: 100%;
 }
 .friends__interests-row {
   display: flex;
@@ -3828,6 +3832,7 @@ img.mfp-img {
   transform: translate(3px, 0.5px);
 }
 .friends__directions {
+  width: 100%;
   border-radius: 8px;
   background: #FFF;
   box-shadow: 1px 1px 4px 0px rgba(94, 92, 154, 0.06);
@@ -3838,6 +3843,16 @@ img.mfp-img {
     padding: 40px 20px;
   }
 }
+@media (max-width: 768px) {
+  .friends__directions {
+    padding: 30px 20px;
+  }
+}
+@media (max-width: 480px) {
+  .friends__directions {
+    padding: 24px 16px;
+  }
+}
 .friends__directions_full {
   width: 100%;
 }
@@ -3846,6 +3861,20 @@ img.mfp-img {
   flex-wrap: wrap;
   gap: 10px;
   padding: 35px 0 50px 0;
+}
+@media (max-width: 768px) {
+  .friends__directions .countries {
+    padding: 24px 0 32px;
+  }
+}
+@media (max-width: 480px) {
+  .friends__directions .countries {
+    padding: 16px 0 24px;
+  }
+}
+.friends__directions .countries .profile-section-empty {
+  width: 100%;
+  flex: 1 1 100%;
 }
 .friends__directions .countries .country__item {
   display: flex;
@@ -6654,11 +6683,17 @@ img.mfp-img {
 }
 .about__block-right {
   width: calc(41% - 15px);
+  display: flex;
+  flex-direction: column;
 }
 @media (max-width: 1024px) {
   .about__block-right {
     width: 100%;
   }
+}
+.about__block-right .friends__directions {
+  width: 100%;
+  flex: 1;
 }
 .about__block .friends__interests {
   margin: 35px 0px 35px 0px;
@@ -6773,6 +6808,7 @@ img.mfp-img {
 }
 .about .friends__directions {
   margin-top: 30px;
+  width: 100%;
 }
 .about__map {
   border-radius: 8px;
@@ -8925,6 +8961,25 @@ img.mfp-img {
   inset: 0;
   background: radial-gradient(circle at 50% 0%, rgba(0, 65, 242, 0.08) 0%, rgba(0, 65, 242, 0) 55%);
   pointer-events: none;
+}
+.need-registration .modal__body-form {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 360px;
+  margin: 28px auto 0;
+  padding: 0;
+  text-align: left;
+}
+@media (max-width: 768px) {
+  .need-registration .modal__body-form {
+    padding: 0;
+  }
+}
+@media (max-width: 480px) {
+  .need-registration .modal__body-form {
+    margin-top: 24px;
+  }
 }
 .need-registration__text {
   position: relative;

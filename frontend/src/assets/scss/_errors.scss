@@ -101,6 +101,24 @@
         }
     }
 
+    .modal__body-form {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 360px;
+        margin: 28px auto 0;
+        padding: 0;
+        text-align: left;
+
+        @media #{$tablet} {
+            padding: 0;
+        }
+
+        @media #{$mobile} {
+            margin-top: 24px;
+        }
+    }
+
     &__text {
         position: relative;
         z-index: 1;

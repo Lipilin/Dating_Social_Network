@@ -30,7 +30,10 @@ function App() {
 
     return (
         <div className="wrapper">
-            <ProfileProvider onAuthModalOpen = {() => setRegistrationOpen(true)}>
+            <ProfileProvider
+                onAuthModalOpen={() => setRegistrationOpen(true)}
+                onLoginModalOpen={() => setAuthOpen(true)}
+            >
                 <CategoryProvider>
                     <Header
                         onOpenAuth={() => setAuthOpen(true)}

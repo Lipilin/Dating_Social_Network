@@ -8,13 +8,27 @@ import {
     API_RESPONSE,
     AUTH_ERROR_MESSAGE,
     AUTH_SUCCESS_MESSAGE,
+    PASSWORD_RESET_SUCCESS_MESSAGE,
     REFRESH_TOKEN_COOKIE_NAME,
     REFRESH_TOKEN_COOKIE_MAX_AGE,
     REFRESH_TOKEN_EXPIRATION_TIME,
     REFRESH_TOKEN_COOKIE_REMEMBER_ME_MAX_AGE 
 } from '@/types.js'
-import { LoginStepSchema, InfoStepSchema, UserLoginSchema, UserUpdateSchema, getValidationErrorMessage } from '@/utils/validation/rules.js'
-import type { UserLoginRequest, UserLoginResponse, UserPostRequest, UserUpdatedRequest } from '@boltaem/common/type.js'
+import {
+    LoginStepSchema,
+    InfoStepSchema,
+    UserLoginSchema,
+    UserUpdateSchema,
+    ResetPasswordRequestSchema,
+    getValidationErrorMessage,
+} from '@/utils/validation/rules.js'
+import type {
+    ResetPasswordRequest,
+    UserLoginRequest,
+    UserLoginResponse,
+    UserPostRequest,
+    UserUpdatedRequest,
+} from '@boltaem/common/type.js'
 import type { RefreshTokenService } from '@/services/RefreshTokenService.js'
 import { generateJwtToken, fromUserResourceToUserUpdateInput, fromUserUpdatedRequestToUserResource, type UserWithRelations } from '@/utils/mapping/user.mapper.js'
 import { encodedAccessSecret, encodedRefreshSecret } from '@/utils/other/authSecret.js'
@@ -153,6 +167,32 @@ export class UserController{
             message: AUTH_SUCCESS_MESSAGE.LOGOUT,
             user: null, 
         })
+    }
+
+    resetPassword = async (req: Request, res: Response) => {
+        const resetRequest: ResetPasswordRequest = req.body
+        const validation = ResetPasswordRequestSchema.safeParse(resetRequest)
+
+        if (validation.error) {
+            return res.status(API_RESPONSE.BAD_REQUEST).json({
+                message: getValidationErrorMessage(validation.error),
+            })
+        }
+
+        try {
+            await this.#userService.resetPassword(
+                validation.data.token,
+                validation.data.password,
+            )
+
+            return res.status(API_RESPONSE.OK).json({
+                message: PASSWORD_RESET_SUCCESS_MESSAGE.PASSWORD_CHANGED,
+            })
+        } catch (error) {
+            return res.status(API_RESPONSE.BAD_REQUEST).json({
+                message: (error as Error).message,
+            })
+        }
     }
 
     update = async(req: Request, res: Response) => {

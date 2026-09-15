@@ -702,9 +702,16 @@
 
         &-right {
             width: calc(41% - 15px);
+            display: flex;
+            flex-direction: column;
 
             @media #{$table} {
                 width: 100%;
+            }
+
+            .friends__directions {
+                width: 100%;
+                flex: 1;
             }
         }
     }
@@ -834,6 +841,7 @@
 
     .friends__directions {
         margin-top: 30px;
+        width: 100%;
     }
 
     &__map {

@@ -5,10 +5,15 @@ import type { UserPostRequest, UserLoginRequest, UserLoginResponse } from '@bolt
 import bcrypt from 'bcryptjs'
 import { type UserWithRelations } from '@/utils/mapping/user.mapper.js'
 import { GENDER } from '@boltaem/common/type.js'
-import { AUTH_ERROR_MESSAGE, EMAIL_CONFIRMATION_ERROR_MESSAGE, type JwtFormat } from '@/types.js'
+import {
+    AUTH_ERROR_MESSAGE,
+    EMAIL_CONFIRMATION_ERROR_MESSAGE,
+    PASSWORD_RESET_ERROR_MESSAGE,
+    type JwtFormat,
+} from '@/types.js'
 import { SERVER_ERRORS } from '@boltaem/common/config.js'
 import type { EmailConfirmationPayload } from '@/utils/other/emailConfirmationToken.js'
-import { getAppBaseUrl } from '@/utils/other/requestBaseUrl.js'
+import { verifyPasswordResetToken } from '@/utils/other/passwordResetToken.js'
 import type { EmailNotificationService } from './EmailNotificationService.js'
 
 export class UserService{
@@ -113,28 +118,9 @@ export class UserService{
                     user.email,
                     user.name,
                     user.login,
-                    getAppBaseUrl(),
                 )
                 return user
             })
-            /*return await prisma.user.create({
-                data: {
-                    email: normalizedEmail,
-                    login: normalizedLogin,
-                    password: hashedPassword,
-                    age: data.age,
-                    name: data.name,
-                    surname: data.surname,
-                    description: data.description,
-                    city: data.city,
-                    gender: data.gender as GENDER,
-                    interests: {
-                        connect: data.interests?.map((interest) => ({ id: interest.id })) || [],
-                    },
-                    role: UserRole.USER,
-                    status: UserStatus.NEW,
-                },
-            })*/
         } catch (error) {
             console.log(error)
             throw new Error(SERVER_ERRORS.REGISTRATION_ERROR)
@@ -156,7 +142,7 @@ export class UserService{
         }
 
         if (user.status === UserStatus.PENDING_APPROVEMENT || user.status === UserStatus.REGISTERED) {
-            throw new Error(EMAIL_CONFIRMATION_ERROR_MESSAGE.ALREADY_CONFIRMED)
+            return user
         }
 
         if (user.status !== UserStatus.NEW) {
@@ -170,6 +156,25 @@ export class UserService{
         return prisma.user.update({
             where: { id: user.id },
             data: { status: UserStatus.PENDING_APPROVEMENT },
+        })
+    }
+
+    async resetPassword(token: string, password: string): Promise<void> {
+        const payload = await verifyPasswordResetToken(token)
+        const user = await prisma.user.findFirst({
+            where: { 
+                id: Number(payload.id), 
+                email: payload.email,
+                login: payload.login 
+            },
+        })
+        console.log(payload, user)
+        if (user == null) throw new Error(PASSWORD_RESET_ERROR_MESSAGE.USER_NOT_FOUND)
+        const hashedPassword = await bcrypt.hash(password, 10)
+
+        await prisma.user.update({
+            where: { id: user.id },
+            data: { password: hashedPassword },
         })
     }
 

@@ -59,7 +59,3 @@ export async function verifyPasswordResetToken(token: string): Promise<PasswordR
     }
 }
 
-export function buildPasswordResetLink(token: string, baseUrl: string): string {
-    const normalizedBaseUrl = baseUrl.replace(/\/$/, '')
-    return `${normalizedBaseUrl}/api/email/password-reset/${encodeURIComponent(token)}`
-}

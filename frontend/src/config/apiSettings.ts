@@ -40,6 +40,7 @@ export const API_SETTINGS: ApiSettings = {
             UPDATE: '/user/update',
             GET: '/user/get',
             LOGIN: '/user/login',
+            RESET_PASSWORD: '/user/reset-password',
             ME: '/user/me',
             CREATE_ANNOUNCEMENT: '/user/create-announcement',
             CREATE_POST: '/user/create-post',
