@@ -39,6 +39,8 @@ function toPublicUrl(relativePath: string): string {
   return `${DEV_BASE_URL}${relativePath}`
 }
 
+const IMAGE_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg'])
+
 function listResourceFiles(subdir: string): string[] {
   const dir = path.join(RESOURCES_DIR, subdir)
   if (!fs.existsSync(dir)) {
@@ -47,7 +49,13 @@ function listResourceFiles(subdir: string): string[] {
 
   const files = fs
     .readdirSync(dir)
-    .filter((file: string) => !file.startsWith('.'))
+    .filter((file: string) => {
+      if (file.startsWith('.')) return false
+      const fullPath = path.join(dir, file)
+      if (!fs.statSync(fullPath).isFile()) return false
+      return IMAGE_EXTENSIONS.has(path.extname(file).toLowerCase())
+    })
+    .sort((a, b) => a.localeCompare(b, 'en'))
 
   if (files.length === 0) {
     throw new Error(`В resources/${subdir} нет файлов: ${dir}`)
@@ -58,25 +66,14 @@ function listResourceFiles(subdir: string): string[] {
 
 const CATEGORY_ICONS = listResourceFiles('categories')
 const DESTINATION_IMAGES = listResourceFiles('destinations')
-const PHOTO_IMAGES = listResourceFiles('photos')
-const PROFILE_PHOTOS = PHOTO_IMAGES.filter((file) => file.includes('profile_'))
+const AVATAR_IMAGES = listResourceFiles('seed_photos/users/avatars')
+const BANNER_IMAGES = listResourceFiles('seed_photos/users/banners')
+const POST_IMAGES = listResourceFiles('seed_photos/posts')
+const ANNOUNCEMENT_IMAGES = listResourceFiles('seed_photos/announcements')
+const INTEREST_IMAGES = listResourceFiles('seed_photos/interests')
 
 function pickByIndex<T>(items: T[], index: number): T {
   return items[index % items.length]
-}
-
-function randomPhoto(): string {
-  if (PHOTO_IMAGES.length > 0 && faker.datatype.boolean({ probability: 0.7 })) {
-    return faker.helpers.arrayElement(PHOTO_IMAGES)
-  }
-  return faker.image.urlPicsumPhotos()
-}
-
-function randomAvatar(): string {
-  if (PROFILE_PHOTOS.length > 0 && faker.datatype.boolean({ probability: 0.6 })) {
-    return faker.helpers.arrayElement(PROFILE_PHOTOS)
-  }
-  return faker.image.avatarGitHub()
 }
 
 function categoryIcon(index: number): string {
@@ -87,11 +84,24 @@ function destinationImage(index: number): string {
   return pickByIndex(DESTINATION_IMAGES, index)
 }
 
-function interestImage(isCountry: boolean, index: number): string {
-  if (isCountry) {
-    return destinationImage(index)
-  }
-  return randomPhoto()
+function avatarImage(index: number): string {
+  return pickByIndex(AVATAR_IMAGES, index)
+}
+
+function bannerImage(index: number): string {
+  return pickByIndex(BANNER_IMAGES, index)
+}
+
+function postImage(index: number): string {
+  return pickByIndex(POST_IMAGES, index)
+}
+
+function announcementIcon(index: number): string {
+  return pickByIndex(ANNOUNCEMENT_IMAGES, index)
+}
+
+function interestImage(index: number): string {
+  return pickByIndex(INTEREST_IMAGES, index)
 }
 
 function pickUserInterests(allInterests: Interest[]): Interest[] {
@@ -224,7 +234,8 @@ export async function seedDev(prisma: PrismaClient): Promise<void> {
   await prisma.user.deleteMany()
 
   console.log('📂 Создание категорий и интересов...')
-  let interestIndex = 0
+  let countryInterestIndex = 0
+  let personalInterestIndex = 0
   for (const [categoryIndex, categoryData] of CATEGORIES.entries()) {
     const category = await prisma.category.create({
       data: {
@@ -236,14 +247,17 @@ export async function seedDev(prisma: PrismaClient): Promise<void> {
 
     const interestNames = INTERESTS_BY_CATEGORY[categoryData.name] || []
     for (const interestName of interestNames) {
+      const image = categoryData.isCountry
+        ? destinationImage(countryInterestIndex++)
+        : interestImage(personalInterestIndex++)
+
       await prisma.interest.create({
         data: {
           name: interestName,
           categoryId: category.id,
-          image: interestImage(categoryData.isCountry, interestIndex),
+          image,
         },
       })
-      interestIndex += 1
     }
   }
 
@@ -267,8 +281,8 @@ export async function seedDev(prisma: PrismaClient): Promise<void> {
       description: 'Администратор системы Boltaem',
       status: UserStatus.REGISTERED,
       role: UserRole.ADMIN,
-      avatar: PROFILE_PHOTOS[0] ?? randomAvatar(),
-      banner: randomPhoto(),
+      avatar: avatarImage(0),
+      banner: bannerImage(0),
       lastSeen: new Date(),
       metadata: {
         preferences: {
@@ -303,8 +317,8 @@ export async function seedDev(prisma: PrismaClient): Promise<void> {
         description: faker.lorem.sentence({ min: 5, max: 15 }),
         status: resolveUserStatus(i),
         role: UserRole.USER,
-        avatar: randomAvatar(),
-        banner: randomPhoto(),
+        avatar: avatarImage(i + 1),
+        banner: bannerImage(i + 1),
         lastSeen: faker.date.recent(),
         metadata: {
           preferences: {
@@ -336,7 +350,7 @@ export async function seedDev(prisma: PrismaClient): Promise<void> {
       data: {
         title: faker.lorem.sentence({ min: 3, max: 8 }),
         content: faker.lorem.paragraphs({ min: 2, max: 5 }),
-        image: randomPhoto(),
+        image: postImage(i),
         tags,
         status: faker.helpers.arrayElement([
           UserContentStatus.PUBLISHED,
@@ -375,7 +389,7 @@ export async function seedDev(prisma: PrismaClient): Promise<void> {
         description: faker.lorem.paragraphs({ min: 2, max: 5 }),
         dateFrom,
         dateTo,
-        icon: randomPhoto(),
+        icon: announcementIcon(i),
         departure: city1,
         destination: city2,
         genderInterest: faker.helpers.arrayElement(GENDERS),
