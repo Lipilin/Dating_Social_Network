@@ -1,0 +1,251 @@
+.head {
+    margin-top: 31px;
+
+    .about {
+        padding: 0;
+        position: static;
+    }
+
+    &__image {
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+
+        @media #{$tablet} {
+            height: 100px;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+    }
+
+    &__profile {
+        background: #FFF;
+        box-shadow: 1px 1px 4px 0px rgba(94, 92, 154, 0.06);
+        padding: 25px 38px 27px 33px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 20px;
+
+        @media #{$tablet} {
+            padding: 20px;
+        }
+
+        &-infos {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+
+            .time {
+                color: #555961;
+                font-family: "TT Commons";
+                font-size: 15px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                position: relative;
+
+                &.online {
+                    color: #05974E;
+                    padding-right: 15px;
+
+                    &::after {
+                        content: "";
+                        width: 7px;
+                        height: 7px;
+                        position: absolute;
+                        top: 4px;
+                        right: 0;
+                        background-color: #11ce70;
+                        border-radius: 50%;
+                    }
+                }
+            }
+        }
+
+        &-avatar {
+            position: relative;
+            height: 85px;
+
+
+            @media #{$mobile} {
+                height: 50px;
+            }
+
+            img {
+                width: 85px;
+                height: 85px;
+                border-radius: 50%;
+
+
+                @media #{$mobile} {
+                    width: 50px;
+                    height: 50px;
+                }
+            }
+
+            span {
+                position: absolute;
+                font-family: 'Gilroy';
+                left: 0;
+                bottom: 0;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background-color: #0041F2;
+                color: #FFF;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 17.647px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+
+                @media #{$mobile} {
+                    width: 15px;
+                    height: 15px;
+                    font-size: 12px;
+                }
+
+                &.red {
+                    background-color: #EB0D6F;
+                }
+
+                .info {
+                    border-radius: 8px;
+                    background: #FFF;
+                    box-shadow: 0px 0px 40px 0px rgba(94, 92, 154, 0.06), 1px 1px 30px 0px rgba(109, 112, 117, 0.08), 1px 1px 3px 0px rgba(109, 112, 117, 0.12);
+                    position: absolute;
+                    padding: 11px 13px 8px 13px;
+                    color: rgba(32, 33, 46, 0.8);
+                    font-family: "TT Commons";
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                    width: max-content;
+                    bottom: -52px;
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: 0.3s all ease;
+                    transform: translateY(-10px);
+                }
+
+                &:hover {
+                    .info {
+                        z-index: 10000;
+                        opacity: 1;
+                        visibility: visible;
+                        transform: translateY(0);
+                    }
+                }
+            }
+        }
+
+        &-name {
+            color: #00195B;
+            font-family: "TT Commons";
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+
+            @media #{$mobile} {
+                font-size: 18px;
+            }
+        }
+
+        &-buttons {
+            display: flex;
+            align-items: center;
+            gap: 23px;
+            flex-wrap: wrap;
+
+            @media #{$mobile} {
+                gap: 10px;
+                width: 100%;
+            }
+
+            .add {
+                display: flex;
+                border-radius: 9.274px;
+                background: #0041F2;
+                display: inline-flex;
+                padding: 13px 18px;
+                align-items: center;
+                gap: 23px;
+                text-decoration: none;
+
+                img {
+                    width: 19px;
+                }
+
+                span {
+                    color: #FFF;
+                    font-family: "Gilroy";
+                    font-size: 15.07px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                }
+
+                &:hover {
+                    background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%), linear-gradient(267deg, rgba(235, 13, 111, 0.5) -9.97%, rgba(235, 13, 111, 0) 64.02%), #0041F2;
+                }
+
+                @media #{$tablet} {
+                    width: calc(50% - 5px);
+                    padding: 13px 12px;
+                    gap: 5px;
+                    font-size: 12px;
+
+                    span {
+                        font-size: 12px;
+                    }
+                }
+            }
+
+            .write {
+                border-radius: 9.274px;
+                background: #0041F2;
+                display: inline-flex;
+                padding: 13px 18px;
+                justify-content: center;
+                align-items: center;
+                gap: 23px;
+                flex-shrink: 0;
+                text-decoration: none;
+
+                @media #{$tablet} {
+                    width: calc(50% - 5px);
+                    gap: 5px;
+
+                    span {
+                        font-size: 12px;
+                    }
+                }
+
+                span {
+                    color: #FFF;
+                    text-align: right;
+                    font-family: "Gilroy";
+                    font-size: 15.07px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                }
+
+                &:hover {
+                    background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%), linear-gradient(267deg, rgba(235, 13, 111, 0.5) -9.97%, rgba(235, 13, 111, 0) 64.02%), #0041F2;
+                }
+            }
+        }
+    }
+}

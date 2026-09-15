@@ -1,0 +1,30 @@
+.section {
+    width: 100%;
+    margin-top: 41px;
+}
+
+.sectionCompact {
+    margin-top: 20px;
+}
+
+.embedded {
+    width: 100%;
+    margin-top: 0;
+}
+
+.standalone {
+    width: 100%;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 1px 1px 4px 0 rgba(94, 92, 154, 0.06);
+}
+
+@media (max-width: 768px) {
+    .section {
+        margin-top: 24px;
+    }
+
+    .sectionCompact {
+        margin-top: 12px;
+    }
+}

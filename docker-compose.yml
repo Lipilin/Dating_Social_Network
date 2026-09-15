@@ -1,0 +1,43 @@
+services:
+  backend:
+    build: 
+      context: .
+      dockerfile: ./backend/Dockerfile
+      target: develop
+    depends_on:
+      - mysql
+    volumes:
+      - ./backend:/app/backend
+      - ./common:/app/common      
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+    env_file:
+      - .env
+
+  mysql:
+    image: mysql:8
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+  frontend:
+    build: 
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend/src:/app/frontend/src
+      - ./frontend/public:/app/frontend/public
+      - ./common:/app/common
+    ports:
+      - "5173:5173"
+
+volumes:
+  mysql_data:

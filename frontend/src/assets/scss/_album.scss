@@ -1,0 +1,171 @@
+.album {
+    margin-top: 10px;
+
+    .container {
+        border-radius: 8px;
+        background: #FFF;
+        box-shadow: 1px 1px 4px 0px rgba(94, 92, 154, 0.06);
+        padding: 46px 44px 40px 44px;
+
+        @media #{$tablet} {
+            padding: 30px 20px;
+        }
+    }
+
+    h3 {
+        color: #001346;
+        font-family: 'Gilroy';
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 100%;
+    }
+
+    &__wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 46px;
+    }
+
+    &__item {
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+        width: 237px;
+        height: 244px;
+        display: flex;
+        flex-direction: column;
+        padding: 21px 25px;
+        justify-content: end;
+        gap: 11px;
+
+        @media #{$tablet} {
+            width: calc(50% - 10px);
+            height: 200px;
+        }
+
+        @media #{$mobile} {
+            height: 200px;
+            width: 100%;
+        }
+
+        &:hover {
+            .album__item-meta {
+                opacity: 1;
+            }
+        }
+
+        &-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            background: linear-gradient(350deg, #212126 -5.75%, rgba(33, 33, 38, 0.00) 45.9%);
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+        }
+
+        &-info {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 10px;
+
+            h5 {
+                color: #FFF;
+                font-family: Gilroy;
+                font-size: 19px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 100%;
+            }
+
+            p {
+                color: #FFF;
+                font-family: Gilroy;
+                font-size: 13px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 100%;
+                padding-bottom: 1px;
+            }
+        }
+
+        &-meta {
+            position: relative;
+            display: flex;
+            gap: 6px;
+            z-index: 1;
+            opacity: 0;
+            transition: .3s all ease;
+        }
+
+        &-comment {
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.70);
+            backdrop-filter: blur(5px);
+            display: inline-flex;
+            padding: 7px 13px 5px 12px;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 5px;
+            text-decoration: none;
+            transition: .3s all ease;
+
+            &:hover {
+                background-color: #fff;
+            }
+
+            span {
+                padding-top: 1px;
+                color: #20212E;
+                font-family: "TT Commons";
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+            }
+        }
+
+        &-like {
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.70);
+            backdrop-filter: blur(5px);
+            display: inline-flex;
+            padding: 6px 16px 5px 13px;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            text-decoration: none;
+            cursor: pointer;
+            transition: .3s all ease;
+
+            &:hover {
+                background-color: #fff;
+            }
+
+            span {
+                padding-top: 2px;
+                color: #20212E;
+                font-family: "TT Commons";
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+            }
+        }
+    }
+}

@@ -1,0 +1,6 @@
+export { MainPage } from './MainPage'
+export { AnnouncementSlider } from './AnnouncementSlider' 
+export { Banner } from './Banner'
+export { DestinationBlock } from './DestinationBlock'
+export { InterestBlock } from './InterestBlock'
+export { SearchForm } from './SearchForm'

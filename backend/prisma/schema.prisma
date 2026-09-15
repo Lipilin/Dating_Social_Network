@@ -1,0 +1,140 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserStatus{
+  NEW
+  PENDING_APPROVEMENT
+  REGISTERED
+  BANNED
+}
+
+enum UserContentStatus{
+  PENDING_APPROVEMENT
+  PUBLISHED
+  BANNED
+}
+
+enum UserRole{
+  USER
+  ADMIN
+}
+
+enum GenderPreference{
+  MALE
+  FEMALE
+  ANYBODY
+}
+
+enum Gender{
+  MALE
+  FEMALE
+}
+
+model User{
+  id Int @id @default(autoincrement())
+  email String @unique
+  login String
+  password String
+  age Int
+  name String
+  city String
+  surname String
+  gender Gender
+  description String? @db.VarChar(255)
+  status UserStatus @default(NEW)
+  role UserRole @default(USER)
+  avatar String?
+  banner String?
+  lastSeen DateTime @default(now())
+  metadata Json?
+  announcements Announcement[]
+  posts Post[]
+  interests Interest[]
+  refreshTokens RefreshToken[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Post{
+  id Int  @id @default(autoincrement())
+  title String
+  tags Json?
+  content String @db.Text
+  image String
+  status UserContentStatus @default(PENDING_APPROVEMENT)
+  userId Int @map("user_id")
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Announcement{
+  id Int  @id @default(autoincrement())
+  title String?
+  interests Interest[]
+  icon String?
+  description String @db.Text
+  dateFrom DateTime @map("date_from")
+  dateTo DateTime @map("date_to")
+  status UserContentStatus @default(PENDING_APPROVEMENT)
+  departure String
+  destination String
+  genderInterest GenderPreference @default(ANYBODY)
+  userId Int @map("user_id")
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Category {
+  id Int  @id @default(autoincrement())
+  icon String
+  name String
+  interests Interest[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  isCountry Boolean @default(false)
+}
+
+model Interest{
+  id Int  @id @default(autoincrement())
+  image String
+  name String
+  categoryId Int @map("category_id")
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  announcements Announcement[]
+  users User[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Page{
+  id  Int  @id @default(autoincrement())
+  name String
+  alias String
+  content String @db.Text
+  updatedAt       DateTime @updatedAt
+  createdAt       DateTime @default(now())
+}
+
+model EmailMessage{
+  id Int @id @default(autoincrement())
+  from String
+  subject String
+  content String @db.Text
+}
+
+model RefreshToken{
+  id String @id @default(cuid())
+  token String @unique
+  userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  expiredAt DateTime
+}

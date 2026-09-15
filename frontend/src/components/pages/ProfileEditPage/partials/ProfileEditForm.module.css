@@ -1,0 +1,356 @@
+.profileEditFormContainer{
+    height: 100hv;
+    background: var(--color-bg-white);
+    max-width: var(--container-max-width-wide);
+    width: 100%;
+    margin: auto;
+    border-radius: 0 0 8px 8px;
+    box-shadow: var(--shadow-input);
+}
+
+.profileEditFormWrapper{
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profileEditText input{
+    outline: none;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    font-family: var(--font-primary);
+    font-size: var(--font-size-lg);
+}
+
+.profileEditText input:not(:placeholder-shown) ~ label, .inputWrapper:focus-within label{
+    top: 0px;
+    left: 6px;
+    background: var(--color-bg-white);
+    padding: 0 4px;
+    opacity: 1;
+    z-index: 3;
+    line-height: 1;
+    box-shadow: 0 0 0 2px var(--color-bg-white);
+}
+
+.inputWrapper:focus-within{
+    border: 1px solid var(--color-primary);
+}
+
+.inputWrapper{
+    position: relative;
+    border: 1px solid var(--color-border-light);
+    padding: 0 10px;
+    height: 45px;
+    border-radius: var(--radius-base);
+}
+
+.inputWrapper label{
+    display: inline-block;
+    position: absolute;
+    left: 10px;
+    z-index: 2;
+    pointer-events: none;
+    color: var(--color-text-muted);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-xl);
+    font-style: normal;
+    font-weight: 400;
+    top: 50%;
+    opacity: 0.7;
+    transition: all 0.3s ease-in-out;
+    transform: translateY(-50%);
+}
+
+.textareaWrapper:focus-within{
+    border: 1px solid var(--color-primary);
+}
+
+.textareaWrapper{
+    position: relative;
+    border: 1px solid var(--color-border-light);
+    padding: 0 10px;
+    min-height: 120px;
+    border-radius: var(--radius-base);
+    width: 100%;
+    grid-column: 1 / -1;
+}
+
+.textareaWrapper textarea{
+    outline: none;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 120px;
+    resize: none;
+    border: none;
+    padding-top: 20px;
+    font-family: var(--font-primary);
+    font-size: var(--font-size-lg);
+}
+
+.textareaWrapper textarea:not(:placeholder-shown) ~ label, .textareaWrapper:focus-within label{
+    top: 0px;
+    left: 6px;
+    background: var(--color-bg-white);
+    padding: 0 4px;
+    opacity: 1;
+    z-index: 3;
+    line-height: 1;
+    box-shadow: 0 0 0 2px var(--color-bg-white);
+}
+
+.textareaWrapper label{
+    display: inline-block;
+    position: absolute;
+    left: 10px;
+    z-index: 2;
+    pointer-events: none;
+    color: var(--color-text-muted);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-xl);
+    font-style: normal;
+    font-weight: 400;
+    top: 10%;
+    opacity: 0.7;
+    transition: all 0.3s ease-in-out;
+}
+
+.profileEditFormHeader{
+    margin-bottom: 32px;
+}
+
+.profileEditInterests{
+    width: 100%;
+    padding: 0;
+}
+
+.profileEditInterests :global(.interest){
+    display: flex;
+    flex-direction: column;
+}
+
+.profileEditInterests :global(.interest__item){
+    padding-top: 21px;
+    border-top: 1px solid var(--color-border);
+    padding-bottom: 26px;
+}
+
+.profileEditInterests :global(.interest__item:first-child){
+    border: none;
+    padding-top: 0;
+}
+
+.profileEditInterests :global(.interest__item-head){
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: var(--color-text-primary);
+    font-family: var(--font-heading);
+    font-size: var(--font-size-xl);
+    font-style: normal;
+    font-weight: 600;
+    line-height: 100%;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 17px;
+}
+
+.profileEditInterests :global(.interest__item-head img){
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
+.profileEditInterests :global(.interest__item-head:after){
+    content: "";
+    position: absolute;
+    right: 14px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background-image: url(../../../../assets/images/arrow_right.svg);
+    width: 9px;
+    height: 9px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform: rotate(90deg);
+    transition: 0.3s all ease;
+}
+
+.profileEditInterests :global(.interest__item-head.active:after){
+    transform: rotate(270deg);
+}
+
+.profileEditInterests :global(.interest__item-body){
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.profileEditInterests :global(.interest__item-body.show){
+    max-height: 1000px;
+}
+
+.profileEditInterests :global(.interest__item-body label),
+.profileEditCountries label{
+    position: relative;
+}
+
+.profileEditInterests :global(.interest__item-body label input),
+.profileEditCountries label input{
+    position: absolute;
+    opacity: 0;
+}
+
+.profileEditInterests :global(.interest__item-body label span),
+.profileEditCountries label span{
+    border-radius: var(--radius-md);
+    background: var(--color-bg-secondary);
+    display: flex;
+    padding: 11px 14px 7px 15px;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-text-body-alpha-80);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-md);
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+    position: relative;
+}
+
+.profileEditInterests :global(.interest__item-body label input:checked ~ span),
+.profileEditCountries label input:checked ~ span{
+    background: var(--color-primary);
+    color: var(--color-text-on-primary);
+    padding-right: 36px;
+}
+
+.profileEditInterests :global(.interest__item-body label input:checked ~ span:after),
+.profileEditCountries label input:checked ~ span:after{
+    content: "";
+    width: 6px;
+    height: 6px;
+    background-image: url(../../../../assets/images/small-x.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    right: 17px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.chooseSection{
+    margin-top: 20px;
+    display: flex;
+    gap: 8px;
+}
+
+.chooseSection span{
+    position: relative;
+    color: var(--color-text-secondary);
+    font-family: var(--font-primary);
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+}
+
+.chooseSection span::after{
+    content: "";
+    border-bottom: 2px solid var(--color-primary);
+    width: 0;
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    height: 3px;
+    bottom: -5px;
+}
+
+.chooseSection span.activeSection::after{
+    width: 100%;
+    transition: ease all 0.3s;
+}
+
+.profileEditCountries{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+@media (min-width: 841px){
+    .profileEditContainer{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .profileEditText{
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .profileEditImage{
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 840px){
+    .profileEditContainer{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 20px;
+    }
+
+    .profileEditText{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .profileEditImage{
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px){
+    .profileEditContainer{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 20px;
+    }
+
+    .profileEditText{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .profileEditImage{
+        display: flex;
+        flex-direction: column;
+    }
+}

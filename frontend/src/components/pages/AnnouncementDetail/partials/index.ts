@@ -1,0 +1,5 @@
+export { AnnouncementDetailContent } from './AnnouncementDetailContent'
+export { AnnouncementInfoBlock } from './AnnouncementInfoBlock'
+export { UserInfoBlock } from './UserInfoBlock'
+export { AnnouncementInterestsBlock } from './AnnouncementInterestsBlock'
+export { GenderPreferenceBlock } from './GenderPreferenceBlock'

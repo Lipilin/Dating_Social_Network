@@ -1,0 +1,54 @@
+import { useCallback, useContext, useState } from 'react'
+import { ProfileContext } from '@/utils/context/ProfileContext'
+import { Loader } from '@/components/pages/Loader/Loader'
+import { PostCreationForm } from './partials/PostCreationForm'
+import type { CreatePostRequest } from '@/utils/api/types'
+import { Post } from '@/utils/api/Post'
+import { useError } from '@/hooks/useError'
+import { NeedRegistration } from '../Errors/NeedRegistration'
+
+const postProvider = new Post()
+
+export function PostCreation(){
+    const { user, userProvider, isLoading } = useContext(ProfileContext)
+    const { error, handleError, clearError } = useError()
+    const [successMessage, setSuccessMessage] = useState<string | null>(null)
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [post, setPost] = useState<CreatePostRequest>({
+        title: '',
+        content: '',
+        tags: [],
+        image: '',
+    })
+
+    const onSend = useCallback(async () => {
+        if (!userProvider || isSubmitting) return
+
+        clearError()
+        setSuccessMessage(null)
+        setIsSubmitting(true)
+
+        try {
+            const response = await userProvider.withRefreshing(async () => {
+                return await postProvider.createPost(post)
+            })
+            setSuccessMessage(response.message)
+        } catch (err) {
+            handleError(err)
+        } finally {
+            setIsSubmitting(false)
+        }
+    }, [userProvider, post, clearError, handleError, isSubmitting])
+
+    if(isLoading || isSubmitting) return <Loader isLoading={true} />
+    if(user == null ) return <NeedRegistration />
+    return (
+        <PostCreationForm
+            onSend={onSend}
+            post={post}
+            setPost={setPost}
+            error={error}
+            successMessage={successMessage}
+        />
+    )
+}

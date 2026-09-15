@@ -1,0 +1,136 @@
+.hero {
+    padding-top: 33px;
+
+    @media #{$mobile} {
+        padding-top: 20px;
+    }
+
+    .row {
+        justify-content: space-between;
+        gap: 30px;
+
+        @media #{$mobile} {
+            gap: 15px;
+        }
+    }
+
+    &__card {
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 261px;
+        background-position: right;
+
+        @media #{$mobile} {
+            height: fit-content;
+        }
+
+        &.big {
+            background-image: url(../images/hero_left_bg.png);
+            background-size: cover;
+            padding: 41px 50px 40px 58px;
+            width: calc(60% - 15px);
+
+            @media #{$laptop} {
+                width: 100%;
+            }
+
+            @media #{$table} {
+                padding: 40px 20px;
+                background-position: left;
+            }
+        }
+
+        &.small {
+            background-image: url(../images/hero_right_bg.png);
+            background-size: cover;
+            width: calc(40% - 15px);
+            padding: 44px 50px 40px 50px;
+
+            @media #{$laptop} {
+                width: 100%;
+            }
+
+            @media #{$table} {
+                padding: 40px 20px;
+            }
+        }
+
+        &-name {
+            color: #FFF;
+            font-family: 'Gilroy';
+            font-size: 31px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 90%;
+            max-width: 230px;
+
+            @media #{$mobile} {
+                font-size: 20px;
+            }
+        }
+
+        &-btn {
+            width: fit-content;
+            border-radius: 10px;
+            background: linear-gradient(180deg, #FFF 0%, rgba(255, 255, 255, 0.00) 100%), linear-gradient(267deg, rgba(235, 13, 111, 0.50) -9.97%, rgba(235, 13, 111, 0.00) 64.02%), #94B1FF;
+            box-shadow: 15px 15px 25px 0px rgba(0, 25, 91, 0.10);
+            color: #00195B;
+            font-family: "TT Commons";
+            font-size: 18px;
+            border: none;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            padding: 19px 59px 14px 63px;
+            cursor: pointer;
+
+            &:hover {
+                filter: brightness(1.1);
+            }
+
+            @media #{$mobile} {
+                margin-top: 20px;
+                font-size: 14px;
+                padding: 14px 30px 10px 30px;
+            }
+        }
+
+        a {
+            color: #FFF;
+            font-family: 'Gilroy';
+            font-size: 17px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 88%;
+            // border-bottom: 1px solid #4089FF;
+            padding-bottom: 8px;
+            text-decoration: none;
+            width: fit-content;
+            position: relative;
+
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: -6px;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background-color: #FFF;
+                transition: width 0.3s ease;
+            }
+
+            &:hover {
+                &::after {
+                    width: 0;
+                }
+            }
+
+            @media #{$mobile} {
+                margin-top: 20px;
+                font-size: 14px;
+            }
+        }
+    }
+}

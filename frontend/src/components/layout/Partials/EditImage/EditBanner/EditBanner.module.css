@@ -1,0 +1,11 @@
+.editBanner{
+    width: 100%;
+}
+
+.editBanner__placeholder{
+    aspect-ratio: 5 / 2;
+}
+
+.editBanner{
+    width: 300px;
+}

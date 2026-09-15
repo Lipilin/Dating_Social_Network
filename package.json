@@ -1,0 +1,35 @@
+{
+  "name": "base",
+  "version": "1.0.0",
+  "description": "Главный конфиг монорепозитория Pick Me Up — платформа знакомств",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lipilin/Dating_Social_Network.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lipilin/Dating_Social_Network/issues"
+  },
+  "homepage": "https://github.com/Lipilin/Dating_Social_Network#readme",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@typescript-eslint/eslint-plugin": "^8.65.0",
+    "@typescript-eslint/parser": "^8.65.0",
+    "eslint": "^10.7.0",
+    "typescript-eslint": "^8.65.0"
+  },
+  "type": "module", 
+  "private": true, 
+  "workspaces": [
+    "backend",
+    "frontend", 
+    "common"
+  ]
+}
