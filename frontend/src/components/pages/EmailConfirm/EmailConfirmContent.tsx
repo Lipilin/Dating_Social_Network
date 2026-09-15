@@ -1,5 +1,5 @@
 import { Loader } from '@/components/pages/Loader/Loader'
-import { EMAIL_CONFIRMATION_SUCCESS_MESSAGE, SITE_SUPPORT_EMAIL } from '@boltaem/common/config'
+import { EMAIL_CONFIRMATION_SUCCESS_MESSAGE, SITE_SUPPORT_EMAIL } from '@pick-me-up/common/config'
 import type { EmailNotificationStep } from './types'
 
 interface EmailConfirmContentProps {

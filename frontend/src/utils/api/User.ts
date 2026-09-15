@@ -11,7 +11,7 @@ import type
     SendPasswordResetEmailResponse,
 } from './types'
 import { API_SETTINGS } from '@/config/General'
-import { HTTP_STATUS } from '@boltaem/common/config'
+import { HTTP_STATUS } from '@pick-me-up/common/config'
 import { getApiErrorMessage } from './getApiErrorMessage'
 
 export class User{

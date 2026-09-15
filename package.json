@@ -1,7 +1,7 @@
 {
   "name": "base",
   "version": "1.0.0",
-  "description": "Главный конфиг монорепозитория Boltaem",
+  "description": "Главный конфиг монорепозитория Pick Me Up — платформа знакомств",
   "main": "index.js",
   "scripts": {
     "lint": "eslint . --ext .ts,.tsx",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Lipilin/boltaem-project.git"
+    "url": "git+https://github.com/Lipilin/Dating_Social_Network.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Lipilin/boltaem-project/issues"
+    "url": "https://github.com/Lipilin/Dating_Social_Network/issues"
   },
-  "homepage": "https://github.com/Lipilin/boltaem-project#readme",
+  "homepage": "https://github.com/Lipilin/Dating_Social_Network#readme",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@typescript-eslint/eslint-plugin": "^8.65.0",

@@ -1,12 +1,12 @@
-export { LoginStepSchema, InfoStepSchema } from '@boltaem/common/validation/UserCreationRules.js'
-export { UserLoginSchema } from '@boltaem/common/validation/UserLoginRules.js'
-export { UserUpdateSchema } from '@boltaem/common/validation/UserUpdateRules.js'
-export { CreatePostSchema } from '@boltaem/common/validation/PostCreationRules.js'
-export { AnnouncementCreateSchema } from '@boltaem/common/validation/AnnouncementCreationRules.js'
+export { LoginStepSchema, InfoStepSchema } from '@pick-me-up/common/validation/UserCreationRules.js'
+export { UserLoginSchema } from '@pick-me-up/common/validation/UserLoginRules.js'
+export { UserUpdateSchema } from '@pick-me-up/common/validation/UserUpdateRules.js'
+export { CreatePostSchema } from '@pick-me-up/common/validation/PostCreationRules.js'
+export { AnnouncementCreateSchema } from '@pick-me-up/common/validation/AnnouncementCreationRules.js'
 export {
     SendRegistrationEmailSchema,
     SendPasswordResetEmailSchema,
-} from '@boltaem/common/validation/EmailNotificationRules.js'
-export { PasswordResetSchema } from '@boltaem/common/validation/PasswordResetRules.js'
-export { ResetPasswordRequestSchema } from '@boltaem/common/validation/ResetPasswordRules.js'
-export { getValidationErrorMessage } from '@boltaem/common/validation/getValidationErrorMessage.js'
+} from '@pick-me-up/common/validation/EmailNotificationRules.js'
+export { PasswordResetSchema } from '@pick-me-up/common/validation/PasswordResetRules.js'
+export { ResetPasswordRequestSchema } from '@pick-me-up/common/validation/ResetPasswordRules.js'
+export { getValidationErrorMessage } from '@pick-me-up/common/validation/getValidationErrorMessage.js'

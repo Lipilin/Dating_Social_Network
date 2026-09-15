@@ -76,9 +76,9 @@ export const ruLocale = {
     },
     messages: {
         dashboard: 'Панель управления',
-        welcomeOnBoard_title: 'Добро пожаловать в панель управления Boltaem',
+        welcomeOnBoard_title: 'Добро пожаловать в панель управления Pick Me Up',
         welcomeOnBoard_subtitle: 'Управление системой для пользователей',
-        loginWelcome: 'Добро пожаловать в Boltaem Admin',
+        loginWelcome: 'Добро пожаловать в Pick Me Up Admin',
         loginButton: 'Войти',
         addingResources_title: 'Добавление ресурсов',
         addingResources_subtitle: 'Создавайте и управляйте ресурсами вашей системы',

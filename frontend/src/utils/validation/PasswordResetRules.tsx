@@ -1,1 +1,1 @@
-export { PasswordResetSchema } from '@boltaem/common/validation/PasswordResetRules'
+export { PasswordResetSchema } from '@pick-me-up/common/validation/PasswordResetRules'

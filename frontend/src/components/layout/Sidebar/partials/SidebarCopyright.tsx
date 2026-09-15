@@ -9,7 +9,7 @@ export function SidebarCopyright() {
                     {link.label}
                 </Link>
             ))}
-            <span>© 2026 BOLTAEM</span>
+            <span>© 2026 Pick Me Up</span>
         </div>
     )
 }

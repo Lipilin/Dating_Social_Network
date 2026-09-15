@@ -10,7 +10,7 @@ export const EMAIL_NOTIFICATIONS_URLS = {
     PASSWORD_RESET: '/password-reset',
 } as const
 
-export const SITE_SUPPORT_EMAIL = 'support@boltaem.ru'
+export const SITE_SUPPORT_EMAIL = 'support@pickmeup.ru'
 
 export const EMAIL_CONFIRMATION_ERROR_MESSAGE = {
     INVALID_TOKEN: 'Недействительный токен подтверждения',

@@ -2,7 +2,7 @@ import { prisma } from '@/prisma.js'
 import type { EmailMessage } from '@prisma/client'
 import {
     EMAIL_MESSAGE_IDS,
-} from '@boltaem/common/emailMessages.js'
+} from '@pick-me-up/common/emailMessages.js'
 import { EMAIL_NOTIFICATION_ERROR_MESSAGE } from '@/config/emailNotificationMessages.js'
 import { sendMail } from '@/utils/other/mailSender.js'
 import { buildEmailNotificationLink } from '@/utils/other/emailNotificationLink.js'

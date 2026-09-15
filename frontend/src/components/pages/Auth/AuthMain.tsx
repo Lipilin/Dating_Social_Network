@@ -4,7 +4,7 @@ import { DefaultInput } from '@/components/ui/inputs/DefaultInput'
 import { UserLoginSchema } from '@/utils/validation/UserLoginRules'
 import { errorListClasses, inputErrorClasses } from '@/styles/formErrors'
 import { Link } from 'react-router'
-import type { UserLoginResponse } from '@boltaem/common/type.js'
+import type { UserLoginResponse } from '@pick-me-up/common/type.js'
 import { ProfileContext } from '@/utils/context/ProfileContext'
 import { getApiErrorMessage } from '@/utils/api/getApiErrorMessage'
 

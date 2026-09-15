@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "Backend часть проекта Boltaem - админка и endpoints",
+  "description": "Backend Pick Me Up — админка и API",
   "license": "ISC",
   "author": "Egor",
   "type": "module",

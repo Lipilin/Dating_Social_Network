@@ -62,7 +62,7 @@ function parseTagsInPayload(request: ActionRequest) {
 export const admin = new AdminJS({
     componentLoader,
     branding: {
-        companyName: 'Boltaem Admin',
+        companyName: 'Pick Me Up Admin',
         logo: '/resources/header_logo.svg'
     },
     resources: [

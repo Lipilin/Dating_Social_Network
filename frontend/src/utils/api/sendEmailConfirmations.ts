@@ -2,7 +2,7 @@ import axios from 'axios'
 import { API_SETTINGS } from '@/config/apiSettings'
 import {
     EMAIL_CONFIRMATION_SUCCESS_MESSAGE,
-} from '@boltaem/common/config'
+} from '@pick-me-up/common/config'
 
 interface EmailConfirmationResponse {
     message: string

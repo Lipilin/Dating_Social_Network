@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 import { Post } from "@/utils/api/Post"
-import type { Post as PostResource } from '@boltaem/common/type'
+import type { Post as PostResource } from '@pick-me-up/common/type'
 import { DefaultPagination } from '@/components/ui/pagination/DefaultPagination'
 import { Loader } from '@/components/pages/Loader/Loader'
 import { NoDataFound } from '../Errors/NoDataFound'

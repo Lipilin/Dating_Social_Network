@@ -3,8 +3,8 @@ import type {
     GENDER,
     InterestResource,
     UserResource,
-} from '@boltaem/common/type.js'
-import { GENDER_PREFERENCE } from '@boltaem/common/type.js'
+} from '@pick-me-up/common/type.js'
+import { GENDER_PREFERENCE } from '@pick-me-up/common/type.js'
 import type { Announcement, Category, Interest, User } from '@prisma/client'
 
 export interface AnnouncementMultipartBody {

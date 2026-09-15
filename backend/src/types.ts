@@ -41,7 +41,7 @@ import {
     PASSWORD_RESET_ERROR_MESSAGE,
     PASSWORD_RESET_SUCCESS_MESSAGE,
     SERVER_ERRORS,
-} from '@boltaem/common/config.js'
+} from '@pick-me-up/common/config.js'
 
 export {
     EMAIL_CONFIRMATION_ERROR_MESSAGE,

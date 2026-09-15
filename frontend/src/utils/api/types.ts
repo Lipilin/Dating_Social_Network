@@ -1,1 +1,1 @@
-export * from '@boltaem/common/type'
+export * from '@pick-me-up/common/type'

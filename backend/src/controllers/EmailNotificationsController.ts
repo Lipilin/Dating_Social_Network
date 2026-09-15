@@ -18,7 +18,7 @@ import {
 import type {
     SendPasswordResetEmailRequest,
     SendRegistrationEmailRequest,
-} from '@boltaem/common/type.js'
+} from '@pick-me-up/common/type.js'
 import { verifyEmailConfirmationToken } from '@/utils/other/emailConfirmationToken.js'
 import { verifyPasswordResetToken } from '@/utils/other/passwordResetToken.js'
 

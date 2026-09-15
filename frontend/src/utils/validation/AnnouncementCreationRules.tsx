@@ -1,1 +1,1 @@
-export { AnnouncementCreateSchema } from '@boltaem/common/validation/AnnouncementCreationRules'
+export { AnnouncementCreateSchema } from '@pick-me-up/common/validation/AnnouncementCreationRules'

@@ -1,1 +1,1 @@
-export { UserLoginSchema } from '@boltaem/common/validation/UserLoginRules'
+export { UserLoginSchema } from '@pick-me-up/common/validation/UserLoginRules'

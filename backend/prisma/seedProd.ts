@@ -1,14 +1,14 @@
 import type { PrismaClient } from '@prisma/client'
-import { STATIC_ROUTES_FOR_BUTTOS } from '@boltaem/common/config.js'
-import { EMAIL_MESSAGES } from '@boltaem/common/emailMessages.js'
+import { STATIC_ROUTES_FOR_BUTTOS } from '@pick-me-up/common/config.js'
+import { EMAIL_MESSAGES } from '@pick-me-up/common/emailMessages.js'
 
 const STATIC_PAGES = [
   {
     alias: STATIC_ROUTES_FOR_BUTTOS.ABOUT.replace(/^\//, ''),
-    name: 'О Boltaem',
+    name: 'О Pick Me Up',
     content: `
-      <p>Boltaem — сервис для поиска попутчиков и публикации маршрутов.</p>
-      <p>Мы помогаем находить единомышленников для путешествий, активного отдыха и совместных поездок.</p>
+      <p>Pick Me Up — платформа знакомств для путешественников.</p>
+      <p>Мы помогаем находить единомышленников, знакомиться и планировать совместные поездки.</p>
     `.trim(),
   },
   {
@@ -23,7 +23,7 @@ const STATIC_PAGES = [
     alias: STATIC_ROUTES_FOR_BUTTOS.TERMS.replace(/^\//, ''),
     name: 'Пользовательское соглашение',
     content: `
-      <p>Используя Boltaem, вы соглашаетесь соблюдать правила сервиса и уважительно относиться к другим пользователям.</p>
+      <p>Используя Pick Me Up, вы соглашаетесь соблюдать правила сервиса и уважительно относиться к другим пользователям.</p>
       <p>Запрещено размещение незаконного, оскорбительного или вводящего в заблуждение контента.</p>
     `.trim(),
   },
@@ -31,7 +31,7 @@ const STATIC_PAGES = [
     alias: STATIC_ROUTES_FOR_BUTTOS.HELP.replace(/^\//, ''),
     name: 'Помощь',
     content: `
-      <p>Если у вас возникли вопросы по работе сервиса, напишите нам на <a href="mailto:support@boltaem.ru">support@boltaem.ru</a>.</p>
+      <p>Если у вас возникли вопросы по работе сервиса, напишите нам на <a href="mailto:support@pickmeup.ru">support@pickmeup.ru</a>.</p>
       <p>Мы ответим в течение 1–2 рабочих дней.</p>
     `.trim(),
   },

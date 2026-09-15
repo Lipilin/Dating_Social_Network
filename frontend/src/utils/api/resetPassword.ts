@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { API_SETTINGS } from '@/config/apiSettings'
-import type { ResetPasswordRequest, ResetPasswordResponse } from '@boltaem/common/type'
+import type { ResetPasswordRequest, ResetPasswordResponse } from '@pick-me-up/common/type'
 
 export async function resetPassword(request: ResetPasswordRequest): Promise<ResetPasswordResponse> {
     const response = await axios.post<ResetPasswordResponse>(

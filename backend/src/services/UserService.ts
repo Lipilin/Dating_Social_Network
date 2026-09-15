@@ -1,17 +1,17 @@
 import { prisma } from '@/prisma.js'
 import type { Prisma, User } from '@prisma/client'
 import { UserStatus, UserRole } from '@prisma/client'
-import type { UserPostRequest, UserLoginRequest, UserLoginResponse } from '@boltaem/common/type.js'
+import type { UserPostRequest, UserLoginRequest, UserLoginResponse } from '@pick-me-up/common/type.js'
 import bcrypt from 'bcryptjs'
 import { type UserWithRelations } from '@/utils/mapping/user.mapper.js'
-import { GENDER } from '@boltaem/common/type.js'
+import { GENDER } from '@pick-me-up/common/type.js'
 import {
     AUTH_ERROR_MESSAGE,
     EMAIL_CONFIRMATION_ERROR_MESSAGE,
     PASSWORD_RESET_ERROR_MESSAGE,
     type JwtFormat,
 } from '@/types.js'
-import { SERVER_ERRORS } from '@boltaem/common/config.js'
+import { SERVER_ERRORS } from '@pick-me-up/common/config.js'
 import type { EmailConfirmationPayload } from '@/utils/other/emailConfirmationToken.js'
 import { verifyPasswordResetToken } from '@/utils/other/passwordResetToken.js'
 import type { EmailNotificationService } from './EmailNotificationService.js'

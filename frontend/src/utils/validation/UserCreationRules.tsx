@@ -1,1 +1,1 @@
-export { LoginStepSchema, InfoStepSchema } from '@boltaem/common/validation/UserCreationRules'
+export { LoginStepSchema, InfoStepSchema } from '@pick-me-up/common/validation/UserCreationRules'

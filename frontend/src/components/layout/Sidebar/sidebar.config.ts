@@ -26,7 +26,7 @@ export const sidebarSupportItems: SidebarMenuItem[] = [
 ]
 
 export const sidebarCopyrightLinks = [
-    { label: 'О BOLTAEM', href: STATIC_ROUTES_FOR_BUTTOS.ABOUT },
+    { label: 'О Pick Me Up', href: STATIC_ROUTES_FOR_BUTTOS.ABOUT },
     { label: 'Помощь', href: STATIC_ROUTES_FOR_BUTTOS.HELP },
     { label: 'Пользовательское соглашение', href: STATIC_ROUTES_FOR_BUTTOS.TERMS },
     { label: 'Конфиденциальность', href: STATIC_ROUTES_FOR_BUTTOS.PRIVACY },

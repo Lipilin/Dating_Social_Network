@@ -2,7 +2,7 @@ import type { AnnouncementWithRelations } from '@/utils/mapping/announcement.map
 import { ANNOUNCEMENT_ERROR_MESSAGE } from "@/config/announcementMessages.js"
 import { prisma } from "@/prisma.js"
 import { assertContentOwnership } from "@/utils/other/assertContentOwnership.js"
-import type { AnnouncementCreateRequest } from "@boltaem/common/type.js"
+import type { AnnouncementCreateRequest } from "@pick-me-up/common/type.js"
 import type { Prisma } from '@prisma/client'
 import { GenderPreference, UserContentStatus, UserStatus } from '@prisma/client'
 

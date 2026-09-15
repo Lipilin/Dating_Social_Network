@@ -1,5 +1,5 @@
 import { prisma } from '@/prisma.js'
-import type { Request } from '@boltaem/common/type.js'
+import type { Request } from '@pick-me-up/common/type.js'
 
 export class CategoryService{
 

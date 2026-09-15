@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { EMAIL_NOTIFICATION_FALLBACK_ERROR_MESSAGE } from '@boltaem/common/config'
+import { EMAIL_NOTIFICATION_FALLBACK_ERROR_MESSAGE } from '@pick-me-up/common/config'
 
 export function getApiErrorMessage(
     error: unknown,

@@ -211,7 +211,7 @@ const RUSSIAN_CITIES = [
 const GENDERS = [GenderPreference.MALE, GenderPreference.FEMALE, GenderPreference.ANYBODY]
 const USER_GENDERS = [Gender.MALE, Gender.FEMALE]
 
-const ADMIN_EMAIL = 'admin@boltaem.ru'
+const ADMIN_EMAIL = 'admin@pickmeup.ru'
 const ADMIN_PASSWORD = 'admin123'
 
 function resolveUserStatus(index: number): UserStatus {
@@ -278,7 +278,7 @@ export async function seedDev(prisma: PrismaClient): Promise<void> {
       surname: 'Системный',
       gender: Gender.MALE,
       city: 'Москва',
-      description: 'Администратор системы Boltaem',
+      description: 'Администратор системы Pick Me Up',
       status: UserStatus.REGISTERED,
       role: UserRole.ADMIN,
       avatar: avatarImage(0),

@@ -1,7 +1,7 @@
 import { POST_ERROR_MESSAGE } from "@/config/postMessages.js"
 import { prisma } from "@/prisma.js"
 import { assertContentOwnership } from "@/utils/other/assertContentOwnership.js"
-import type { CreatePostRequest } from "@boltaem/common/type.js"
+import type { CreatePostRequest } from "@pick-me-up/common/type.js"
 import type { Post, Prisma } from "@prisma/client"
 import { UserContentStatus, UserStatus } from "@prisma/client"
 

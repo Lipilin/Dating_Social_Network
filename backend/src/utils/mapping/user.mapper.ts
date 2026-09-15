@@ -1,5 +1,5 @@
 import { fromAnnouncementToResource } from '../mapping/announcement.mapper.js'
-import type { UserLoginResponse, UserResource, UserUpdatedRequest, GENDER } from '@boltaem/common/type.js'
+import type { UserLoginResponse, UserResource, UserUpdatedRequest, GENDER } from '@pick-me-up/common/type.js'
 import { Prisma } from '@prisma/client'
 import { SignJWT } from 'jose'
 import { encodedAccessSecret, encodedRefreshSecret } from '../other/authSecret.js'

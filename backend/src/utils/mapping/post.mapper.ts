@@ -1,4 +1,4 @@
-import type { PostResource } from '@boltaem/common/type.js'
+import type { PostResource } from '@pick-me-up/common/type.js'
 
 export interface PostMultipartBody {
     post?: Partial<PostResource> & { id?: number }

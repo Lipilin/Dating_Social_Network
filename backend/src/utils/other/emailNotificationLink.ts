@@ -1,4 +1,4 @@
-import { EMAIL_NOTIFICATIONS_URLS } from '@boltaem/common/config.js'
+import { EMAIL_NOTIFICATIONS_URLS } from '@pick-me-up/common/config.js'
 import { getAppBaseUrl } from './requestBaseUrl.js'
 
 type EmailNotificationUrlKey = keyof typeof EMAIL_NOTIFICATIONS_URLS

@@ -28,7 +28,7 @@ import type {
     UserLoginResponse,
     UserPostRequest,
     UserUpdatedRequest,
-} from '@boltaem/common/type.js'
+} from '@pick-me-up/common/type.js'
 import type { RefreshTokenService } from '@/services/RefreshTokenService.js'
 import { generateJwtToken, fromUserResourceToUserUpdateInput, fromUserUpdatedRequestToUserResource, type UserWithRelations } from '@/utils/mapping/user.mapper.js'
 import { encodedAccessSecret, encodedRefreshSecret } from '@/utils/other/authSecret.js'
